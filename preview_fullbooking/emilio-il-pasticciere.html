@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Emilio Il Pasticciere — Prenota su Full Booking</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --primary:   #3f2d21;
+  --secondary: #c8ab97;
+  --bg:        #f7f5f0;
+  --on-primary:   #ffffff;
+  --on-secondary: #1a1a1a;
+}
+*{ margin:0; padding:0; box-sizing:border-box; }
+body{ font-family:'Inter',sans-serif; background:var(--bg); color:#2c2c2c; }
+
+/* TOPBAR FULL BOOKING */
+.fb-bar{
+  background:#111; padding:7px 20px;
+  display:flex; align-items:center; justify-content:space-between;
+  font-size:11px; color:#aaa;
+}
+.fb-brand{ color:#fff; font-weight:700; letter-spacing:1px; font-size:13px; }
+.fb-brand span{ color:var(--secondary); }
+.fb-preview-tag{
+  background:var(--secondary); color:var(--on-secondary);
+  padding:3px 10px; border-radius:20px; font-size:10px; font-weight:700;
+  letter-spacing:0.5px;
+}
+
+/* HEADER RISTORANTE — colori reali del cliente */
+.header{
+  background:var(--primary); padding:14px 24px;
+  display:flex; align-items:center; justify-content:space-between;
+  position:sticky; top:0; z-index:100;
+  box-shadow:0 2px 16px rgba(0,0,0,0.25);
+}
+.header-left{ display:flex; align-items:center; gap:14px; }
+.rist-logo{ height:44px; width:auto; max-width:140px; object-fit:contain; }
+.rist-nome{
+  font-family:'Playfair Display',serif; font-size:20px;
+  color:var(--on-primary); letter-spacing:0.5px;
+}
+.btn-prenota-top{
+  background:var(--secondary); color:var(--on-secondary);
+  border:none; padding:10px 22px; border-radius:6px;
+  font-size:13px; font-weight:700; cursor:pointer; letter-spacing:0.5px;
+}
+
+/* HERO */
+.hero{ position:relative; height:420px; overflow:hidden; }
+.hero img{ width:100%; height:100%; object-fit:cover; }
+.hero-ov{
+  position:absolute; inset:0;
+  background:linear-gradient(to top,rgba(0,0,0,0.80) 0%,rgba(0,0,0,0.05) 55%);
+}
+.hero-info{ position:absolute; bottom:30px; left:30px; right:30px; color:#fff; }
+.hero-info h1{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(24px,4vw,40px); margin-bottom:10px;
+  text-shadow:0 2px 12px rgba(0,0,0,0.6);
+}
+.hero-tagline{
+  font-size:14px; color:rgba(255,255,255,0.85);
+  margin-bottom:12px; max-width:560px; line-height:1.6;
+}
+.hero-meta{ display:flex; align-items:center; gap:14px; flex-wrap:wrap; }
+.rating-pill{
+  display:flex; align-items:center; gap:5px;
+  background:rgba(255,255,255,0.15); backdrop-filter:blur(6px);
+  padding:6px 14px; border-radius:20px;
+}
+.s{ font-size:15px; }
+.s.full,.s.half{ color:#f5c518; }
+.s.empty{ color:rgba(255,255,255,0.35); }
+.r-num{ color:#fff; font-weight:700; font-size:15px; }
+.r-cnt{ color:rgba(255,255,255,0.75); font-size:12px; }
+.hero-citta{ color:rgba(255,255,255,0.9); font-size:14px; }
+
+/* LAYOUT */
+.wrap{
+  max-width:960px; margin:0 auto; padding:30px 18px;
+  display:grid; grid-template-columns:1fr 370px; gap:26px;
+}
+@media(max-width:720px){.wrap{grid-template-columns:1fr;}}
+
+/* GALLERY */
+.gallery{ display:grid; grid-template-columns:1fr 1fr; gap:6px; border-radius:10px; overflow:hidden; margin-bottom:22px; }
+.gimg img{ width:100%; height:145px; object-fit:cover; display:block; }
+
+/* INFO CARDS */
+.card{
+  background:#fff; border-radius:12px; padding:22px;
+  margin-bottom:18px; box-shadow:0 2px 14px rgba(0,0,0,0.06);
+}
+.card h3{
+  font-family:'Playfair Display',serif; font-size:16px;
+  color:var(--primary); margin-bottom:14px;
+  padding-bottom:10px; border-bottom:2px solid var(--bg);
+}
+.info-r{ display:flex; gap:10px; margin-bottom:9px; font-size:14px; color:#555; }
+.info-r .ico{ font-size:17px; flex-shrink:0; }
+.orario-row{
+  display:flex; justify-content:space-between;
+  font-size:13px; color:#555; padding:4px 0;
+  border-bottom:1px solid #f5f5f5;
+}
+
+/* PERCHE FULL BOOKING */
+.why-item{ display:flex; align-items:flex-start; gap:10px; margin-bottom:10px; }
+.why-icon{
+  width:30px; height:30px; border-radius:50%;
+  background:var(--primary); color:var(--on-primary);
+  display:flex; align-items:center; justify-content:center;
+  font-size:13px; flex-shrink:0;
+}
+.why-text{ font-size:13px; color:#555; line-height:1.5; }
+.why-text strong{ color:#2c2c2c; font-size:13px; }
+
+/* BOOKING CARD */
+.booking-card{
+  background:#fff; border-radius:14px; padding:26px;
+  box-shadow:0 4px 28px rgba(0,0,0,0.11);
+  border-top:4px solid var(--primary);
+  position:sticky; top:68px; height:fit-content;
+}
+.booking-card h2{
+  font-family:'Playfair Display',serif; font-size:20px;
+  color:var(--primary); margin-bottom:4px;
+}
+.bk-sub{ font-size:13px; color:#999; margin-bottom:20px; }
+.fg{ margin-bottom:14px; }
+.fg label{
+  display:block; font-size:11px; font-weight:700;
+  color:#777; margin-bottom:5px;
+  text-transform:uppercase; letter-spacing:0.5px;
+}
+.fg input,.fg select{
+  width:100%; padding:11px 13px;
+  border:1.5px solid #e8e0d5; border-radius:8px;
+  font-size:14px; color:#2c2c2c; background:#fafaf8;
+  font-family:'Inter',sans-serif; appearance:none;
+}
+.fg input:focus,.fg select:focus{
+  outline:none; border-color:var(--primary); background:#fff;
+}
+.fg-row{ display:grid; grid-template-columns:1fr 1fr; gap:11px; }
+.btn-book{
+  width:100%; padding:15px; margin-top:6px;
+  background:var(--primary); color:var(--on-primary);
+  border:none; border-radius:10px; font-size:15px; font-weight:700;
+  cursor:pointer; font-family:'Inter',sans-serif; letter-spacing:0.5px;
+  transition:opacity 0.2s;
+}
+.btn-book:hover{opacity:0.88;}
+.bk-note{ text-align:center; font-size:11px; color:#bbb; margin-top:12px; }
+.bk-note span{ color:var(--secondary); font-weight:700; }
+
+/* FOOTER */
+footer{
+  background:#111; color:rgba(255,255,255,0.5);
+  text-align:center; padding:22px; font-size:12px; margin-top:36px;
+}
+footer strong{ color:var(--secondary); }
+</style>
+</head>
+<body>
+
+<!-- TOPBAR FULL BOOKING -->
+<div class="fb-bar">
+  <span class="fb-brand">FULL<span>BOOKING</span>.it</span>
+  
+</div>
+
+<!-- HEADER con colori reali del ristorante -->
+<header class="header">
+  <div class="header-left">
+    <img src="https://www.emilioilpasticciere.it/cdn/shop/files/logo-emilio-1.png?crop=center&height=1000&v=1709034249&width=1000" alt="Logo Emilio Il Pasticciere" class="rist-logo" onerror="this.style.display='none'">
+    <span class="rist-nome">Emilio Il Pasticciere</span>
+  </div>
+  <button class="btn-prenota-top" onclick="document.querySelector('.booking-card').scrollIntoView({behavior:'smooth'})">
+    📅 Prenota Ora
+  </button>
+</header>
+
+<!-- HERO -->
+<div class="hero">
+  <img src="https://places.googleapis.com/v1/places/ChIJO8MuqeUCOxMRb67-0R43f6g/photos/Ab43m-trTmTA40IflljphZ_JNHTT2nAb6oG_VJ-NtSu39QP_nebuWkAOQzcRWDQyrz_1L7VE42xzuoXgsoO9LDM_NypJFERgcj8qzE9RoIOEn8Fj6KADTlMTdl06dZzeg8r_w94tUkO0Jmh-c-x_rXjNcBI8XBSuOnjOi9Wg3d5odukDivBCxL7RJl7_oqGaM-CTKh02cvjsisv9TRbXYnXSyMceRk8Qb_8QA1JaPWqsXkB1O12J-ShOEG9fIFX0MhjrpSTro8tf6kaErl8sFKjstmhebwGJSpbFR2DXSTjRRFs6vjgs7Fw90i-1zOIfkJbgLsqtvQ_wFpqjmnw-W23lTUuaaaXGGv-ckfECEmn9z6JJj12MnnLN469bqZUX4EOAYF4800eJcwkGiNnZZocnCJoRg3jKNNir4B5rlEb1LeMSHmc8/media?maxWidthPx=800&key=AIzaSyC1pQxgyEA66BJ_F2ZLkHJvQeYDawXItEg" alt="Emilio Il Pasticciere"
+       onerror="this.src='https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1200'">
+  <div class="hero-ov"></div>
+  <div class="hero-info">
+    <h1>Emilio Il Pasticciere</h1>
+    <p class="hero-tagline">Il creatore del Roccobabà®</p>
+    <div class="hero-meta">
+      <div class="rating-pill">
+        <span class="s full">★</span><span class="s full">★</span><span class="s full">★</span><span class="s full">★</span><span class="s half">★</span>
+        <span class="r-num">4.7</span>
+        <span class="r-cnt">(1,082 recensioni Google)</span>
+      </div>
+      <span class="hero-citta">📍 Casal di Principe</span>
+    </div>
+  </div>
+</div>
+
+<!-- CONTENUTO -->
+<div class="wrap">
+
+  <!-- SINISTRA -->
+  <div>
+
+    <div class="gallery"><div class="gimg"><img src="https://places.googleapis.com/v1/places/ChIJO8MuqeUCOxMRb67-0R43f6g/photos/Ab43m-s-2ESwWYRVHhMLS_xSvD9pUEd5FuDpQvsklfwqHHPuE6c5j_24aQSrmYu0-YtQlp5AvjdZzYfzxvGTWvXpyUDXh7JK3j6FkpjXhqk2hq_VM-HYAczphQiN9TMz1cI5Fe253zotxAc7Re-wxY7P1LTzyLMU0oEd529OpLyPeQr30FwTsv-gBupxvim40K3kWbEJi59dsZ97ZC8hOmBbuVtj5XMTxrO8oIijLE7kUBdrwffzqhDCmDoxyFDclRjeyw7GBv5oxPGvCTP9pWbMuvIt_iyaROHC9pE5t8pN6O3sq-CV91hWFD0v585vDiZe_Xgd0sp05x1_RuSPoQVx4knvb5Es3UenjOAxmGUgfxCJ3gu9vwdwvb1qFWGCkB8BsYYWHIGfot5NbwfIFTa04B3-Tt-yHfKHgzkYsuh9myuT2ZY/media?maxWidthPx=800&key=AIzaSyC1pQxgyEA66BJ_F2ZLkHJvQeYDawXItEg" alt="Emilio Il Pasticciere" loading="lazy" onerror="this.parentElement.style.display='none'"></div><div class="gimg"><img src="https://places.googleapis.com/v1/places/ChIJO8MuqeUCOxMRb67-0R43f6g/photos/Ab43m-vT6ZU2BYDz-7FjJ84VhMaM-30cgQHOnFnwsw02wbca6C5-oyjf1TnbiTwuF4VUb7_1z89TXWwQESP158EJICc3Cd3wbnB-pq5rQBBRd4IdMZI41AN56eTwL73ePGUBN7Jx1uDFD15sKaiGxc0aWLZCvk78LsY-kLMUbQEHuKWyVoBuhpBXriulNmlq1RlfF0R68c4vcjNOJdHdUCie7NUsgjqD3Gs7fvm2yULXWR2gil3rXH5nW1DvqjIjTR-MZ63vW6O9zpTdaUW220whUWV_YccVao3F9M2BttkZq3upTMBPQP0fLilafGBS5kBjkqkTBp3wcE2oum2wRN5EGhwmCoIBbQEwN0XNHe6pefXub4ru2JKSeCPDBbTUrl7muw4KsD4lCmRTBwIavvFuy6QKUNe3km8NlzRop9Kt4_oBcao/media?maxWidthPx=800&key=AIzaSyC1pQxgyEA66BJ_F2ZLkHJvQeYDawXItEg" alt="Emilio Il Pasticciere" loading="lazy" onerror="this.parentElement.style.display='none'"></div><div class="gimg"><img src="https://places.googleapis.com/v1/places/ChIJO8MuqeUCOxMRb67-0R43f6g/photos/Ab43m-uZTiAyEm3WSlbfwygoL-86_aWPFKMqynCfgo9KBgOF12PzK2ZzMgfoMhOz8NwfzfxlazDi6G6MdZTyHozlH8fQGdiwZH2cjcdaRQhp1cUDDXuOowvhZh3owjiTWxY3_9t3bpHYueyBWdxstgPaPMbK7xKvn2QyRYnjnDe9Old3T-fhCwHbSf6hQd0azGKbF3B9Zh7nq-jQZE3V-z_qrku7iwBFYUuW39tTb2mZvLa1oCH8HWruyzkupJ8IR90w_SPmAXAlqy3D7h38fSOC4ZeKWUUK7dThQNwtLFT2SkOTuswrTnaA3TYMbbvzUrO0eULnGsERcwhg4UBXyJ2NEzoCKg5KDabngvuIxs5lAmBRGF6YcoHTQV0IDfIxbcnrwLOezHeyg0QuhEl4mXNXXLiKdCB7nh2HRFUnoOYUlgMcfQy5adMtX6X3_p5r-NTK/media?maxWidthPx=800&key=AIzaSyC1pQxgyEA66BJ_F2ZLkHJvQeYDawXItEg" alt="Emilio Il Pasticciere" loading="lazy" onerror="this.parentElement.style.display='none'"></div></div>
+
+    <div class="card">
+      <h3>📍 Dove siamo</h3>
+      <div class="info-r"><span class="ico">🏠</span><span>Via San Donato, 47, 81033 Casal di Principe CE</span></div>
+      <div class="info-r"><span class="ico">📞</span><span>081 816 3783</span></div>
+      <div class="info-r"><span class="ico">⭐</span><span><strong>4.7/5</strong> su 1,082 recensioni Google</span></div>
+    </div>
+
+    <div class="card">
+      <h3>🕐 Orari di apertura</h3>
+      <div class="orario-row"><span>Monday</span><span>7:00 AM – 1:30 PM, 3:00 – 9:30 PM</span></div><div class="orario-row"><span>Tuesday</span><span>Closed</span></div><div class="orario-row"><span>Wednesday</span><span>7:00 AM – 1:30 PM, 3:00 – 9:30 PM</span></div><div class="orario-row"><span>Thursday</span><span>7:00 AM – 1:30 PM, 3:00 – 9:30 PM</span></div><div class="orario-row"><span>Friday</span><span>7:00 AM – 1:30 PM, 3:00 – 9:30 PM</span></div><div class="orario-row"><span>Saturday</span><span>7:00 AM – 1:30 PM, 3:00 – 9:30 PM</span></div><div class="orario-row"><span>Sunday</span><span>7:00 AM – 2:00 PM, 3:30 – 9:30 PM</span></div>
+    </div>
+
+    <div class="card">
+      <h3>🏆 Perché prenotare online con Full Booking?</h3>
+
+      <div class="why-item">
+        <div class="why-icon">24</div>
+        <div class="why-text"><strong>Prenota quando vuoi</strong><br>Il sistema accetta prenotazioni 24 ore su 24, anche a mezzanotte.</div>
+      </div>
+      <div class="why-item">
+        <div class="why-icon">✓</div>
+        <div class="why-text"><strong>Conferma immediata via WhatsApp</strong><br>Ricevi la conferma sul cellulare in pochi secondi.</div>
+      </div>
+      <div class="why-item">
+        <div class="why-icon">0€</div>
+        <div class="why-text"><strong>Nessuna commissione</strong><br>La prenotazione diretta è sempre gratuita per il cliente.</div>
+      </div>
+
+      <div class="why-item">
+        <div class="why-icon">📧</div>
+        <div class="why-text"><strong>Riepilogo via email</strong><br>Ricevi anche un'email con tutti i dettagli della prenotazione.</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- DESTRA — FORM -->
+  <div>
+    <div class="booking-card">
+      <h2>Prenota il tuo tavolo</h2>
+      <p class="bk-sub">da Emilio Il Pasticciere · Casal di Principe</p>
+
+      <div class="fg">
+        <label>Data</label>
+        <input type="date" id="data-input">
+      </div>
+      <div class="fg-row">
+        <div class="fg">
+          <label>Orario</label>
+          <select>
+            <option>12:30</option><option>13:00</option><option>13:30</option>
+            <option>20:00</option><option selected>20:30</option>
+            <option>21:00</option><option>21:30</option><option>22:00</option>
+          </select>
+        </div>
+        <div class="fg">
+          <label>Persone</label>
+          <select>
+            <option>1</option><option selected>2</option>
+            <option>3</option><option>4</option><option>5</option><option>6+</option>
+          </select>
+        </div>
+      </div>
+      <div class="fg">
+        <label>Nome e Cognome</label>
+        <input type="text" placeholder="Mario Rossi">
+      </div>
+      <div class="fg-row">
+        <div class="fg">
+          <label>Telefono</label>
+          <input type="tel" placeholder="+39 333 000 0000">
+        </div>
+        <div class="fg">
+          <label>Email</label>
+          <input type="email" placeholder="mario@email.it">
+        </div>
+      </div>
+      <div class="fg">
+        <label>Note speciali (opzionale)</label>
+        <input type="text" placeholder="Allergie, occasioni speciali...">
+      </div>
+
+      <button class="btn-book">🗓️ Verifica Disponibilità</button>
+
+      <p class="bk-note">
+        Powered by <span>Full Booking</span> · Prenotazione gratuita · Zero commissioni
+      </p>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <strong><strong>Full Booking</strong> · Sistema di prenotazione online per ristoranti<strong style="color:#fff">Emilio Il Pasticciere</strong><br>
+  
+</footer>
+
+<script>
+  const d = new Date(); d.setDate(d.getDate()+1);
+  document.getElementById('data-input').value = d.toISOString().split('T')[0];
+  document.getElementById('data-input').min = d.toISOString().split('T')[0];
+</script>
+</body>
+</html>

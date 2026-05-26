@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pizzeria Gaetano Genovesi — Prenota su Full Booking</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: #f7f5f0;
+    color: #2c2c2c;
+    min-height: 100vh;
+  }
+
+  /* ── HEADER FULL BOOKING ── */
+  .header {
+    background: #1a3a2a;
+    padding: 14px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 20px rgba(0,0,0,0.3);
+  }
+  .logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    color: #c9a84c;
+    letter-spacing: 1px;
+  }
+  .logo span { color: #fff; font-size: 13px; display: block; font-family: 'Inter', sans-serif; font-weight: 300; letter-spacing: 2px; }
+  .header-cta {
+    background: #c9a84c;
+    color: #fff;
+    border: none;
+    padding: 10px 22px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    letter-spacing: 0.5px;
+  }
+
+  /* ── ANTEPRIMA BADGE ── */
+  .preview-banner {
+    background: linear-gradient(135deg, #c9a84c, #e8c875);
+    color: #1a3a2a;
+    text-align: center;
+    padding: 10px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative;
+    height: 380px;
+    overflow: hidden;
+  }
+  .hero img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.1) 60%);
+  }
+  .hero-info {
+    position: absolute;
+    bottom: 28px;
+    left: 28px;
+    right: 28px;
+    color: white;
+  }
+  .hero-info h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(22px, 4vw, 36px);
+    margin-bottom: 8px;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.5);
+  }
+  .hero-meta {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .rating-box {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(255,255,255,0.15);
+    backdrop-filter: blur(4px);
+    padding: 5px 12px;
+    border-radius: 20px;
+  }
+  .star { font-size: 16px; }
+  .star.full { color: #f5c518; }
+  .star.half { color: #f5c518; }
+  .star.empty { color: rgba(255,255,255,0.4); }
+  .rating-num { color: white; font-weight: 600; font-size: 15px; }
+  .rating-count { color: rgba(255,255,255,0.8); font-size: 12px; }
+  .hero-citta {
+    color: rgba(255,255,255,0.9);
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  /* ── CONTENUTO ── */
+  .content {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 32px 20px;
+    display: grid;
+    grid-template-columns: 1fr 380px;
+    gap: 28px;
+  }
+  @media(max-width: 700px) {
+    .content { grid-template-columns: 1fr; }
+  }
+
+  /* ── GALLERY ── */
+  .gallery {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-bottom: 24px;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .gallery-img img {
+    width: 100%;
+    height: 140px;
+    object-fit: cover;
+    display: block;
+  }
+
+  /* ── INFO RISTORANTE ── */
+  .info-card {
+    background: white;
+    border-radius: 12px;
+    padding: 22px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  }
+  .info-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 17px;
+    color: #1a3a2a;
+    margin-bottom: 14px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #f0ebe0;
+  }
+  .info-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 10px;
+    font-size: 14px;
+    color: #555;
+  }
+  .info-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+  .orari-list { list-style: none; font-size: 13px; color: #555; line-height: 1.8; padding-left: 4px; }
+  .orari-nd { font-size: 13px; color: #999; font-style: italic; }
+
+  /* ── FORM PRENOTAZIONE ── */
+  .booking-card {
+    background: white;
+    border-radius: 14px;
+    padding: 26px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.10);
+    border-top: 4px solid #1a3a2a;
+    position: sticky;
+    top: 80px;
+    height: fit-content;
+  }
+  .booking-card h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    color: #1a3a2a;
+    margin-bottom: 6px;
+  }
+  .booking-subtitle {
+    font-size: 13px;
+    color: #888;
+    margin-bottom: 22px;
+  }
+  .form-group {
+    margin-bottom: 16px;
+  }
+  .form-group label {
+    display: block;
+    font-size: 12px;
+    font-weight: 600;
+    color: #555;
+    margin-bottom: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .form-group input,
+  .form-group select {
+    width: 100%;
+    padding: 11px 14px;
+    border: 1.5px solid #e8e0d5;
+    border-radius: 8px;
+    font-size: 14px;
+    color: #2c2c2c;
+    background: #fafaf8;
+    font-family: 'Inter', sans-serif;
+    appearance: none;
+  }
+  .form-group input:focus,
+  .form-group select:focus {
+    outline: none;
+    border-color: #1a3a2a;
+    background: white;
+  }
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  .btn-prenota {
+    width: 100%;
+    padding: 15px;
+    background: #1a3a2a;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 8px;
+    font-family: 'Inter', sans-serif;
+    letter-spacing: 0.5px;
+    transition: background 0.2s;
+  }
+  .btn-prenota:hover { background: #2d6a4f; }
+  .booking-note {
+    text-align: center;
+    font-size: 11px;
+    color: #aaa;
+    margin-top: 12px;
+  }
+  .booking-note span { color: #c9a84c; font-weight: 600; }
+
+  /* ── FOOTER ── */
+  .footer {
+    background: #1a3a2a;
+    color: rgba(255,255,255,0.6);
+    text-align: center;
+    padding: 24px;
+    font-size: 12px;
+    margin-top: 40px;
+  }
+  .footer strong { color: #c9a84c; }
+
+  /* ── DEMO WATERMARK ── */
+  .demo-notice {
+    background: #fff3cd;
+    border: 1px solid #ffc107;
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin-bottom: 20px;
+    font-size: 13px;
+    color: #856404;
+    text-align: center;
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="header">
+  <div class="logo">
+    FULL BOOKING
+    <span>PIATTAFORMA DI PRENOTAZIONE</span>
+  </div>
+  <button class="header-cta" onclick="document.querySelector('.booking-card').scrollIntoView({behavior:'smooth'})">
+    Prenota Ora
+  </button>
+</header>
+
+<!-- BANNER ANTEPRIMA -->
+<div class="preview-banner">
+  🎯 Questa è un'ANTEPRIMA esclusiva di come apparirebbe Pizzeria Gaetano Genovesi su Full Booking
+</div>
+
+<!-- HERO -->
+<div class="hero">
+  <img src="https://places.googleapis.com/v1/places/ChIJwazy3SAJOxMRzjLLsg6o3Mw/photos/Ab43m-tPJijTx5xO_rVWgLGrebx-U1gX42BDL1U6MJk04TIdg3KgZTOAyMIMoVNXdtnUc25osnp_Ui4rZIMAUMmX4zpOuhWf4txaUQP7sUULMgkB7pxH1QT8AUw3eyR5-fILqZPYbzgjU5uQ8Uoq6vPjYhuF2VenME_1PFviEWBgXtYbsRudkfXXUaT04nK-7XT8dAJYog2BmBRdWC80WAONe8MXMcg1lbGa19RKo3v2z1LLwMeeY8juuAEgHfMgTEn4xeFKOTEKFbLAHj0ZGUfhM-m1bHofsrgY4aspgiB9qtCjcDXESU3IyGYjK6qbSCU9h2PCKSwkAs3QooSb2kHlKXjnB3Jzx2I6kbYns6toCtseqHoIyQc3yB5LdyPp5hNrrkzs48TFTzH1bw_qNlF-0IY-Y8DDt8yLcO0dFDLcOpQ/media?maxWidthPx=800&key=AIzaSyC1pQxgyEA66BJ_F2ZLkHJvQeYDawXItEg" alt="Pizzeria Gaetano Genovesi" onerror="this.src='https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800'">
+  <div class="hero-overlay"></div>
+  <div class="hero-info">
+    <h1>Pizzeria Gaetano Genovesi</h1>
+    <div class="hero-meta">
+      <div class="rating-box">
+        <span class="star full">★</span><span class="star full">★</span><span class="star full">★</span><span class="star full">★</span><span class="star empty">☆</span>
+        <span class="rating-num">4.4</span>
+        <span class="rating-count">(4,307 recensioni)</span>
+      </div>
+      <div class="hero-citta">📍 Napoli</div>
+    </div>
+  </div>
+</div>
+
+<!-- CONTENUTO PRINCIPALE -->
+<div class="content">
+
+  <!-- COLONNA SINISTRA -->
+  <div class="left-col">
+
+    <!-- AVVISO DEMO -->
+    <div class="demo-notice">
+      ⭐ <strong>Anteprima riservata a Pizzeria Gaetano Genovesi</strong> — La tua pagina su Full Booking potrebbe apparire esattamente così, con le tue foto e informazioni reali.
+    </div>
+
+    <!-- GALLERY FOTO -->
+    <div class="gallery"><div class="gallery-img"><img src="https://places.googleapis.com/v1/places/ChIJwazy3SAJOxMRzjLLsg6o3Mw/photos/Ab43m-uD3TgHkA9TToM83VhHiLwUuDuLL7_8lReiz7QOx58Se7Y1Btch8QK8ept8tvwvP3iQL2_tLGWCuLFb6y7wtNbTJ7n3FXCf5ubdkNSWIISYPe-cca6ZBOJMZbPg4kq1Hz754qQg8L636Y2dYJaKJ1YAXGfTJx2u-xCDkWMCkdBRpRV0eEWtatAk_UJawwb4Ho0Re84i5c0B-b4py2whKZM8_nifGEoM6xX81QRcJNwv22V-fHro242QBEVhiwC7L2dtbinKJdvIhnkrifGYO9UaA50t3AgKpgqPldXm2jvEBwzsVu3PfbXNGS54NDRgT6x8YyDqchMVC9_04pPbl9utRNFIl9E8fKgunNw2Hn0he3Mg0ky9c4x3A5LPsGU5MLv5icOKhWSGPKco4PsUumHkluETonorxnXDrJ4HRHBLmEE/media?maxWidthPx=800&key=AIzaSyC1pQxgyEA66BJ_F2ZLkHJvQeYDawXItEg" alt="Foto Pizzeria Gaetano Genovesi" loading="lazy" onerror="this.parentElement.style.display='none'"></div><div class="gallery-img"><img src="https://places.googleapis.com/v1/places/ChIJwazy3SAJOxMRzjLLsg6o3Mw/photos/Ab43m-uVQn29K_uTyePyN7viPVdv_ydXzxhJnwWgd7xLx4pc5E7G5aT_UieDME1NbV2E-QsoW_5bMQBBgAWSTCrF5UOQ5AV1UFeoI5-D_igBt2GHzWlKuAyDKj8fiQLkeLgTH8aP1SHa2pWIM9nThOc0ui385J4YQp9A8zkP3ib-knodjJOOONAQ7dDLuozGHbJO5uAqUABZDAVDOnG3DOI1A-Mn2JFkV5FpJAAWyJlwFbUsIWvAmmn0nzzNM4Kq8_AUK4QFoiZKQgPrZa1b1ANWt12BRDCdTnAIsZr7Fz3M-Uo9swrT1yLTsmfi96GArJWAkBJJS4PQ4v8I7ZawV6Yvslf5YZ2ghUOj7ZTnpmC6bxPo0i7L5dDQHacEdiFLG38nojxtjDFrQ87KTcSEXN0RjSoHwLxfupDcBJG2jdfIx0k6YuPtb9ltqLXJTHO68AmP/media?maxWidthPx=800&key=AIzaSyC1pQxgyEA66BJ_F2ZLkHJvQeYDawXItEg" alt="Foto Pizzeria Gaetano Genovesi" loading="lazy" onerror="this.parentElement.style.display='none'"></div></div>
+
+    <!-- INFO RISTORANTE -->
+    <div class="info-card">
+      <h3>📍 Informazioni</h3>
+      <div class="info-row">
+        <span class="info-icon">🏠</span>
+        <span>Via Alessandro Manzoni, 26/i, 80123 Napoli NA</span>
+      </div>
+      <div class="info-row">
+        <span class="info-icon">⭐</span>
+        <span><strong>4.4/5</strong> basato su 4,307 recensioni Google</span>
+      </div>
+    </div>
+
+    <!-- ORARI -->
+    <div class="info-card">
+      <h3>🕐 Orari di apertura</h3>
+      <ul class='orari-list'><li>Monday: Closed</li><li>Tuesday: 12:30 – 3:30 PM, 7:00 PM – 1:00 AM</li><li>Wednesday: 12:30 – 3:30 PM, 7:00 PM – 1:00 AM</li><li>Thursday: 12:30 – 3:30 PM, 7:00 PM – 1:00 AM</li></ul>
+    </div>
+
+    <!-- PERCHE FULL BOOKING -->
+    <div class="info-card">
+      <h3>🏔️ Perché scegliere Full Booking?</h3>
+      <div class="info-row"><span class="info-icon">✅</span><span>Prenotazioni online 24/7 — anche quando sei chiuso</span></div>
+      <div class="info-row"><span class="info-icon">✅</span><span>Zero commissioni per le prenotazioni dirette</span></div>
+      <div class="info-row"><span class="info-icon">✅</span><span>Pagina attiva in 24 ore </span></div>
+      <div class="info-row"><span class="info-icon">✅</span><span>Gestione tavoli e fasce orarie personalizzabili</span></div>
+      <div class="info-row"><span class="info-icon">✅</span><span>Clienti ricevono conferma automatica via WhatsApp</span></div>
+    </div>
+
+  </div>
+
+  <!-- COLONNA DESTRA — FORM PRENOTAZIONE -->
+  <div class="right-col">
+    <div class="booking-card">
+      <h2>Prenota un Tavolo</h2>
+      <p class="booking-subtitle">Disponibilità in tempo reale</p>
+
+      <div class="form-group">
+        <label>Data</label>
+        <input type="date" id="data">
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>Orario</label>
+          <select>
+            <option>12:30</option><option>13:00</option><option>13:30</option>
+            <option selected>20:00</option><option>20:30</option>
+            <option>21:00</option><option>21:30</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Persone</label>
+          <select>
+            <option>1</option><option selected>2</option>
+            <option>3</option><option>4</option>
+            <option>5</option><option>6+</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Nome e Cognome</label>
+        <input type="text" placeholder="Es. Mario Rossi">
+      </div>
+
+      <div class="form-group">
+        <label>Telefono</label>
+        <input type="tel" placeholder="+39 333 000 0000">
+      </div>
+
+      <button class="btn-prenota">
+        🗓️ Verifica Disponibilità
+      </button>
+
+      <p class="booking-note">
+        Powered by <span>Full Booking</span> · Prenotazione gratuita · Nessuna commissione
+      </p>
+    </div>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <strong><strong>Full Booking</strong> · Sistema di prenotazione online per ristoranti<br>
+  
+</footer>
+
+<script>
+  // Imposta data di oggi come default
+  const oggi = new Date();
+  const domani = new Date(oggi);
+  domani.setDate(domani.getDate() + 1);
+  const iso = domani.toISOString().split('T')[0];
+  document.getElementById('data').value = iso;
+  document.getElementById('data').min = iso;
+</script>
+</body>
+</html>

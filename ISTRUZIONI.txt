@@ -1,0 +1,81 @@
+╔══════════════════════════════════════════════════════════════╗
+║          🎯  GF LEAD HUNTER v1.0 — ISTRUZIONI               ║
+║          GF Technological System | Gennaro Fusco             ║
+╚══════════════════════════════════════════════════════════════╝
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+STEP 1 — INSTALLA LE DIPENDENZE (una volta sola)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Apri il terminale in questa cartella e scrivi:
+
+   pip install -r requirements.txt
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+STEP 2 — CONFIGURA L'API KEY GOOGLE MAPS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Apri config.py e sostituisci:
+
+   GOOGLE_MAPS_API_KEY = "INSERISCI_QUI_LA_TUA_API_KEY"
+
+con la tua chiave presa da:
+   console.cloud.google.com → Credenziali → Crea chiave API
+
+API da abilitare su Google Console:
+   - Places API
+   - Maps JavaScript API
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+STEP 3 (opzionale) — CONFIGURA EMAIL
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Per inviare email, in config.py imposta:
+
+   GMAIL_APP_PASSWORD = "xxxx xxxx xxxx xxxx"
+
+La password app Gmail si crea su:
+   myaccount.google.com → Sicurezza → Password per le app
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+UTILIZZO — COMANDI
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+▶ Dashboard web (il modo più comodo):
+   python main.py dashboard
+
+▶ Cerca farmacie a Napoli:
+   python main.py search farmacia Napoli
+
+▶ Cerca tutti i bar in Campania:
+   python main.py search bar
+
+▶ Ricerca completa (tutte le categorie):
+   python main.py search
+
+▶ Cerca email dai siti web:
+   python main.py enrich
+
+▶ Invia WhatsApp a 20 lead nuovi:
+   python main.py whatsapp
+
+▶ Invia email a 50 lead:
+   python main.py email
+
+▶ Statistiche:
+   python main.py stats
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+CATEGORIE DISPONIBILI
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+farmacia | tabaccheria | bar | ristorante
+supermercato | gelateria | hotel | parrucchiere
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+WORKFLOW CONSIGLIATO
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+1. python main.py search farmacia Napoli   ← trova lead
+2. python main.py enrich                   ← trova email
+3. python main.py whatsapp                 ← contatta i lead
+4. python main.py dashboard                ← gestisci tutto
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SUPPORTO: Leonardo (Claude Code) | Gennaro +39 388 884 2343
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━

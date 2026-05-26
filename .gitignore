@@ -1,0 +1,34 @@
+# ============================================================
+#  GF LEAD HUNTER — File da NON caricare su GitHub
+# ============================================================
+
+# Credenziali e API key — MAI su GitHub
+config.py
+
+# Database con dati personali dei ristoranti
+leads.db
+
+# File di log Flask
+flask_out.txt
+flask_err.txt
+flask_log.txt
+preview_gen_log.txt
+campagna_log.txt
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Ambiente virtuale
+venv/
+env/
+.env
+
+# Brochure PDF (file pesante)
+brochure.pdf
+
+# File temporanei Windows
+Thumbs.db
+desktop.ini

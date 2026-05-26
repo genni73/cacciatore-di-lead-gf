@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<title>Brochure Cashmatic — GF Technological System</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@300;400;500;600&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #06091a;
+    --card: #0d1128;
+    --card2: #111830;
+    --accent: #1a8fff;
+    --accent2: #00d4ff;
+    --text: #e8f0ff;
+    --muted: #7a8ab0;
+    --border: #1e2a50;
+    --green: #00c853;
+  }
+
+  body {
+    font-family: 'DM Sans', Arial, sans-serif;
+    background: #e8e8e8;
+  }
+
+  .page {
+    width: 210mm;
+    height: 297mm;
+    margin: 0 auto 16px auto;
+    background: var(--bg);
+    color: var(--text);
+    position: relative;
+    overflow: hidden;
+    page-break-after: always;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ======== PAGINA 1 — COPERTINA ======== */
+  .p1-header {
+    padding: 28px 36px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .brand-name {
+    font-family: 'Syne', sans-serif;
+    font-size: 17px;
+    font-weight: 800;
+    color: var(--accent2);
+  }
+
+  .brand-sub { font-size: 10px; color: var(--muted); margin-top: 2px; }
+
+  .badge {
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    color: white;
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+  }
+
+  .p1-hero {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 36px 0;
+    text-align: center;
+    position: relative;
+  }
+
+  .cover-label {
+    font-size: 10px;
+    color: var(--accent2);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    opacity: 0.8;
+  }
+
+  .cover-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 46px;
+    font-weight: 800;
+    color: white;
+    line-height: 1.05;
+    margin-bottom: 12px;
+  }
+
+  .cover-title span { color: var(--accent2); }
+
+  .cover-sub {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.7;
+    max-width: 400px;
+    margin-bottom: 24px;
+  }
+
+  .cover-img {
+    width: 300px;
+    height: 230px;
+    object-fit: contain;
+    filter: drop-shadow(0 16px 50px rgba(0,212,255,0.25));
+    margin-bottom: 24px;
+  }
+
+  .incentivo-pill {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    background: rgba(0,212,255,0.07);
+    border: 1px solid rgba(0,212,255,0.25);
+    border-radius: 14px;
+    padding: 14px 28px;
+  }
+
+  .incentivo-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 40px;
+    font-weight: 800;
+    color: var(--accent2);
+    line-height: 1;
+  }
+
+  .incentivo-right { text-align: left; }
+  .incentivo-title { font-size: 13px; font-weight: 600; color: white; }
+  .incentivo-desc { font-size: 11px; color: var(--muted); margin-top: 2px; }
+
+  .p1-footer {
+    background: rgba(0,0,0,0.35);
+    border-top: 1px solid var(--border);
+    padding: 14px 36px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .footer-contact { font-size: 11px; color: var(--muted); }
+  .footer-contact strong { color: var(--accent2); display: block; font-size: 12px; margin-bottom: 1px; }
+  .footer-site { font-size: 12px; color: var(--accent); font-weight: 600; }
+
+  /* ======== PAGINA 2 — PRODOTTI ======== */
+  .p2-top {
+    background: linear-gradient(180deg, #0a0e20 0%, var(--bg) 100%);
+    padding: 24px 36px 20px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .section-eyebrow {
+    font-size: 10px;
+    color: var(--accent2);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+
+  .section-heading {
+    font-family: 'Syne', sans-serif;
+    font-size: 26px;
+    font-weight: 800;
+    color: white;
+  }
+
+  .section-heading span { color: var(--accent2); }
+
+  .products-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 12px;
+    padding: 16px 36px;
+  }
+
+  .prod-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  .prod-img-box {
+    background: linear-gradient(135deg, #0a0e22, #121b35);
+    padding: 14px;
+    text-align: center;
+    height: 130px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .prod-img-box img {
+    max-width: 100%;
+    max-height: 100px;
+    object-fit: contain;
+    filter: drop-shadow(0 4px 12px rgba(0,212,255,0.2));
+  }
+
+  .prod-body { padding: 12px; }
+
+  .prod-name {
+    font-family: 'Syne', sans-serif;
+    font-size: 14px;
+    font-weight: 800;
+    color: white;
+    margin-bottom: 4px;
+  }
+
+  .prod-desc {
+    font-size: 10px;
+    color: var(--muted);
+    line-height: 1.5;
+    margin-bottom: 10px;
+  }
+
+  .prod-price-box {
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    border-radius: 7px;
+    padding: 8px 10px;
+    text-align: center;
+  }
+
+  .prod-old { font-size: 10px; opacity: 0.75; text-decoration: line-through; color: white; }
+  .prod-new { font-family: 'Syne', sans-serif; font-size: 20px; font-weight: 800; color: white; line-height: 1.1; }
+  .prod-note { font-size: 9px; color: rgba(255,255,255,0.85); }
+
+  .prod-tags { display: flex; flex-wrap: wrap; gap: 3px; margin-top: 8px; }
+  .tag {
+    background: rgba(26,143,255,0.12);
+    border: 1px solid rgba(26,143,255,0.25);
+    color: var(--accent2);
+    font-size: 9px;
+    padding: 2px 7px;
+    border-radius: 20px;
+  }
+
+  /* GAMMA + VANTAGGI */
+  .gamma-section {
+    padding: 0 36px;
+    margin-bottom: 12px;
+  }
+
+  .gamma-img-box {
+    background: linear-gradient(135deg, #0a0e22, #121b35);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px 20px;
+    text-align: center;
+    height: 95px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  .gamma-img-box img {
+    max-width: 100%;
+    max-height: 75px;
+    object-fit: contain;
+  }
+
+  .vantaggi-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 8px;
+    padding: 0 36px;
+  }
+
+  .v-item {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px 12px;
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .v-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+  .v-title { font-size: 11px; font-weight: 600; color: white; margin-bottom: 2px; }
+  .v-desc { font-size: 10px; color: var(--muted); line-height: 1.4; }
+
+  .p2-footer {
+    margin-top: auto;
+    background: rgba(0,0,0,0.35);
+    border-top: 1px solid var(--border);
+    padding: 10px 36px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .p-brand { font-size: 11px; color: var(--accent); font-weight: 600; }
+  .p-site { font-size: 10px; color: var(--muted); }
+
+  /* ======== PAGINA 3 — INCENTIVI + SETTORI + CONTATTI ======== */
+  .p3-hero {
+    background: linear-gradient(135deg, #06091a 0%, #0e1630 100%);
+    padding: 22px 36px 18px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .incentivi-title-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+
+  .incentivi-icon-box {
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    flex-shrink: 0;
+  }
+
+  .incentivi-heading {
+    font-family: 'Syne', sans-serif;
+    font-size: 20px;
+    font-weight: 800;
+    color: white;
+  }
+
+  .incentivi-heading span { color: var(--accent2); }
+
+  .esempi-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 10px;
+  }
+
+  .esempio {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(0,212,255,0.18);
+    border-radius: 10px;
+    padding: 12px;
+    text-align: center;
+  }
+
+  .es-model { font-size: 9px; color: var(--muted); text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 6px; }
+  .es-orig { font-size: 16px; color: white; font-weight: 600; margin-bottom: 2px; }
+  .es-credito { font-size: 11px; color: #ff6b6b; margin-bottom: 4px; }
+  .es-sep { height: 1px; background: var(--border); margin: 6px 0; }
+  .es-label { font-size: 9px; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 2px; }
+  .es-finale { font-family: 'Syne', sans-serif; font-size: 22px; font-weight: 800; color: var(--accent2); }
+
+  .incentivi-note-row {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+  }
+
+  .inote {
+    flex: 1;
+    background: rgba(0,200,83,0.08);
+    border: 1px solid rgba(0,200,83,0.2);
+    border-radius: 7px;
+    padding: 7px 10px;
+    font-size: 10px;
+    color: var(--green);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  /* SETTORI */
+  .settori-section {
+    padding: 14px 36px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .mini-heading {
+    font-family: 'Syne', sans-serif;
+    font-size: 13px;
+    font-weight: 800;
+    color: white;
+    margin-bottom: 10px;
+  }
+
+  .mini-heading span { color: var(--accent2); }
+
+  .settori-row {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 7px;
+  }
+
+  .sett {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 8px 6px;
+    text-align: center;
+  }
+
+  .sett-icon { font-size: 18px; margin-bottom: 3px; }
+  .sett-name { font-size: 9px; color: var(--muted); font-weight: 500; }
+
+  /* CONTATTI */
+  .p3-contacts {
+    margin: 0 36px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, var(--accent) 0%, #0066cc 50%, var(--accent2) 100%);
+    padding: 20px 24px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 20px;
+    align-items: center;
+  }
+
+  .contacts-left h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 18px;
+    font-weight: 800;
+    color: white;
+    margin-bottom: 12px;
+  }
+
+  .c-items { display: grid; grid-template-columns: 1fr 1fr; gap: 7px; }
+
+  .c-item {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 12px;
+    color: rgba(255,255,255,0.9);
+  }
+
+  .c-item strong { display: block; font-size: 13px; color: white; }
+  .c-icon { font-size: 15px; flex-shrink: 0; }
+
+  .contacts-right { text-align: center; }
+
+  .contacts-logo {
+    width: 90px;
+    height: 90px;
+    object-fit: contain;
+    filter: brightness(0) invert(1);
+    margin-bottom: 6px;
+  }
+
+  .contacts-right p {
+    font-size: 10px;
+    color: rgba(255,255,255,0.8);
+    line-height: 1.5;
+    max-width: 120px;
+  }
+
+  /* TOTEM SECTION */
+  .totem-section {
+    padding: 12px 36px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .totem-row {
+    display: flex;
+    gap: 12px;
+    align-items: stretch;
+  }
+
+  .totem-img-box {
+    background: linear-gradient(135deg, #0a0e22, #121b35);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 8px;
+    text-align: center;
+    width: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .totem-img-box img {
+    max-width: 80px;
+    max-height: 70px;
+    object-fit: contain;
+  }
+
+  .totem-content { flex: 1; }
+
+  .totem-content .mini-heading { margin-bottom: 6px; }
+
+  .totem-features {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5px;
+  }
+
+  .tf {
+    font-size: 10px;
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .tf::before { content: '✓'; color: var(--accent2); font-weight: 700; }
+
+  .p3-footer {
+    margin-top: auto;
+    background: rgba(0,0,0,0.4);
+    border-top: 1px solid var(--border);
+    padding: 8px 36px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  @page {
+    margin: 0;
+    size: A4;
+  }
+
+  @media print {
+    body { background: var(--bg); margin: 0; padding: 0; }
+    .page { margin: 0; box-shadow: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ======== PAGINA 1 — COPERTINA ======== -->
+<div class="page">
+  <div class="p1-header">
+    <div>
+      <div class="brand-name">GF Technological System</div>
+      <div class="brand-sub">Partner Esclusivo Cashmatic | Napoli e Campania</div>
+    </div>
+    <div class="badge">⭐ Partner Esclusivo Campania</div>
+  </div>
+
+  <div class="p1-hero">
+    <div class="cover-label">Soluzioni per la gestione automatica del contante</div>
+    <div class="cover-title">Casse Automatiche<br><span>per il Denaro</span></div>
+    <div class="cover-sub">
+      La tecnologia Cashmatic elimina errori di cassa, velocizza i pagamenti<br>
+      e si ripaga con gli incentivi fiscali del Piano Transizione 5.0.
+    </div>
+
+    <img class="cover-img"
+         src="C:/Users/genna/Desktop/foto cashmatic/460-1.png"
+         alt="Cashmatic SelfPay 460"
+         onerror="this.style.display='none'">
+
+    <div class="incentivo-pill">
+      <div class="incentivo-num">45%</div>
+      <div class="incentivo-right">
+        <div class="incentivo-title">Credito Fiscale — Piano Transizione 5.0</div>
+        <div class="incentivo-desc">Recupera quasi la metà del costo come credito d'imposta immediato</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="p1-footer">
+    <div class="footer-contact">
+      <strong>Gennaro Fusco</strong>
+      📱 +39 388 884 2343 &nbsp;|&nbsp; ✉️ cashmatic.fusco@gmail.com
+    </div>
+    <div class="footer-site">casseautomaticheperildenaro.it</div>
+  </div>
+</div>
+
+
+<!-- ======== PAGINA 2 — PRODOTTI + VANTAGGI ======== -->
+<div class="page">
+  <div class="p2-top">
+    <div class="section-eyebrow">La nostra gamma</div>
+    <div class="section-heading">I Modelli <span>Cashmatic</span></div>
+  </div>
+
+  <div class="products-row">
+    <div class="prod-card">
+      <div class="prod-img-box">
+        <img src="C:/Users/genna/Desktop/foto cashmatic/460-1.png" alt="SelfPay 460">
+      </div>
+      <div class="prod-body">
+        <div class="prod-name">SelfPay 460</div>
+        <div class="prod-desc">Compatta e versatile. Perfetta per piccoli e medi esercizi commerciali.</div>
+        <div class="prod-price-box">
+          <div class="prod-old">Listino: 6.000 €</div>
+          <div class="prod-new">3.300 €</div>
+          <div class="prod-note">dopo credito fiscale 45%</div>
+        </div>
+        <div class="prod-tags">
+          <span class="tag">Bar</span>
+          <span class="tag">Farmacia</span>
+          <span class="tag">Parrucchiere</span>
+          <span class="tag">Hotel</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="prod-card">
+      <div class="prod-img-box">
+        <img src="C:/Users/genna/Desktop/foto cashmatic/860jpg.jpg" alt="SelfPay 860">
+      </div>
+      <div class="prod-body">
+        <div class="prod-name">SelfPay 860</div>
+        <div class="prod-desc">Alta capacità per locali con volumi elevati di transazioni giornaliere.</div>
+        <div class="prod-price-box">
+          <div class="prod-old">Listino: 7.000 €</div>
+          <div class="prod-new">3.850 €</div>
+          <div class="prod-note">dopo credito fiscale 45%</div>
+        </div>
+        <div class="prod-tags">
+          <span class="tag">Ristorante</span>
+          <span class="tag">Caseificio</span>
+          <span class="tag">Gastronomia</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="prod-card">
+      <div class="prod-img-box">
+        <img src="C:/Users/genna/Desktop/foto cashmatic/1060.jpg" alt="SelfPay 1060">
+      </div>
+      <div class="prod-body">
+        <div class="prod-name">SelfPay 1060</div>
+        <div class="prod-desc">La potenza massima per esercizi ad altissimo volume di contante.</div>
+        <div class="prod-price-box">
+          <div class="prod-old">Listino: 8.000 €</div>
+          <div class="prod-new">4.400 €</div>
+          <div class="prod-note">dopo credito fiscale 45%</div>
+        </div>
+        <div class="prod-tags">
+          <span class="tag">Supermercato</span>
+          <span class="tag">Tabaccheria</span>
+          <span class="tag">GDO</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="gamma-section">
+    <div class="gamma-img-box">
+      <img src="C:/Users/genna/Desktop/foto cashmatic/gamma al cmpleto.JPG" alt="Gamma completa">
+    </div>
+  </div>
+
+  <div class="vantaggi-grid">
+    <div class="v-item">
+      <div class="v-icon">💰</div>
+      <div>
+        <div class="v-title">Zero ammanchi</div>
+        <div class="v-desc">Contante gestito automaticamente. Niente errori di resto o differenze di cassa.</div>
+      </div>
+    </div>
+    <div class="v-item">
+      <div class="v-icon">⚡</div>
+      <div>
+        <div class="v-title">Pagamenti veloci</div>
+        <div class="v-desc">Il cliente inserisce i soldi da solo. Code più corte, più clienti serviti.</div>
+      </div>
+    </div>
+    <div class="v-item">
+      <div class="v-icon">🛡️</div>
+      <div>
+        <div class="v-title">Massima sicurezza</div>
+        <div class="v-desc">Contante blindato in cassaforte interna. Nessun rischio per il personale.</div>
+      </div>
+    </div>
+    <div class="v-item">
+      <div class="v-icon">📊</div>
+      <div>
+        <div class="v-title">Software incluso</div>
+        <div class="v-desc">Report e statistiche sempre disponibili. Valore commerciale: 1.500 €.</div>
+      </div>
+    </div>
+    <div class="v-item">
+      <div class="v-icon">🔧</div>
+      <div>
+        <div class="v-title">Assistenza diretta</div>
+        <div class="v-desc">Non un call center. Interveniamo di persona in tutta la Campania.</div>
+      </div>
+    </div>
+    <div class="v-item">
+      <div class="v-icon">🎁</div>
+      <div>
+        <div class="v-title">Noleggio disponibile</div>
+        <div class="v-desc">Preferisci non acquistare? Canone mensile fisso, zero anticipo.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="p2-footer">
+    <div class="p-brand">GF Technological System</div>
+    <div class="p-site">casseautomaticheperildenaro.it &nbsp;|&nbsp; +39 388 884 2343</div>
+  </div>
+</div>
+
+
+<!-- ======== PAGINA 3 — INCENTIVI + SETTORI + CONTATTI ======== -->
+<div class="page">
+  <div class="p3-hero">
+    <div class="incentivi-title-row">
+      <div class="incentivi-icon-box">🏛️</div>
+      <div>
+        <div class="section-eyebrow">Piano Transizione 5.0</div>
+        <div class="incentivi-heading">Risparmia fino al <span>45%</span></div>
+      </div>
+    </div>
+
+    <div class="esempi-row">
+      <div class="esempio">
+        <div class="es-model">SelfPay 460</div>
+        <div class="es-orig">6.000 €</div>
+        <div class="es-credito">− 2.700 € credito fiscale</div>
+        <div class="es-sep"></div>
+        <div class="es-label">Costo finale</div>
+        <div class="es-finale">3.300 €</div>
+      </div>
+      <div class="esempio">
+        <div class="es-model">SelfPay 860</div>
+        <div class="es-orig">7.000 €</div>
+        <div class="es-credito">− 3.150 € credito fiscale</div>
+        <div class="es-sep"></div>
+        <div class="es-label">Costo finale</div>
+        <div class="es-finale">3.850 €</div>
+      </div>
+      <div class="esempio">
+        <div class="es-model">SelfPay 1060</div>
+        <div class="es-orig">8.000 €</div>
+        <div class="es-credito">− 3.600 € credito fiscale</div>
+        <div class="es-sep"></div>
+        <div class="es-label">Costo finale</div>
+        <div class="es-finale">4.400 €</div>
+      </div>
+    </div>
+
+    <div class="incentivi-note-row">
+      <div class="inote">✓ Valido per tutte le Partite IVA</div>
+      <div class="inote">✓ Cumulabile con altre agevolazioni</div>
+      <div class="inote">✓ Pratiche gestite da noi</div>
+    </div>
+  </div>
+
+  <!-- TOTEM NOLEGGIO -->
+  <div class="totem-section">
+    <div class="totem-row">
+      <div class="totem-img-box">
+        <img src="C:/Users/genna/Desktop/foto cashmatic/Totem-Cashmatic-Visual-Py-27-e-32-Cassa-automatica-michael-Tech.jpg" alt="Totem VisualPay">
+      </div>
+      <div class="totem-content">
+        <div class="mini-heading">Totem <span>VisualPay</span> — Noleggio Zero Anticipo</div>
+        <div class="totem-features">
+          <div class="tf">Self-order + cassa automatica integrata</div>
+          <div class="tf">Canone mensile fisso, nessuna spesa iniziale</div>
+          <div class="tf">Software gestionale incluso GRATIS</div>
+          <div class="tf">Ideale per gelaterie, bar e ristoranti</div>
+          <div class="tf">Il totem si paga con i clienti in più</div>
+          <div class="tf">Installazione e formazione incluse</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SETTORI -->
+  <div class="settori-section">
+    <div class="mini-heading">I Settori che <span>Serviamo</span></div>
+    <div class="settori-row">
+      <div class="sett"><div class="sett-icon">💊</div><div class="sett-name">Farmacie</div></div>
+      <div class="sett"><div class="sett-icon">☕</div><div class="sett-name">Bar & Caffè</div></div>
+      <div class="sett"><div class="sett-icon">🍕</div><div class="sett-name">Ristoranti</div></div>
+      <div class="sett"><div class="sett-icon">🚬</div><div class="sett-name">Tabaccherie</div></div>
+      <div class="sett"><div class="sett-icon">🛒</div><div class="sett-name">Supermercati</div></div>
+      <div class="sett"><div class="sett-icon">🍦</div><div class="sett-name">Gelaterie</div></div>
+      <div class="sett"><div class="sett-icon">🏨</div><div class="sett-name">Hotel</div></div>
+      <div class="sett"><div class="sett-icon">💇</div><div class="sett-name">Parrucchieri</div></div>
+      <div class="sett"><div class="sett-icon">💪</div><div class="sett-name">Palestre</div></div>
+      <div class="sett"><div class="sett-icon">💆</div><div class="sett-name">Estetici</div></div>
+      <div class="sett"><div class="sett-icon">🐾</div><div class="sett-name">Veterinari</div></div>
+      <div class="sett"><div class="sett-icon">🧀</div><div class="sett-name">Caseifici</div></div>
+    </div>
+  </div>
+
+  <!-- CONTATTI -->
+  <div class="p3-contacts" style="margin-top: 14px;">
+    <div class="contacts-left">
+      <h3>📞 Prenota una Demo Gratuita</h3>
+      <div class="c-items">
+        <div class="c-item">
+          <span class="c-icon">📱</span>
+          <div><strong>+39 388 884 2343</strong>WhatsApp & Telefono</div>
+        </div>
+        <div class="c-item">
+          <span class="c-icon">✉️</span>
+          <div>cashmatic.fusco@gmail.com</div>
+        </div>
+        <div class="c-item">
+          <span class="c-icon">🌐</span>
+          <div>casseautomaticheperildenaro.it</div>
+        </div>
+        <div class="c-item">
+          <span class="c-icon">📍</span>
+          <div>Napoli e tutta la Campania</div>
+        </div>
+      </div>
+    </div>
+    <div class="contacts-right">
+      <img class="contacts-logo"
+           src="C:/Users/genna/Desktop/foto cashmatic/LOGO GF.jpeg"
+           alt="Logo GF"
+           onerror="this.style.display='none'">
+      <p>Assistenza diretta.<br>Nessun intermediario.<br><strong>Intervento entro 24h.</strong></p>
+    </div>
+  </div>
+
+  <div class="p3-footer">
+    <div class="p-brand">GF Technological System — Partner Esclusivo Cashmatic Campania</div>
+    <div class="p-site">casseautomaticheperildenaro.it</div>
+  </div>
+</div>
+
+</body>
+</html>

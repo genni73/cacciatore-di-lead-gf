@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>I Damiano Pizzeria — Prenota su Full Booking</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --primary:   #1a3a2a;
+  --secondary: #c9a84c;
+  --bg:        #f7f5f0;
+  --on-primary:   #ffffff;
+  --on-secondary: #1a1a1a;
+}
+*{ margin:0; padding:0; box-sizing:border-box; }
+body{ font-family:'Inter',sans-serif; background:var(--bg); color:#2c2c2c; }
+
+/* TOPBAR FULL BOOKING */
+.fb-bar{
+  background:#111; padding:7px 20px;
+  display:flex; align-items:center; justify-content:space-between;
+  font-size:11px; color:#aaa;
+}
+.fb-brand{ color:#fff; font-weight:700; letter-spacing:1px; font-size:13px; }
+.fb-brand span{ color:var(--secondary); }
+.fb-preview-tag{
+  background:var(--secondary); color:var(--on-secondary);
+  padding:3px 10px; border-radius:20px; font-size:10px; font-weight:700;
+  letter-spacing:0.5px;
+}
+
+/* HEADER RISTORANTE — colori reali del cliente */
+.header{
+  background:var(--primary); padding:14px 24px;
+  display:flex; align-items:center; justify-content:space-between;
+  position:sticky; top:0; z-index:100;
+  box-shadow:0 2px 16px rgba(0,0,0,0.25);
+}
+.header-left{ display:flex; align-items:center; gap:14px; }
+.rist-logo{ height:44px; width:auto; max-width:140px; object-fit:contain; }
+.rist-nome{
+  font-family:'Playfair Display',serif; font-size:20px;
+  color:var(--on-primary); letter-spacing:0.5px;
+}
+.btn-prenota-top{
+  background:var(--secondary); color:var(--on-secondary);
+  border:none; padding:10px 22px; border-radius:6px;
+  font-size:13px; font-weight:700; cursor:pointer; letter-spacing:0.5px;
+}
+
+/* HERO */
+.hero{ position:relative; height:420px; overflow:hidden; }
+.hero img{ width:100%; height:100%; object-fit:cover; }
+.hero-ov{
+  position:absolute; inset:0;
+  background:linear-gradient(to top,rgba(0,0,0,0.80) 0%,rgba(0,0,0,0.05) 55%);
+}
+.hero-info{ position:absolute; bottom:30px; left:30px; right:30px; color:#fff; }
+.hero-info h1{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(24px,4vw,40px); margin-bottom:10px;
+  text-shadow:0 2px 12px rgba(0,0,0,0.6);
+}
+.hero-tagline{
+  font-size:14px; color:rgba(255,255,255,0.85);
+  margin-bottom:12px; max-width:560px; line-height:1.6;
+}
+.hero-meta{ display:flex; align-items:center; gap:14px; flex-wrap:wrap; }
+.rating-pill{
+  display:flex; align-items:center; gap:5px;
+  background:rgba(255,255,255,0.15); backdrop-filter:blur(6px);
+  padding:6px 14px; border-radius:20px;
+}
+.s{ font-size:15px; }
+.s.full,.s.half{ color:#f5c518; }
+.s.empty{ color:rgba(255,255,255,0.35); }
+.r-num{ color:#fff; font-weight:700; font-size:15px; }
+.r-cnt{ color:rgba(255,255,255,0.75); font-size:12px; }
+.hero-citta{ color:rgba(255,255,255,0.9); font-size:14px; }
+
+/* LAYOUT */
+.wrap{
+  max-width:960px; margin:0 auto; padding:30px 18px;
+  display:grid; grid-template-columns:1fr 370px; gap:26px;
+}
+@media(max-width:720px){.wrap{grid-template-columns:1fr;}}
+
+/* GALLERY */
+.gallery{ display:grid; grid-template-columns:1fr 1fr; gap:6px; border-radius:10px; overflow:hidden; margin-bottom:22px; }
+.gimg img{ width:100%; height:145px; object-fit:cover; display:block; }
+
+/* INFO CARDS */
+.card{
+  background:#fff; border-radius:12px; padding:22px;
+  margin-bottom:18px; box-shadow:0 2px 14px rgba(0,0,0,0.06);
+}
+.card h3{
+  font-family:'Playfair Display',serif; font-size:16px;
+  color:var(--primary); margin-bottom:14px;
+  padding-bottom:10px; border-bottom:2px solid var(--bg);
+}
+.info-r{ display:flex; gap:10px; margin-bottom:9px; font-size:14px; color:#555; }
+.info-r .ico{ font-size:17px; flex-shrink:0; }
+.orario-row{
+  display:flex; justify-content:space-between;
+  font-size:13px; color:#555; padding:4px 0;
+  border-bottom:1px solid #f5f5f5;
+}
+
+/* PERCHE FULL BOOKING */
+.why-item{ display:flex; align-items:flex-start; gap:10px; margin-bottom:10px; }
+.why-icon{
+  width:30px; height:30px; border-radius:50%;
+  background:var(--primary); color:var(--on-primary);
+  display:flex; align-items:center; justify-content:center;
+  font-size:13px; flex-shrink:0;
+}
+.why-text{ font-size:13px; color:#555; line-height:1.5; }
+.why-text strong{ color:#2c2c2c; font-size:13px; }
+
+/* BOOKING CARD */
+.booking-card{
+  background:#fff; border-radius:14px; padding:26px;
+  box-shadow:0 4px 28px rgba(0,0,0,0.11);
+  border-top:4px solid var(--primary);
+  position:sticky; top:68px; height:fit-content;
+}
+.booking-card h2{
+  font-family:'Playfair Display',serif; font-size:20px;
+  color:var(--primary); margin-bottom:4px;
+}
+.bk-sub{ font-size:13px; color:#999; margin-bottom:20px; }
+.fg{ margin-bottom:14px; }
+.fg label{
+  display:block; font-size:11px; font-weight:700;
+  color:#777; margin-bottom:5px;
+  text-transform:uppercase; letter-spacing:0.5px;
+}
+.fg input,.fg select{
+  width:100%; padding:11px 13px;
+  border:1.5px solid #e8e0d5; border-radius:8px;
+  font-size:14px; color:#2c2c2c; background:#fafaf8;
+  font-family:'Inter',sans-serif; appearance:none;
+}
+.fg input:focus,.fg select:focus{
+  outline:none; border-color:var(--primary); background:#fff;
+}
+.fg-row{ display:grid; grid-template-columns:1fr 1fr; gap:11px; }
+.btn-book{
+  width:100%; padding:15px; margin-top:6px;
+  background:var(--primary); color:var(--on-primary);
+  border:none; border-radius:10px; font-size:15px; font-weight:700;
+  cursor:pointer; font-family:'Inter',sans-serif; letter-spacing:0.5px;
+  transition:opacity 0.2s;
+}
+.btn-book:hover{opacity:0.88;}
+.bk-note{ text-align:center; font-size:11px; color:#bbb; margin-top:12px; }
+.bk-note span{ color:var(--secondary); font-weight:700; }
+
+/* FOOTER */
+footer{
+  background:#111; color:rgba(255,255,255,0.5);
+  text-align:center; padding:22px; font-size:12px; margin-top:36px;
+}
+footer strong{ color:var(--secondary); }
+</style>
+</head>
+<body>
+
+<!-- TOPBAR FULL BOOKING -->
+<div class="fb-bar">
+  <span class="fb-brand">FULL<span>BOOKING</span>.it</span>
+  <span class="fb-preview-tag">ANTEPRIMA RISERVATA</span>
+</div>
+
+<!-- HEADER con colori reali del ristorante -->
+<header class="header">
+  <div class="header-left">
+    <img src="https://www.pizzeriaidamiano.it/wp-content/uploads/2026/02/logo.svg" alt="Logo I Damiano Pizzeria" class="rist-logo" onerror="this.style.display='none'">
+    <span class="rist-nome">I Damiano Pizzeria</span>
+  </div>
+  <button class="btn-prenota-top" onclick="document.querySelector('.booking-card').scrollIntoView({behavior:'smooth'})">
+    📅 Prenota Ora
+  </button>
+</header>
+
+<!-- HERO -->
+<div class="hero">
+  <img src="https://places.googleapis.com/v1/places/ChIJKWo4_tKnOxMR0fWm7dzWQWc/photos/Ab43m-uhnwNPHUJPCcrxjo3FXqpq9OabMdJ9PNErOmT1u7NXc3MvxYtuL7Gadm2C4_StE3ss3c9BTBEmHeSuYX13L54sDR0NSCLk2lwl_-jAaWeaGx9XEpO6By7nclhbdUCCWf0Y2gprEqboBMaTWO2X3VpTp4MNBDrZTIzJIGsCbUg0dllJiLAHCp2qgudKT2lTYwE4zSeXHaSuv1dlGiuENAdpxtWr7yxgYCWhats3NaK_mcAVEEl_b-QGsQLmOMjf0kRcRuTlBqMZR2bK-uz7rnqKTj2qALK5KYs3X0D6BUqlbg/media?maxWidthPx=800&key=AIzaSyC1pQxgyEA66BJ_F2ZLkHJvQeYDawXItEg" alt="I Damiano Pizzeria"
+       onerror="this.src='https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1200'">
+  <div class="hero-ov"></div>
+  <div class="hero-info">
+    <h1>I Damiano Pizzeria</h1>
+    <p class="hero-tagline">Benvenuti da I Damiano Pizzeria — prenota il tuo tavolo online</p>
+    <div class="hero-meta">
+      <div class="rating-pill">
+        <span class="s full">★</span><span class="s full">★</span><span class="s full">★</span><span class="s half">★</span><span class="s empty">☆</span>
+        <span class="r-num">3.8</span>
+        <span class="r-cnt">(749 recensioni Google)</span>
+      </div>
+      <span class="hero-citta">📍 Portici</span>
+    </div>
+  </div>
+</div>
+
+<!-- CONTENUTO -->
+<div class="wrap">
+
+  <!-- SINISTRA -->
+  <div>
+
+    <div class="gallery"><div class="gimg"><img src="https://places.googleapis.com/v1/places/ChIJKWo4_tKnOxMR0fWm7dzWQWc/photos/Ab43m-uPXtQTByNplcn6DOM57gvgFqejE9rCqtzfAkE3_J3_FLVWnKTaykfbf5K3NpD6sY6PM2i8PU-BDNKoSUcguCqnQCvdiqyP4zU1H4SlMhvJbp4CX93h4c9c10hHtctxkvhEN-x6uQ45VIw3aibEQgJ_QDCeRvA754k6HSxFBjMfrUfQCb9Hhk0EOh9_rRjBYIkRIhpFZT4sSQVQovD7nqU1ThVMgGTt-TzW9YpF7LGR48ffJa5LBplMRliFjPmpIDYgjTE3YBtg9BwHJe2UnlDo24RQ0pn90FrT05w4YI5kUA/media?maxWidthPx=800&key=AIzaSyC1pQxgyEA66BJ_F2ZLkHJvQeYDawXItEg" alt="I Damiano Pizzeria" loading="lazy" onerror="this.parentElement.style.display='none'"></div><div class="gimg"><img src="https://places.googleapis.com/v1/places/ChIJKWo4_tKnOxMR0fWm7dzWQWc/photos/Ab43m-vc0t-PXgwxUxZQ5rfh79HMmNH__8ZHcpOSHpZFIRT6FL4YUhp9QpGGdLji5uA5sjXrRsAPvCBOIPEBBcT0SCMxqyUWGVSCQXaebF4S4fGajx-SzkeDU4oq9YFwU_Chd8N2JuM3iXFcFBfXuuhKonyacRUvlkeX7xpnicJNbQ6O2l_btpH8fV_l1L_E2ku6jcVp1karnQz0_O_LtYTUpGWZHjQCVx1Ujep2620ovkbjDovpiv78dPkT8tTLSIl40ixcsbPVnBU3BbC-gcsDRAUuuyGRmTZisjRdSW2JLSrha4uvOXzFGlR0sSQ5n7YrMyXzve0LuJP0dXcQ9SfcEy_T9FPBIY8L6CpTSqVAoObAGP9b6mh6K5ITNNGWN6hbYCPaXoufoxgsueyHqifROqi5dEo0zGzWquewZ9BDm700yu3eMnZUyDXKZnNXFSGL/media?maxWidthPx=800&key=AIzaSyC1pQxgyEA66BJ_F2ZLkHJvQeYDawXItEg" alt="I Damiano Pizzeria" loading="lazy" onerror="this.parentElement.style.display='none'"></div><div class="gimg"><img src="https://places.googleapis.com/v1/places/ChIJKWo4_tKnOxMR0fWm7dzWQWc/photos/Ab43m-vphNBwvBHI4B77pKK8qq18Tm65WCRakt441-8uIP2YUcSpNeRtzbqv30nLFbcr--kJrzhsROTjytIXoN2xX5NieaA7-cT_FlNAYGAmQszAZAppuBZmBgwpkVcXzEwlGhgv-WgOowbvtjUTQxtEnBKjoSP-3BPNlud_s5ctaAZGrKp9YFQgbSQ4oXC3MsM2IHljbyCB2lgWl6iLNRFVk_FtiyAixkmk5yGA03LHiUBxuIjlW520bL_igc7UkFvf7NSllueIyPLNma06LVomzsfNMSNRrT8PvQ5TKjxEp9owfHx2fg5tXO2GAQEua55hi1VRGx_YPTCFBs59sQ2q-VVR-7xRMv0NiDT1MMdjHh042JcMGZLDdqNvgyTQyhGo43Wn4s4sZPaMhCrQMB7mKuMo--B8g5wKvFFiqSCwVB70IZYPHhckD5bJlkP2h06a/media?maxWidthPx=800&key=AIzaSyC1pQxgyEA66BJ_F2ZLkHJvQeYDawXItEg" alt="I Damiano Pizzeria" loading="lazy" onerror="this.parentElement.style.display='none'"></div></div>
+
+    <div class="card">
+      <h3>📍 Dove siamo</h3>
+      <div class="info-r"><span class="ico">🏠</span><span>Via Gaetano Poli, 43, 80055 Portici NA</span></div>
+      <div class="info-r"><span class="ico">📞</span><span>081 1806 1060</span></div>
+      <div class="info-r"><span class="ico">⭐</span><span><strong>3.8/5</strong> su 749 recensioni Google</span></div>
+    </div>
+
+    <div class="card">
+      <h3>🕐 Orari di apertura</h3>
+      <div class="orario-row"><span>Monday</span><span>12:00 – 3:00 PM, 7:00 PM – 12:30 AM</span></div><div class="orario-row"><span>Tuesday</span><span>12:00 – 3:00 PM, 7:00 PM – 12:30 AM</span></div><div class="orario-row"><span>Wednesday</span><span>12:00 – 3:00 PM, 7:00 PM – 12:30 AM</span></div><div class="orario-row"><span>Thursday</span><span>12:00 – 3:00 PM, 7:00 PM – 12:30 AM</span></div><div class="orario-row"><span>Friday</span><span>12:00 – 3:00 PM, 7:00 PM – 12:30 AM</span></div><div class="orario-row"><span>Saturday</span><span>12:00 – 3:00 PM, 7:00 PM – 1:00 AM</span></div><div class="orario-row"><span>Sunday</span><span>12:00 – 3:00 PM, 7:00 PM – 12:30 AM</span></div>
+    </div>
+
+    <div class="card">
+      <h3>🏆 Perché prenotare online con Full Booking?</h3>
+
+      <div class="why-item">
+        <div class="why-icon">24</div>
+        <div class="why-text"><strong>Prenota quando vuoi</strong><br>Il sistema accetta prenotazioni 24 ore su 24, anche a mezzanotte.</div>
+      </div>
+      <div class="why-item">
+        <div class="why-icon">✓</div>
+        <div class="why-text"><strong>Conferma immediata via WhatsApp</strong><br>Ricevi la conferma sul cellulare in pochi secondi.</div>
+      </div>
+      <div class="why-item">
+        <div class="why-icon">0€</div>
+        <div class="why-text"><strong>Nessuna commissione</strong><br>La prenotazione diretta è sempre gratuita per il cliente.</div>
+      </div>
+
+      <div class="why-item">
+        <div class="why-icon">📧</div>
+        <div class="why-text"><strong>Riepilogo via email</strong><br>Ricevi anche un'email con tutti i dettagli della prenotazione.</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- DESTRA — FORM -->
+  <div>
+    <div class="booking-card">
+      <h2>Prenota il tuo tavolo</h2>
+      <p class="bk-sub">da I Damiano Pizzeria · Portici</p>
+
+      <div class="fg">
+        <label>Data</label>
+        <input type="date" id="data-input">
+      </div>
+      <div class="fg-row">
+        <div class="fg">
+          <label>Orario</label>
+          <select>
+            <option>12:30</option><option>13:00</option><option>13:30</option>
+            <option>20:00</option><option selected>20:30</option>
+            <option>21:00</option><option>21:30</option><option>22:00</option>
+          </select>
+        </div>
+        <div class="fg">
+          <label>Persone</label>
+          <select>
+            <option>1</option><option selected>2</option>
+            <option>3</option><option>4</option><option>5</option><option>6+</option>
+          </select>
+        </div>
+      </div>
+      <div class="fg">
+        <label>Nome e Cognome</label>
+        <input type="text" placeholder="Mario Rossi">
+      </div>
+      <div class="fg-row">
+        <div class="fg">
+          <label>Telefono</label>
+          <input type="tel" placeholder="+39 333 000 0000">
+        </div>
+        <div class="fg">
+          <label>Email</label>
+          <input type="email" placeholder="mario@email.it">
+        </div>
+      </div>
+      <div class="fg">
+        <label>Note speciali (opzionale)</label>
+        <input type="text" placeholder="Allergie, occasioni speciali...">
+      </div>
+
+      <button class="btn-book">🗓️ Verifica Disponibilità</button>
+
+      <p class="bk-note">
+        Powered by <span>Full Booking</span> · Prenotazione gratuita · Zero commissioni
+      </p>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <strong>Full Booking</strong> — La piattaforma di prenotazione per ristoranti ·
+  Questa è un'anteprima esclusiva creata per <strong style="color:#fff">I Damiano Pizzeria</strong><br>
+  Attiva la tua pagina oggi stesso · fullbooking.it
+</footer>
+
+<script>
+  const d = new Date(); d.setDate(d.getDate()+1);
+  document.getElementById('data-input').value = d.toISOString().split('T')[0];
+  document.getElementById('data-input').min = d.toISOString().split('T')[0];
+</script>
+</body>
+</html>
