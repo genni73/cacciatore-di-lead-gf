@@ -3,316 +3,531 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Pizzeria Sorbillo — Prenota su Full Booking</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<title>Pizzeria Sorbillo — Salerno | Full Booking</title>
+<meta name="description" content="La pizzeria Via Tribunali di Rodolfo Sorbillo ha sede a Cava e Salerno. Dal 1935 il nome Sorbillo è sinonimo di pizza, scopri la pizzeria.">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-:root {
-  --primary:   #1a3a2a;
-  --secondary: #c9a84c;
-  --bg:        #f7f5f0;
-  --on-primary:   #ffffff;
-  --on-secondary: #1a1a1a;
-}
-*{ margin:0; padding:0; box-sizing:border-box; }
-body{ font-family:'Inter',sans-serif; background:var(--bg); color:#2c2c2c; }
+:root { 
+  --nero:     #0a0a0a;
+  --nero2:    #141414;
+  --nero3:    #1e1e1e;
+  --oro:      #c9a84c;
+  --oro2:     #e8c96b;
+  --crema:    #f0ead6;
+  --grigio:   #8a8a8a;
+  --bianco:   #ffffff;
+ }
 
-/* TOPBAR FULL BOOKING */
-.fb-bar{
-  background:#111; padding:7px 20px;
-  display:flex; align-items:center; justify-content:space-between;
-  font-size:11px; color:#aaa;
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--nero);
+  color: var(--crema);
+  -webkit-font-smoothing: antialiased;
 }
-.fb-brand{ color:#fff; font-weight:700; letter-spacing:1px; font-size:13px; }
-.fb-brand span{ color:var(--secondary); }
-.fb-preview-tag{
-  background:var(--secondary); color:var(--on-secondary);
-  padding:3px 10px; border-radius:20px; font-size:10px; font-weight:700;
-  letter-spacing:0.5px;
+a { color: inherit; text-decoration: none; }
+img { display: block; }
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--nero2); }
+::-webkit-scrollbar-thumb { background: var(--oro); border-radius: 3px; }
+
+/* Topbar Full Booking */
+.fb-topbar {
+  background: var(--nero);
+  border-bottom: 1px solid rgba(201,168,76,0.2);
+  padding: 10px 32px;
+  display: flex; align-items: center; justify-content: space-between;
+  position: sticky; top: 0; z-index: 200;
+  backdrop-filter: blur(12px);
+}
+.fb-logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 18px; letter-spacing: 3px; font-weight: 700;
+  color: var(--bianco);
+}
+.fb-logo span { color: var(--oro); }
+.fb-topbar-cta {
+  font-size: 11px; color: var(--grigio);
+  letter-spacing: 1px; text-transform: uppercase;
 }
 
-/* HEADER RISTORANTE — colori reali del cliente */
-.header{
-  background:var(--primary); padding:14px 24px;
-  display:flex; align-items:center; justify-content:space-between;
-  position:sticky; top:0; z-index:100;
-  box-shadow:0 2px 16px rgba(0,0,0,0.25);
+/* Bottone oro */
+.btn-oro {
+  display: inline-block;
+  background: linear-gradient(135deg, var(--oro), var(--oro2));
+  color: var(--nero);
+  padding: 14px 36px;
+  font-size: 12px; font-weight: 700;
+  letter-spacing: 2px; text-transform: uppercase;
+  border: none; cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  transition: opacity .2s, transform .2s;
 }
-.header-left{ display:flex; align-items:center; gap:14px; }
-.rist-logo{ height:44px; width:auto; max-width:140px; object-fit:contain; }
-.rist-nome{
-  font-family:'Playfair Display',serif; font-size:20px;
-  color:var(--on-primary); letter-spacing:0.5px;
+.btn-oro:hover { opacity: .88; transform: translateY(-1px); }
+
+/* Linea oro decorativa */
+.gold-line {
+  width: 48px; height: 2px;
+  background: linear-gradient(90deg, var(--oro), var(--oro2));
+  margin: 0 auto 20px;
 }
-.btn-prenota-top{
-  background:var(--secondary); color:var(--on-secondary);
-  border:none; padding:10px 22px; border-radius:6px;
-  font-size:13px; font-weight:700; cursor:pointer; letter-spacing:0.5px;
+.gold-line.left { margin: 0 0 20px; }
+
+
+/* NAVBAR */
+.navbar {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 300;
+  background: rgba(10,10,10,0.92);
+  border-bottom: 1px solid rgba(201,168,76,0.15);
+  padding: 0 40px;
+  display: flex; align-items: center; justify-content: space-between;
+  height: 68px;
+  backdrop-filter: blur(16px);
+  transition: background .3s;
+}
+.navbar-brand {
+  display: flex; align-items: center; gap: 14px;
+}
+.nav-logo { height: 40px; width: auto; max-width: 130px; object-fit: contain; }
+.navbar-nome {
+  font-family: 'Playfair Display', serif;
+  font-size: 17px; color: var(--crema); letter-spacing: .5px;
+}
+.navbar-links {
+  display: flex; align-items: center; gap: 32px;
+}
+.navbar-links a {
+  font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+  color: var(--grigio); transition: color .2s;
+}
+.navbar-links a:hover { color: var(--oro); }
+.navbar-prenota {
+  background: linear-gradient(135deg, var(--oro), var(--oro2));
+  color: var(--nero) !important;
+  padding: 10px 22px;
+  font-size: 11px !important; font-weight: 700 !important;
+  letter-spacing: 2px;
+}
+.navbar-prenota:hover { opacity: .88; }
+@media(max-width: 768px) {
+  .navbar { padding: 0 20px; }
+  .navbar-links { display: none; }
 }
 
 /* HERO */
-.hero{ position:relative; height:420px; overflow:hidden; }
-.hero img{ width:100%; height:100%; object-fit:cover; }
-.hero-ov{
-  position:absolute; inset:0;
-  background:linear-gradient(to top,rgba(0,0,0,0.80) 0%,rgba(0,0,0,0.05) 55%);
+.hero {
+  height: 100vh; min-height: 600px;
+  position: relative; overflow: hidden;
 }
-.hero-info{ position:absolute; bottom:30px; left:30px; right:30px; color:#fff; }
-.hero-info h1{
-  font-family:'Playfair Display',serif;
-  font-size:clamp(24px,4vw,40px); margin-bottom:10px;
-  text-shadow:0 2px 12px rgba(0,0,0,0.6);
+.hero-img {
+  width: 100%; height: 100%; object-fit: cover;
+  transform: scale(1.04);
+  transition: transform 8s ease;
 }
-.hero-tagline{
-  font-size:14px; color:rgba(255,255,255,0.85);
-  margin-bottom:12px; max-width:560px; line-height:1.6;
+.hero:hover .hero-img { transform: scale(1); }
+.hero-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(10,10,10,0.3) 0%,
+    rgba(10,10,10,0.1) 40%,
+    rgba(10,10,10,0.85) 100%
+  );
 }
-.hero-meta{ display:flex; align-items:center; gap:14px; flex-wrap:wrap; }
-.rating-pill{
-  display:flex; align-items:center; gap:5px;
-  background:rgba(255,255,255,0.15); backdrop-filter:blur(6px);
-  padding:6px 14px; border-radius:20px;
+.hero-content {
+  position: absolute; bottom: 80px; left: 0; right: 0;
+  padding: 0 60px;
+  max-width: 900px;
 }
-.s{ font-size:15px; }
-.s.full,.s.half{ color:#f5c518; }
-.s.empty{ color:rgba(255,255,255,0.35); }
-.r-num{ color:#fff; font-weight:700; font-size:15px; }
-.r-cnt{ color:rgba(255,255,255,0.75); font-size:12px; }
-.hero-citta{ color:rgba(255,255,255,0.9); font-size:14px; }
+.hero-badge {
+  display: inline-block;
+  border: 1px solid var(--oro);
+  color: var(--oro);
+  font-size: 10px; letter-spacing: 3px; text-transform: uppercase;
+  padding: 6px 16px; margin-bottom: 20px;
+}
+.hero-titolo {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(36px, 6vw, 72px);
+  font-weight: 700; line-height: 1.1;
+  color: var(--bianco);
+  text-shadow: 0 2px 40px rgba(0,0,0,0.5);
+  margin-bottom: 16px;
+}
+.hero-tagline {
+  font-size: 15px; color: rgba(240,234,214,0.8);
+  line-height: 1.7; max-width: 540px; margin-bottom: 24px;
+  font-weight: 300;
+}
+.hero-meta {
+  display: flex; align-items: center; gap: 20px; flex-wrap: wrap;
+}
+.rating-pill {
+  display: flex; align-items: center; gap: 8px;
+  background: rgba(201,168,76,0.12);
+  border: 1px solid rgba(201,168,76,0.3);
+  padding: 8px 18px;
+}
+.star { font-size: 14px; }
+.star.full, .star.half { color: var(--oro); }
+.star.empty { color: rgba(201,168,76,0.25); }
+.rating-num { color: var(--oro); font-weight: 700; font-size: 15px; }
+.rating-cnt { color: rgba(240,234,214,0.6); font-size: 12px; }
+.hero-citta { color: rgba(240,234,214,0.75); font-size: 13px; letter-spacing: 1px; }
+@media(max-width: 768px) {
+  .hero-content { padding: 0 24px; bottom: 60px; }
+}
 
-/* LAYOUT */
-.wrap{
-  max-width:960px; margin:0 auto; padding:30px 18px;
-  display:grid; grid-template-columns:1fr 370px; gap:26px;
+/* SCROLL INDICATOR */
+.scroll-ind {
+  position: absolute; bottom: 28px; left: 50%;
+  transform: translateX(-50%);
+  display: flex; flex-direction: column; align-items: center; gap: 6px;
+  color: rgba(201,168,76,0.5); font-size: 10px; letter-spacing: 2px;
+  text-transform: uppercase;
+  animation: bounce 2s infinite;
 }
-@media(max-width:720px){.wrap{grid-template-columns:1fr;}}
+.scroll-ind::after {
+  content: ''; width: 1px; height: 40px;
+  background: linear-gradient(to bottom, var(--oro), transparent);
+}
+@keyframes bounce {
+  0%,100% { opacity: .5; transform: translateX(-50%) translateY(0); }
+  50% { opacity: 1; transform: translateX(-50%) translateY(6px); }
+}
+
+/* BOTTONE PRENOTA FLOTTANTE */
+.btn-prenota-float {
+  position: fixed;
+  bottom: 36px; right: 36px;
+  z-index: 500;
+  width: 96px; height: 96px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--oro), var(--oro2));
+  color: var(--nero);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 4px;
+  font-family: 'Inter', sans-serif;
+  font-size: 11px; font-weight: 800;
+  letter-spacing: 2px; text-transform: uppercase;
+  text-decoration: none;
+  box-shadow: 0 8px 32px rgba(201,168,76,0.35), 0 2px 8px rgba(0,0,0,0.4);
+  transition: transform .25s, box-shadow .25s, opacity .25s;
+  opacity: 0;
+  transform: scale(0.7) translateY(20px);
+  pointer-events: none;
+}
+.btn-prenota-float.visible {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+  pointer-events: auto;
+}
+.btn-prenota-float:hover {
+  transform: scale(1.07) translateY(-3px);
+  box-shadow: 0 14px 40px rgba(201,168,76,0.5), 0 4px 12px rgba(0,0,0,0.4);
+}
+.btn-prenota-float .float-arrow {
+  font-size: 18px; line-height: 1;
+  transition: transform .2s;
+}
+.btn-prenota-float:hover .float-arrow {
+  transform: translateY(3px);
+}
+@media(max-width: 768px) {
+  .btn-prenota-float {
+    width: 80px; height: 80px;
+    bottom: 24px; right: 20px;
+    font-size: 10px;
+    opacity: 1; transform: scale(1) translateY(0);
+    pointer-events: auto;
+  }
+}
+
+/* SEZIONI */
+section { padding: 100px 60px; }
+@media(max-width: 768px) { section { padding: 60px 24px; } }
+
+.section-label {
+  font-size: 10px; letter-spacing: 4px; text-transform: uppercase;
+  color: var(--oro); margin-bottom: 14px;
+}
+.section-titolo {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(28px, 4vw, 42px); font-weight: 600;
+  color: var(--crema); line-height: 1.2; margin-bottom: 20px;
+}
+
+/* CHI SIAMO */
+.chi-siamo {
+  max-width: 1100px; margin: 0 auto;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
+}
+@media(max-width: 768px) { .chi-siamo { grid-template-columns: 1fr; gap: 40px; } }
+.chi-siamo-testo p {
+  font-size: 16px; line-height: 1.9; color: rgba(240,234,214,0.75);
+  font-weight: 300; margin-bottom: 16px;
+}
+.chi-siamo-foto {
+  position: relative; height: 480px;
+}
+.chi-siamo-foto img {
+  width: 100%; height: 100%; object-fit: cover;
+}
+.chi-siamo-foto::before {
+  content: '';
+  position: absolute; inset: -12px -12px 12px 12px;
+  border: 1px solid rgba(201,168,76,0.25);
+  z-index: -1;
+}
 
 /* GALLERY */
-.gallery{ display:grid; grid-template-columns:1fr 1fr; gap:6px; border-radius:10px; overflow:hidden; margin-bottom:22px; }
-.gimg img{ width:100%; height:145px; object-fit:cover; display:block; }
+.gallery-section { background: var(--nero2); }
+.gallery-grid {
+  max-width: 1200px; margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: 280px 280px;
+  gap: 4px;
+}
+.gallery-item { overflow: hidden; position: relative; }
+.gallery-item:first-child {
+  grid-column: span 2; grid-row: span 2;
+}
+.gallery-item img {
+  width: 100%; height: 100%; object-fit: cover;
+  transition: transform .6s ease;
+}
+.gallery-item:hover img { transform: scale(1.05); }
+@media(max-width: 768px) {
+  .gallery-grid { grid-template-columns: 1fr 1fr; grid-template-rows: auto; }
+  .gallery-item:first-child { grid-column: span 2; height: 220px; }
+  .gallery-item { height: 160px; }
+}
 
-/* INFO CARDS */
-.card{
-  background:#fff; border-radius:12px; padding:22px;
-  margin-bottom:18px; box-shadow:0 2px 14px rgba(0,0,0,0.06);
+/* INFO + ORARI */
+.info-section {
+  max-width: 1100px; margin: 0 auto;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 80px;
 }
-.card h3{
-  font-family:'Playfair Display',serif; font-size:16px;
-  color:var(--primary); margin-bottom:14px;
-  padding-bottom:10px; border-bottom:2px solid var(--bg);
+@media(max-width: 768px) { .info-section { grid-template-columns: 1fr; gap: 48px; } }
+.info-card {
+  border-top: 1px solid rgba(201,168,76,0.2);
+  padding-top: 32px;
 }
-.info-r{ display:flex; gap:10px; margin-bottom:9px; font-size:14px; color:#555; }
-.info-r .ico{ font-size:17px; flex-shrink:0; }
-.orario-row{
-  display:flex; justify-content:space-between;
-  font-size:13px; color:#555; padding:4px 0;
-  border-bottom:1px solid #f5f5f5;
+.info-row {
+  display: flex; align-items: flex-start; gap: 16px;
+  margin-bottom: 20px; padding-bottom: 20px;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
 }
+.info-row:last-child { border-bottom: none; }
+.info-ico {
+  width: 36px; height: 36px; flex-shrink: 0;
+  background: rgba(201,168,76,0.1);
+  border: 1px solid rgba(201,168,76,0.2);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 15px;
+}
+.info-txt { font-size: 14px; color: rgba(240,234,214,0.75); line-height: 1.6; }
+.info-txt strong { color: var(--crema); font-size: 12px; letter-spacing: 1px; text-transform: uppercase; display: block; margin-bottom: 4px; }
+.orario-row {
+  display: flex; justify-content: space-between;
+  padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.05);
+  font-size: 13px;
+}
+.orario-giorno { color: var(--crema); }
+.orario-ore { color: var(--grigio); text-align: right; }
+.no-info { font-size: 13px; color: var(--grigio); font-style: italic; }
 
-/* PERCHE FULL BOOKING */
-.why-item{ display:flex; align-items:flex-start; gap:10px; margin-bottom:10px; }
-.why-icon{
-  width:30px; height:30px; border-radius:50%;
-  background:var(--primary); color:var(--on-primary);
-  display:flex; align-items:center; justify-content:center;
-  font-size:13px; flex-shrink:0;
+/* CTA PRENOTA */
+.cta-section {
+  background: var(--nero2);
+  border-top: 1px solid rgba(201,168,76,0.15);
+  border-bottom: 1px solid rgba(201,168,76,0.15);
+  text-align: center;
+  padding: 120px 60px;
 }
-.why-text{ font-size:13px; color:#555; line-height:1.5; }
-.why-text strong{ color:#2c2c2c; font-size:13px; }
-
-/* BOOKING CARD */
-.booking-card{
-  background:#fff; border-radius:14px; padding:26px;
-  box-shadow:0 4px 28px rgba(0,0,0,0.11);
-  border-top:4px solid var(--primary);
-  position:sticky; top:68px; height:fit-content;
+.cta-section .section-titolo { margin-bottom: 14px; }
+.cta-section p {
+  font-size: 15px; color: rgba(240,234,214,0.6);
+  max-width: 500px; margin: 0 auto 40px;
+  line-height: 1.7; font-weight: 300;
 }
-.booking-card h2{
-  font-family:'Playfair Display',serif; font-size:20px;
-  color:var(--primary); margin-bottom:4px;
+.cta-duo {
+  display: flex; align-items: center; justify-content: center;
+  gap: 20px; flex-wrap: wrap;
 }
-.bk-sub{ font-size:13px; color:#999; margin-bottom:20px; }
-.fg{ margin-bottom:14px; }
-.fg label{
-  display:block; font-size:11px; font-weight:700;
-  color:#777; margin-bottom:5px;
-  text-transform:uppercase; letter-spacing:0.5px;
+.btn-outline {
+  display: inline-block;
+  border: 1px solid var(--oro);
+  color: var(--oro);
+  padding: 14px 36px;
+  font-size: 12px; font-weight: 600;
+  letter-spacing: 2px; text-transform: uppercase;
+  transition: all .2s;
 }
-.fg input,.fg select{
-  width:100%; padding:11px 13px;
-  border:1.5px solid #e8e0d5; border-radius:8px;
-  font-size:14px; color:#2c2c2c; background:#fafaf8;
-  font-family:'Inter',sans-serif; appearance:none;
-}
-.fg input:focus,.fg select:focus{
-  outline:none; border-color:var(--primary); background:#fff;
-}
-.fg-row{ display:grid; grid-template-columns:1fr 1fr; gap:11px; }
-.btn-book{
-  width:100%; padding:15px; margin-top:6px;
-  background:var(--primary); color:var(--on-primary);
-  border:none; border-radius:10px; font-size:15px; font-weight:700;
-  cursor:pointer; font-family:'Inter',sans-serif; letter-spacing:0.5px;
-  transition:opacity 0.2s;
-}
-.btn-book:hover{opacity:0.88;}
-.bk-note{ text-align:center; font-size:11px; color:#bbb; margin-top:12px; }
-.bk-note span{ color:var(--secondary); font-weight:700; }
+.btn-outline:hover { background: var(--oro); color: var(--nero); }
 
 /* FOOTER */
-footer{
-  background:#111; color:rgba(255,255,255,0.5);
-  text-align:center; padding:22px; font-size:12px; margin-top:36px;
+footer {
+  background: var(--nero);
+  border-top: 1px solid rgba(201,168,76,0.1);
+  padding: 48px 60px 32px;
+  display: flex; justify-content: space-between; align-items: flex-end;
+  flex-wrap: wrap; gap: 24px;
 }
-footer strong{ color:var(--secondary); }
+.footer-brand {
+  font-family: 'Playfair Display', serif;
+  font-size: 20px; letter-spacing: 3px; color: var(--crema);
+}
+.footer-brand span { color: var(--oro); }
+.footer-copy {
+  font-size: 11px; color: rgba(138,138,138,0.5);
+  letter-spacing: 1px;
+}
+@media(max-width: 768px) {
+  footer { padding: 40px 24px 28px; flex-direction: column; align-items: flex-start; }
+}
 </style>
 </head>
 <body>
 
-<!-- TOPBAR FULL BOOKING -->
-<div class="fb-bar">
-  <span class="fb-brand">FULL<span>BOOKING</span>.it</span>
-  
-</div>
+<!-- BOTTONE PRENOTA FLOTTANTE -->
+<a href="pizzeria-sorbillo-prenota.html" class="btn-prenota-float" id="floatBtn">
+  <span>PRENOTA</span>
+  <span class="float-arrow">↓</span>
+</a>
 
-<!-- HEADER con colori reali del ristorante -->
-<header class="header">
-  <div class="header-left">
-    <img src="https://sorbilloviatribunali.it/wp-content/uploads/2018/11/sorbillo-logo.png" alt="Logo Pizzeria Sorbillo" class="rist-logo" onerror="this.style.display='none'">
-    <span class="rist-nome">Pizzeria Sorbillo</span>
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div class="navbar-brand">
+    <img src="https://sorbilloviatribunali.it/wp-content/uploads/2018/11/sorbillo-logo.png" alt="Logo Pizzeria Sorbillo" class="nav-logo" onerror="this.style.display='none'">
+    <span class="navbar-nome">Pizzeria Sorbillo</span>
   </div>
-  <button class="btn-prenota-top" onclick="document.querySelector('.booking-card').scrollIntoView({behavior:'smooth'})">
-    📅 Prenota Ora
-  </button>
-</header>
+  <div class="navbar-links">
+    <a href="#ristorante">Il Ristorante</a>
+    <a href="#galleria">Galleria</a>
+    <a href="#orari">Orari</a>
+    <a href="pizzeria-sorbillo-prenota.html" class="navbar-prenota">Prenota</a>
+  </div>
+</nav>
 
 <!-- HERO -->
-<div class="hero">
-  <img src="https://places.googleapis.com/v1/places/ChIJJf9ZiCfCOxMRyCqfETO7bDI/photos/Ab43m-sXcBiJVH2UIJWiHA4PSxJpVdAZfeuHOB30YkImPeIm4TFVrsYrKUNxRKG75R0LXNEy3oQaqcxZ7c5q7N_MMNnyPfUURqsAxtazhIiyoOQpsE6An74jkB5mYghvmoroDgAcOFHccAePjn4ACh-Q5ULe8IaC5yxMJv25sN_GxBZ4DBkvaIQBKkuyZlCeFm5UrFJuoiKcwbf5q4MTSlKjjFkpiKRGXGsnpvrZHQlzs0fpfYjOnC-_cSp0wNoOSmyS4rznAJUNjjmiXO8SrlTEuK6HSvQ8P0rAZZZ2oR0aN5H3ni6Hq6uOnH-kqFKPnr2GDYbqp55004OFtCTX_NAhYn8XLyqf0ZyWTCUrWcN5yReh-Nra7BBrleE3jEic-FAo6JmN8LZnNvRi5ckmjB6-4itmVsKBttPokRtnP2S1PMgr1g/media?maxWidthPx=800&key=AIzaSyC1pQxgyEA66BJ_F2ZLkHJvQeYDawXItEg" alt="Pizzeria Sorbillo"
-       onerror="this.src='https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1200'">
-  <div class="hero-ov"></div>
-  <div class="hero-info">
-    <h1>Pizzeria Sorbillo</h1>
-    <p class="hero-tagline">La pizzeria Via Tribunali di Rodolfo Sorbillo ha sede a Cava e Salerno. Dal 1935 il nome Sorbillo è sinonimo di pizza, s</p>
+<section class="hero">
+  <img class="hero-img" src="https://places.googleapis.com/v1/places/ChIJJf9ZiCfCOxMRyCqfETO7bDI/photos/Ab43m-uKajnmA7XKOc0POv3C655vWcS-ofXeHrkYh675eJ1sM_PWZeSNvTRrQlIdSvVHNbhCIP2S7FOWYjXKGaoYmCIV6ku6SYVjUssska2WKTz_XHEGxbitg7OT5b7C3Cp3zx1083l-zIm7CbQe-NF0ECGIx8cpAKV0U0a6vYWD4cjwZkp_Sd66CzUoEaU5jJbXVrkde81ZphS5GQ1htwkAS8u95Hvt48g78KM7JD_v14CIIUXmpmMTyv8zjux9Oj4wqJIFU1fhBPg_q01y1uxBEKQs5hsKdnqPCT3d3I8oft2_T6qihWz2YQATlbae2DPPkvtURRc3agI992QmuqyYscih_Oabn8SfoQLYlgLIF88mzsV6bSlgiw0rOR9ZWv-wFXmlkFPTKjcFkrQTgBM8ATN_etoVZVDtJmsvtRqbL49K3Q/media?maxWidthPx=1200&key=AIzaSyC1pQxgyEA66BJ_F2ZLkHJvQeYDawXItEg" alt="Pizzeria Sorbillo"
+       onerror="this.src='https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1600'">
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-badge">Full Booking · Salerno</div>
+    <h1 class="hero-titolo">Pizzeria Sorbillo</h1>
+    <p class="hero-tagline">La pizzeria Via Tribunali di Rodolfo Sorbillo ha sede a Cava e Salerno. Dal 1935 il nome Sorbillo è sinonimo di pizza, scopri la pizzeria.</p>
     <div class="hero-meta">
       <div class="rating-pill">
-        <span class="s full">★</span><span class="s full">★</span><span class="s full">★</span><span class="s full">★</span><span class="s empty">☆</span>
-        <span class="r-num">4.3</span>
-        <span class="r-cnt">(2,582 recensioni Google)</span>
+        <span class="star full">★</span><span class="star full">★</span><span class="star full">★</span><span class="star full">★</span><span class="star empty">☆</span>
+        <span class="rating-num">4.3</span>
+        <span class="rating-cnt">(2,582 recensioni)</span>
       </div>
       <span class="hero-citta">📍 Salerno</span>
     </div>
   </div>
-</div>
+  <div class="scroll-ind">Scopri</div>
+</section>
 
-<!-- CONTENUTO -->
-<div class="wrap">
-
-  <!-- SINISTRA -->
-  <div>
-
-    <div class="gallery"><div class="gimg"><img src="https://places.googleapis.com/v1/places/ChIJJf9ZiCfCOxMRyCqfETO7bDI/photos/Ab43m-udkhLGiDCpJwxF2x1iOWrbZyv4vloBaO8MaU53oLUsPz3D601lBXDa8LHJI5CTcTO8fVqcGMdIKsrQbMFAtFsA-QlBbtNSly0WEKNKhwIkiCI5-9pL_8jyRTbMU0YmKy87x_J1uiFtfHYLywVcLrHq6bZ2dE4xtvKzQCcogAWzxmbj9DNMflvYoSoODxUaloOY7iAYiO4GF-NiXsp_SdHfNthULQf7V_-kwoFODVB3UQ7Q_-ytUgytDuxoIEUNGQRhpnYy7R2mNVwlKTMppKvxi-wjVHzN9xmAzEK4RalZyEdaHfYjAGi2QPmBDzs48jf_5CArbJwfvlQEiSbLF7ZBcnlbtCnCHMyVJXXg43amS8QXC5vhLj93GCex-VyGGyBaAlWfCPeYM0Mx6nlJo2LxpuFqgjtiqCI0Q7We-EvexaNt/media?maxWidthPx=800&key=AIzaSyC1pQxgyEA66BJ_F2ZLkHJvQeYDawXItEg" alt="Pizzeria Sorbillo" loading="lazy" onerror="this.parentElement.style.display='none'"></div><div class="gimg"><img src="https://places.googleapis.com/v1/places/ChIJJf9ZiCfCOxMRyCqfETO7bDI/photos/Ab43m-vFcsVmjQO8Lb-1GJWS7FkD7P5Q74d2IYhnzEFJ-3y8Zx0M2rm_trQaZrMOsA1ydLDgeJvVZCr9sigCYJ-ilcu7yGS3k1FshnIWYy5_6pLZqJdLQKY8LKjqTRrQ4snra1IRNX3co9s67DD1LnlV8lXSG4jGYgEssw5Xq7BQLFj_RiRYHhI7FxAODbdQkocsDSmhNBMVC6K1nxXfbtrjp3AXvww7yjJr10-gxLsEeSEjL4mCWx1KPVKaAxtUsj8BJCVKXmfyc0Tee2e7hvdwIcDskfTPY6OvY__qqWmNPjnkQ2utIK9mtDvH0qLh7khYgHxWXpfKM0irGJBJId8YQ5WTArZK9P2AIxvq53S3TZR2kOcuDoDWMr5ivKe3zM8T7XBz0ekUxNCKk3ZmPxPQ92NPHnaCZ2X8lPNfUYtZKBy60A/media?maxWidthPx=800&key=AIzaSyC1pQxgyEA66BJ_F2ZLkHJvQeYDawXItEg" alt="Pizzeria Sorbillo" loading="lazy" onerror="this.parentElement.style.display='none'"></div><div class="gimg"><img src="https://places.googleapis.com/v1/places/ChIJJf9ZiCfCOxMRyCqfETO7bDI/photos/Ab43m-t_qhxggfnQlVAZqNYCZiooBKxUkGNnHnH9vyV9xg7mWjZZsP4rLeduXGxhJYQPxAABbOSfTtH-Zhnr0rnRY0IIybGP7LY9bwY662JlSFhTcG5ar8vKMVjnkC5SMEHXTkTmLk12Ub9Y9frbl1QddISUvBTw67AmsS3aP-5UTIPZwuFD5-JBmgAKctNsknR9RYD24Z7P4DvimojZJ9CkpGRKqQTeFGDBtDmhfHSTJX0R6YFgd38RbwZAI5Q7YIeWBJ9NtSi-aUze2KwkzYUEdSUCuz8slnLkj4Ig3oS5IamYrRpKwpDnyxXtx4tmtpXhwjS_rHbk6Bq0M48VTtCzHvf40MI3cw2lcbmWTLGHplZp4AUQlx297McQr_d48viEF-35YATFjRvsO6EGetjwpd55Sjurhijdjpb38eRhnD5c3G1E8-29fvcdabu6YQ/media?maxWidthPx=800&key=AIzaSyC1pQxgyEA66BJ_F2ZLkHJvQeYDawXItEg" alt="Pizzeria Sorbillo" loading="lazy" onerror="this.parentElement.style.display='none'"></div></div>
-
-    <div class="card">
-      <h3>📍 Dove siamo</h3>
-      <div class="info-r"><span class="ico">🏠</span><span>Corso Giuseppe Garibaldi, 29/9, 84123 Salerno SA</span></div>
-      <div class="info-r"><span class="ico">📞</span><span>089 296 1874</span></div>
-      <div class="info-r"><span class="ico">⭐</span><span><strong>4.3/5</strong> su 2,582 recensioni Google</span></div>
+<!-- CHI SIAMO -->
+<section id="ristorante">
+  <div class="chi-siamo">
+    <div class="chi-siamo-testo">
+      <div class="section-label">Il Ristorante</div>
+      <h2 class="section-titolo">Pizzeria Sorbillo</h2>
+      <div class="gold-line left"></div>
+      <p>Intimate eatery specializing in traditional Neapolitan-style pizzas & fried offerings.</p>
+      <p>Prenota il tuo tavolo online in pochi secondi — conferma immediata su WhatsApp, zero commissioni.</p>
+      <br>
+      <a href="pizzeria-sorbillo-prenota.html" class="btn-oro">Prenota Ora</a>
     </div>
-
-    <div class="card">
-      <h3>🕐 Orari di apertura</h3>
-      <div class="orario-row"><span>Monday</span><span>12:30 – 3:00 PM, 7:30 – 11:30 PM</span></div><div class="orario-row"><span>Tuesday</span><span>12:30 – 3:00 PM, 7:30 – 11:30 PM</span></div><div class="orario-row"><span>Wednesday</span><span>12:30 – 3:00 PM, 7:30 – 11:30 PM</span></div><div class="orario-row"><span>Thursday</span><span>12:30 – 3:00 PM, 7:30 – 11:30 PM</span></div><div class="orario-row"><span>Friday</span><span>12:30 – 3:00 PM, 7:30 – 11:30 PM</span></div><div class="orario-row"><span>Saturday</span><span>12:30 – 3:00 PM, 7:30 PM – 12:00 AM</span></div><div class="orario-row"><span>Sunday</span><span>12:30 – 3:00 PM, 7:30 – 11:30 PM</span></div>
-    </div>
-
-    <div class="card">
-      <h3>🏆 Perché prenotare online con Full Booking?</h3>
-
-      <div class="why-item">
-        <div class="why-icon">24</div>
-        <div class="why-text"><strong>Prenota quando vuoi</strong><br>Il sistema accetta prenotazioni 24 ore su 24, anche a mezzanotte.</div>
-      </div>
-      <div class="why-item">
-        <div class="why-icon">✓</div>
-        <div class="why-text"><strong>Conferma immediata via WhatsApp</strong><br>Ricevi la conferma sul cellulare in pochi secondi.</div>
-      </div>
-      <div class="why-item">
-        <div class="why-icon">0€</div>
-        <div class="why-text"><strong>Nessuna commissione</strong><br>La prenotazione diretta è sempre gratuita per il cliente.</div>
-      </div>
-
-      <div class="why-item">
-        <div class="why-icon">📧</div>
-        <div class="why-text"><strong>Riepilogo via email</strong><br>Ricevi anche un'email con tutti i dettagli della prenotazione.</div>
-      </div>
-    </div>
-
-  </div>
-
-  <!-- DESTRA — FORM -->
-  <div>
-    <div class="booking-card">
-      <h2>Prenota il tuo tavolo</h2>
-      <p class="bk-sub">da Pizzeria Sorbillo · Salerno</p>
-
-      <div class="fg">
-        <label>Data</label>
-        <input type="date" id="data-input">
-      </div>
-      <div class="fg-row">
-        <div class="fg">
-          <label>Orario</label>
-          <select>
-            <option>12:30</option><option>13:00</option><option>13:30</option>
-            <option>20:00</option><option selected>20:30</option>
-            <option>21:00</option><option>21:30</option><option>22:00</option>
-          </select>
-        </div>
-        <div class="fg">
-          <label>Persone</label>
-          <select>
-            <option>1</option><option selected>2</option>
-            <option>3</option><option>4</option><option>5</option><option>6+</option>
-          </select>
-        </div>
-      </div>
-      <div class="fg">
-        <label>Nome e Cognome</label>
-        <input type="text" placeholder="Mario Rossi">
-      </div>
-      <div class="fg-row">
-        <div class="fg">
-          <label>Telefono</label>
-          <input type="tel" placeholder="+39 333 000 0000">
-        </div>
-        <div class="fg">
-          <label>Email</label>
-          <input type="email" placeholder="mario@email.it">
-        </div>
-      </div>
-      <div class="fg">
-        <label>Note speciali (opzionale)</label>
-        <input type="text" placeholder="Allergie, occasioni speciali...">
-      </div>
-
-      <button class="btn-book">🗓️ Verifica Disponibilità</button>
-
-      <p class="bk-note">
-        Powered by <span>Full Booking</span> · Prenotazione gratuita · Zero commissioni
-      </p>
+    <div class="chi-siamo-foto">
+      <img src="https://places.googleapis.com/v1/places/ChIJJf9ZiCfCOxMRyCqfETO7bDI/photos/Ab43m-sLhH7Xjpx10CNcUef7uwbGfRRwoIsrbssDQsgPINua4qGJML-XXthlgopLNlI-EIPuPlWgoce_SEJ1BKySFrLOL6s5Nn8esHz_1a6FAENdi8HjpbW9Gj8aHFdE08Rm1TAt7NQwkos-qayqVadRl2VyWZc5Zru036QkK6zNWZm4T5UKCGdXhp9NcGWB43nhx-9RgP8_l1VL3kADQTrgRRxrjmaV0UwgrJHUdlyXx6Iq3Ie9NgZEieI-RxF-kxJG4gFx3y1ak6c7AYzIH4M_jIhm0CFXVrAIMzGv18RnDegAbHKvpzI5pHvcwgA6E2RxC3MMV018unvVSauiYOXVD4L6PYD1lCj4AaH8CRAi1z8LiQ_90GxNp1t3bL7JnH39qoPwAJDTAN-P2zsKCmpKUz2dGAJwq9OIFnrJo8qji9QAIJz2/media?maxWidthPx=1200&key=AIzaSyC1pQxgyEA66BJ_F2ZLkHJvQeYDawXItEg" alt="Pizzeria Sorbillo"
+           onerror="this.src='https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800'">
     </div>
   </div>
+</section>
 
-</div>
+<!-- GALLERY -->
+<section id="galleria" class="gallery-section">
+  <div style="max-width:1200px;margin:0 auto 40px">
+    <div class="section-label">Galleria</div>
+    <h2 class="section-titolo">Le nostre immagini</h2>
+    <div class="gold-line left"></div>
+  </div>
+  <div class="gallery-grid"><div class="gallery-item"><img src="https://places.googleapis.com/v1/places/ChIJJf9ZiCfCOxMRyCqfETO7bDI/photos/Ab43m-uKajnmA7XKOc0POv3C655vWcS-ofXeHrkYh675eJ1sM_PWZeSNvTRrQlIdSvVHNbhCIP2S7FOWYjXKGaoYmCIV6ku6SYVjUssska2WKTz_XHEGxbitg7OT5b7C3Cp3zx1083l-zIm7CbQe-NF0ECGIx8cpAKV0U0a6vYWD4cjwZkp_Sd66CzUoEaU5jJbXVrkde81ZphS5GQ1htwkAS8u95Hvt48g78KM7JD_v14CIIUXmpmMTyv8zjux9Oj4wqJIFU1fhBPg_q01y1uxBEKQs5hsKdnqPCT3d3I8oft2_T6qihWz2YQATlbae2DPPkvtURRc3agI992QmuqyYscih_Oabn8SfoQLYlgLIF88mzsV6bSlgiw0rOR9ZWv-wFXmlkFPTKjcFkrQTgBM8ATN_etoVZVDtJmsvtRqbL49K3Q/media?maxWidthPx=1200&key=AIzaSyC1pQxgyEA66BJ_F2ZLkHJvQeYDawXItEg" alt="Pizzeria Sorbillo" loading="lazy" onerror="this.parentElement.style.display:none"></div><div class="gallery-item"><img src="https://places.googleapis.com/v1/places/ChIJJf9ZiCfCOxMRyCqfETO7bDI/photos/Ab43m-sLhH7Xjpx10CNcUef7uwbGfRRwoIsrbssDQsgPINua4qGJML-XXthlgopLNlI-EIPuPlWgoce_SEJ1BKySFrLOL6s5Nn8esHz_1a6FAENdi8HjpbW9Gj8aHFdE08Rm1TAt7NQwkos-qayqVadRl2VyWZc5Zru036QkK6zNWZm4T5UKCGdXhp9NcGWB43nhx-9RgP8_l1VL3kADQTrgRRxrjmaV0UwgrJHUdlyXx6Iq3Ie9NgZEieI-RxF-kxJG4gFx3y1ak6c7AYzIH4M_jIhm0CFXVrAIMzGv18RnDegAbHKvpzI5pHvcwgA6E2RxC3MMV018unvVSauiYOXVD4L6PYD1lCj4AaH8CRAi1z8LiQ_90GxNp1t3bL7JnH39qoPwAJDTAN-P2zsKCmpKUz2dGAJwq9OIFnrJo8qji9QAIJz2/media?maxWidthPx=1200&key=AIzaSyC1pQxgyEA66BJ_F2ZLkHJvQeYDawXItEg" alt="Pizzeria Sorbillo" loading="lazy" onerror="this.parentElement.style.display:none"></div><div class="gallery-item"><img src="https://places.googleapis.com/v1/places/ChIJJf9ZiCfCOxMRyCqfETO7bDI/photos/Ab43m-tG6vdvU120NLmjFhbMW4MgZa8a5cmehwpa60Yyoxq34c3I_WHAxRYvZcsY5owHlWVCLmg-Yri9l5c9yy7OWiNxWkCmZWikbI0m4roAmCEVsZco1Ehm8gwWToOFdeVAi0cHOfXMmpZZZDqLEWgk6Hi-jGGrH5H_6Yal0-sXP4KBIw5MzqXiLwRqArZe3JyAswjgRtPn7H9FGFqgqQLiaGm8hICdpGOnI9Go9NDtjD0ORgZNIbRvx68y8leXg0caVaE_f6SZ6l3zzP7_5BChPpl5ckdyIjgmlea5XDiUkuO0bsVNIGLFQAldeARe9U-6Kv78iqzB_Of-VtwHsSkim2VQ5RJHo1lExl5OBvYol8AQ-dPcJzoto7OO1GHeFel8W3s_9WoRDp4FR7ZrKp6NaeiCt2cje6XqFW2w5Ex5VX0kpA/media?maxWidthPx=1200&key=AIzaSyC1pQxgyEA66BJ_F2ZLkHJvQeYDawXItEg" alt="Pizzeria Sorbillo" loading="lazy" onerror="this.parentElement.style.display:none"></div><div class="gallery-item"><img src="https://places.googleapis.com/v1/places/ChIJJf9ZiCfCOxMRyCqfETO7bDI/photos/Ab43m-uZVcXudEZsJHEje0JpdCj7RnoPt5nk9Vx4xzDRPD5Mmm5tuXQyEo7i-K8AyrYKBXahNtcgMlPYOfL0CM0kfQvqpny9dHnX5ymecOg4yVE-JZrz5KgfAxprzKs4VjnlsuG_wwVq3dsI7Nc5d7bRuaIuHxhvGpCEUmrH3gRXVWgVQq8a-TqPNKlrG8psxAOs4ZaoCP4pG2D9YCiE8SevagfrYraRKfRx76Kp0Thx7c2YE1Xza3znvdw_HOmo2xGH0jNRpkRFsNEQ-YMQ1nLOrnm1zu-5xvWLwZE-sa6PXLL3ePS1lIDcAzbkhMDSPHxwfbPmp6SiD-QJi25pHv_rkMWfBFQhHyDeEWjE7TWngiQi0Kt_IOVHKnbWcg1sFakiMGZQKI1geW0Rxkww4XdP0YdTaZ5TclhJ5hzozZh7D-A6R2uF4Pi6Li7LXOqQXA/media?maxWidthPx=1200&key=AIzaSyC1pQxgyEA66BJ_F2ZLkHJvQeYDawXItEg" alt="Pizzeria Sorbillo" loading="lazy" onerror="this.parentElement.style.display:none"></div><div class="gallery-item"><img src="https://places.googleapis.com/v1/places/ChIJJf9ZiCfCOxMRyCqfETO7bDI/photos/Ab43m-vgXlNl5R9yBh6H7L81habYpo4zMPQvbCiGTJ9ywtqsAs4cZjLQaLnWVsORUCseuB0mtyDo1cUR_DrFOY0tmJFXtI5UXq9u7BpQVZVOLzi-4TH4vzrZaDcXibkT9MkV4aOPpbEp0kTs4MsGO3AGEgJcPq1cEekzjT_fZ2FtzozXM9JUZyNj-YoP98QZzUmGCcfjfFPeFGDhD98U2qB2V3VI9G9SaUIIv6WChUkUbNCzB336LhhFsAk7tfy9wwAvYxdKmMTKzYo1fOps7aSbLNXkh4Lm-4kIBNXt3pGdy0VnQLSVhJ165MGAaYuMdKvToe2LDqKiB4QO_tVZKYrHvkfHaqE_h670McBUlmp9igFRmnpvKlwM6LoDVnc63dhnOy83CGFfvbWKrO5To1EdgYjGJZJQkEbvxCGIS1vzW6uuSw_nSMu4Fbunm9BAec5q/media?maxWidthPx=1200&key=AIzaSyC1pQxgyEA66BJ_F2ZLkHJvQeYDawXItEg" alt="Pizzeria Sorbillo" loading="lazy" onerror="this.parentElement.style.display:none"></div></div>
+</section>
 
+<!-- ORARI E INFO -->
+<section id="orari">
+  <div class="info-section">
+    <div class="info-card">
+      <div class="section-label">Informazioni</div>
+      <h2 class="section-titolo" style="font-size:26px">Dove siamo</h2>
+      <div class="gold-line left"></div>
+      <div class="info-row">
+        <div class="info-ico">📍</div>
+        <div class="info-txt"><strong>Indirizzo</strong>Corso Giuseppe Garibaldi, 29/9, 84123 Salerno SA</div>
+      </div>
+      <div class="info-row"><div class="info-ico">📞</div><div class="info-txt"><strong>Telefono</strong>089 296 1874</div></div>
+      <div class="info-row">
+        <div class="info-ico">⭐</div>
+        <div class="info-txt"><strong>Valutazione Google</strong>4.3/5 su 2,582 recensioni</div>
+      </div>
+      <div class="info-row"><div class="info-ico">🌐</div><div class="info-txt"><strong>Sito web</strong><a href="http://www.sorbilloviatribunali.it/" style="color:var(--oro)">http://www.sorbilloviatribunali.it/</a></div></div>
+    </div>
+    <div class="info-card">
+      <div class="section-label">Orari</div>
+      <h2 class="section-titolo" style="font-size:26px">Quando apriremo</h2>
+      <div class="gold-line left"></div>
+      <div class="orario-row"><span class="orario-giorno">Monday</span><span class="orario-ore">12:30 – 3:00 PM, 7:30 – 11:30 PM</span></div><div class="orario-row"><span class="orario-giorno">Tuesday</span><span class="orario-ore">12:30 – 3:00 PM, 7:30 – 11:30 PM</span></div><div class="orario-row"><span class="orario-giorno">Wednesday</span><span class="orario-ore">12:30 – 3:00 PM, 7:30 – 11:30 PM</span></div><div class="orario-row"><span class="orario-giorno">Thursday</span><span class="orario-ore">12:30 – 3:00 PM, 7:30 – 11:30 PM</span></div><div class="orario-row"><span class="orario-giorno">Friday</span><span class="orario-ore">12:30 – 3:00 PM, 7:30 – 11:30 PM</span></div><div class="orario-row"><span class="orario-giorno">Saturday</span><span class="orario-ore">12:30 – 3:00 PM, 7:30 PM – 12:00 AM</span></div><div class="orario-row"><span class="orario-giorno">Sunday</span><span class="orario-ore">12:30 – 3:00 PM, 7:30 – 11:30 PM</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="section-label">Prenotazione Online</div>
+  <h2 class="section-titolo">Riserva il tuo tavolo</h2>
+  <div class="gold-line"></div>
+  <p>Prenota in 30 secondi. Conferma immediata su WhatsApp.<br>Zero commissioni — sempre gratuito per i clienti.</p>
+  <div class="cta-duo">
+    <a href="pizzeria-sorbillo-prenota.html" class="btn-oro">📅 Prenota Ora</a>
+    <a href="tel:089 296 1874" class="btn-outline">📞 Chiama</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
 <footer>
-  <strong><strong>Full Booking</strong> · Sistema di prenotazione online per ristoranti<strong style="color:#fff">Pizzeria Sorbillo</strong><br>
-  
+  <div>
+    <div class="footer-brand">FULL<span>BOOKING</span></div>
+    <div style="font-size:12px;color:var(--grigio);margin-top:6px;letter-spacing:1px">
+      Sistema di prenotazione online · Pizzeria Sorbillo · Salerno
+    </div>
+  </div>
+  <div class="footer-copy">
+    © 2025 fullbooking.cloud · Powered by GF Technological System
+  </div>
 </footer>
 
 <script>
-  const d = new Date(); d.setDate(d.getDate()+1);
-  document.getElementById('data-input').value = d.toISOString().split('T')[0];
-  document.getElementById('data-input').min = d.toISOString().split('T')[0];
+  // Bottone prenota flottante — appare dopo 80% dell'altezza hero
+  const floatBtn = document.getElementById('floatBtn');
+  const heroH = document.querySelector('.hero').offsetHeight;
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > heroH * 0.8) {
+      floatBtn.classList.add('visible');
+    } else {
+      floatBtn.classList.remove('visible');
+    }
+  }, { passive: true });
 </script>
 </body>
 </html>

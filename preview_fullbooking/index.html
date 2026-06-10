@@ -1,0 +1,979 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Full Booking — Il sistema di prenotazione per ristoranti</title>
+<meta name="description" content="Full Booking: sistema di prenotazione online per ristoranti. Zero commissioni, conferma immediata su WhatsApp, attivazione gratuita.">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --nero:    #0a0a0a;
+  --nero2:   #141414;
+  --nero3:   #1e1e1e;
+  --oro:     #c9a84c;
+  --oro2:    #e8c96b;
+  --crema:   #f0ead6;
+  --grigio:  #8a8a8a;
+  --bianco:  #ffffff;
+}
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--nero);
+  color: var(--crema);
+  -webkit-font-smoothing: antialiased;
+}
+a { color: inherit; text-decoration: none; }
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: var(--nero2); }
+::-webkit-scrollbar-thumb { background: var(--oro); }
+
+/* ── NAVBAR ── */
+.navbar {
+  position: fixed; top:0; left:0; right:0; z-index:300;
+  background: rgba(10,10,10,0.95);
+  border-bottom: 1px solid rgba(201,168,76,0.15);
+  padding: 0 48px;
+  display: flex; align-items: center; justify-content: space-between;
+  height: 68px;
+  backdrop-filter: blur(16px);
+}
+.nav-logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 20px; letter-spacing: 4px; font-weight: 700;
+  color: var(--bianco);
+}
+.nav-logo span { color: var(--oro); }
+.nav-links { display: flex; align-items: center; gap: 36px; }
+.nav-links a {
+  font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+  color: var(--grigio); transition: color .2s;
+}
+.nav-links a:hover { color: var(--oro); }
+.nav-cta {
+  background: linear-gradient(135deg, var(--oro), var(--oro2));
+  color: var(--nero) !important;
+  padding: 10px 24px;
+  font-weight: 700 !important;
+}
+@media(max-width:768px) {
+  .navbar { padding: 0 20px; }
+  .nav-links { gap: 16px; }
+  .nav-links a:not(.nav-cta) { display: none; }
+}
+
+/* ── HERO ── */
+.hero {
+  min-height: 100vh;
+  display: flex; align-items: center; justify-content: center;
+  text-align: center;
+  padding: 120px 24px 80px;
+  position: relative;
+  overflow: hidden;
+}
+.hero-bg {
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 0%, rgba(201,168,76,0.08) 0%, transparent 70%),
+    radial-gradient(ellipse 50% 40% at 80% 100%, rgba(201,168,76,0.05) 0%, transparent 60%);
+}
+.hero-grid {
+  position: absolute; inset: 0; opacity: .04;
+  background-image:
+    linear-gradient(rgba(201,168,76,.4) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(201,168,76,.4) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+.hero-content { position: relative; max-width: 820px; }
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 10px;
+  border: 1px solid rgba(201,168,76,0.35);
+  padding: 8px 20px; margin-bottom: 32px;
+  font-size: 11px; letter-spacing: 3px; text-transform: uppercase;
+  color: var(--oro);
+}
+.hero-badge::before {
+  content: ''; width: 6px; height: 6px; border-radius: 50%;
+  background: var(--oro); animation: pulse 2s infinite;
+}
+@keyframes pulse {
+  0%,100% { opacity:1; transform:scale(1); }
+  50% { opacity:.4; transform:scale(1.5); }
+}
+.hero h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(40px, 7vw, 80px);
+  font-weight: 700; line-height: 1.1;
+  color: var(--bianco); margin-bottom: 24px;
+}
+.hero h1 em {
+  font-style: italic; color: var(--oro);
+}
+.hero-sub {
+  font-size: clamp(16px, 2vw, 20px);
+  color: rgba(240,234,214,0.65);
+  line-height: 1.7; font-weight: 300;
+  max-width: 580px; margin: 0 auto 48px;
+}
+.hero-cta-group {
+  display: flex; align-items: center; justify-content: center;
+  gap: 16px; flex-wrap: wrap;
+}
+.btn-primary {
+  display: inline-block;
+  background: linear-gradient(135deg, var(--oro), var(--oro2));
+  color: var(--nero);
+  padding: 16px 40px;
+  font-size: 12px; font-weight: 700;
+  letter-spacing: 2px; text-transform: uppercase;
+  transition: opacity .2s, transform .2s;
+}
+.btn-primary:hover { opacity:.88; transform: translateY(-2px); }
+.btn-ghost {
+  display: inline-flex; align-items: center; gap: 8px;
+  border: 1px solid rgba(201,168,76,0.3);
+  color: var(--oro);
+  padding: 16px 36px;
+  font-size: 12px; font-weight: 600;
+  letter-spacing: 2px; text-transform: uppercase;
+  transition: all .2s;
+}
+.btn-ghost:hover { background: rgba(201,168,76,0.07); border-color: var(--oro); }
+.hero-note {
+  margin-top: 28px;
+  font-size: 12px; color: rgba(138,138,138,0.6);
+  letter-spacing: .5px;
+}
+.hero-note span { color: var(--oro); }
+
+/* ── NUMERI ── */
+.numeri {
+  border-top: 1px solid rgba(201,168,76,0.1);
+  border-bottom: 1px solid rgba(201,168,76,0.1);
+  padding: 60px 48px;
+  display: grid; grid-template-columns: repeat(4,1fr);
+  gap: 1px; background: rgba(201,168,76,0.08);
+}
+.numero-item {
+  background: var(--nero); padding: 32px 24px; text-align: center;
+}
+.numero-val {
+  font-family: 'Playfair Display', serif;
+  font-size: 42px; font-weight: 700; color: var(--oro);
+  line-height: 1; margin-bottom: 8px;
+}
+.numero-label {
+  font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+  color: var(--grigio);
+}
+@media(max-width:768px) {
+  .numeri { grid-template-columns: 1fr 1fr; padding: 40px 20px; }
+}
+
+/* ── COME FUNZIONA ── */
+.section { padding: 100px 48px; max-width: 1100px; margin: 0 auto; }
+@media(max-width:768px) { .section { padding: 70px 24px; } }
+.section-label {
+  font-size: 10px; letter-spacing: 4px; text-transform: uppercase;
+  color: var(--oro); margin-bottom: 14px;
+}
+.section-titolo {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(28px, 4vw, 44px); font-weight: 600;
+  color: var(--crema); line-height: 1.2; margin-bottom: 16px;
+}
+.gold-line { width: 48px; height: 2px; background: linear-gradient(90deg, var(--oro), var(--oro2)); margin-bottom: 48px; }
+
+.steps { display: grid; grid-template-columns: repeat(3,1fr); gap: 2px; }
+@media(max-width:768px) { .steps { grid-template-columns: 1fr; } }
+.step {
+  background: var(--nero2); padding: 40px 32px;
+  position: relative; overflow: hidden;
+  transition: background .2s;
+}
+.step:hover { background: var(--nero3); }
+.step::before {
+  content: '';
+  position: absolute; top:0; left:0; right:0; height: 2px;
+  background: linear-gradient(90deg, var(--oro), transparent);
+  opacity: 0; transition: opacity .2s;
+}
+.step:hover::before { opacity: 1; }
+.step-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 56px; font-weight: 700;
+  color: rgba(201,168,76,0.12); line-height: 1;
+  margin-bottom: 16px;
+}
+.step-titolo {
+  font-size: 16px; font-weight: 600; color: var(--crema);
+  margin-bottom: 10px;
+}
+.step-testo {
+  font-size: 14px; color: var(--grigio); line-height: 1.7; font-weight: 300;
+}
+
+/* ── PERCHE FULL BOOKING ── */
+.perche { background: var(--nero2); padding: 100px 48px; }
+.perche-inner { max-width: 1100px; margin: 0 auto; }
+.features { display: grid; grid-template-columns: repeat(2,1fr); gap: 2px; margin-top: 0; }
+@media(max-width:768px) { .features { grid-template-columns: 1fr; } .perche { padding: 70px 24px; } }
+.feature {
+  background: var(--nero); padding: 36px 32px;
+  display: flex; gap: 20px; align-items: flex-start;
+  transition: background .2s;
+}
+.feature:hover { background: rgba(201,168,76,0.03); }
+.feature-ico {
+  width: 44px; height: 44px; flex-shrink: 0;
+  background: rgba(201,168,76,0.1);
+  border: 1px solid rgba(201,168,76,0.2);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px;
+}
+.feature-titolo {
+  font-size: 14px; font-weight: 700; color: var(--crema);
+  margin-bottom: 6px; letter-spacing: .3px;
+}
+.feature-testo {
+  font-size: 13px; color: var(--grigio); line-height: 1.6; font-weight: 300;
+}
+
+/* ── CHI SIAMO ── */
+.chisiamo { background: var(--nero2); padding: 100px 48px; }
+.chisiamo-inner {
+  max-width: 1100px; margin: 0 auto;
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 80px; align-items: center;
+}
+@media(max-width:768px) { .chisiamo { padding: 70px 24px; } .chisiamo-inner { grid-template-columns:1fr; gap:40px; } }
+.chisiamo-testo p {
+  font-size: 15px; color: rgba(240,234,214,0.7);
+  line-height: 1.9; font-weight: 300; margin-bottom: 16px;
+}
+.chisiamo-numeri {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 2px; margin-top: 40px;
+}
+.cn-item {
+  background: var(--nero); padding: 28px 24px; text-align: center;
+}
+.cn-val {
+  font-family: 'Playfair Display', serif;
+  font-size: 38px; font-weight: 700; color: var(--oro); line-height: 1;
+  margin-bottom: 6px;
+}
+.cn-label { font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--grigio); }
+.netfood-logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 28px; font-weight: 700; color: var(--crema);
+  letter-spacing: 2px; margin-bottom: 8px;
+}
+.netfood-logo span { color: var(--oro); }
+.netfood-sub { font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: var(--grigio); margin-bottom: 32px; }
+.chisiamo-foto-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 3px;
+}
+.chisiamo-foto-grid div {
+  background: var(--nero3);
+  aspect-ratio: 4/3;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 36px;
+  border: 1px solid rgba(201,168,76,0.08);
+}
+.chisiamo-foto-grid div:first-child {
+  grid-column: span 2;
+  font-size: 48px;
+  aspect-ratio: 16/7;
+  background: linear-gradient(135deg, var(--nero2), var(--nero3));
+  border: 1px solid rgba(201,168,76,0.15);
+}
+
+/* ── RISTORANTI ATTIVI ── */
+.ristoranti-section { padding: 100px 48px; }
+@media(max-width:768px) { .ristoranti-section { padding: 70px 24px; } }
+.ristoranti-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px; margin-top: 0;
+}
+@media(max-width:900px) { .ristoranti-grid { grid-template-columns: 1fr 1fr; } }
+@media(max-width:540px) { .ristoranti-grid { grid-template-columns: 1fr; } }
+.rist-card {
+  background: var(--nero2);
+  position: relative; overflow: hidden;
+  transition: background .2s;
+  text-decoration: none; display: block;
+}
+.rist-card:hover { background: var(--nero3); }
+.rist-card-img {
+  width: 100%; height: 180px; object-fit: cover;
+  display: block; filter: brightness(.75);
+  transition: filter .3s, transform .4s;
+}
+.rist-card:hover .rist-card-img { filter: brightness(.9); transform: scale(1.03); }
+.rist-card-body { padding: 18px 20px; }
+.rist-card-nome {
+  font-family: 'Playfair Display', serif;
+  font-size: 15px; color: var(--crema); margin-bottom: 4px;
+}
+.rist-card-citta { font-size: 11px; color: var(--grigio); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 10px; }
+.rist-card-stars { color: var(--oro); font-size: 12px; margin-bottom: 10px; }
+.rist-card-cta {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 11px; color: var(--oro); letter-spacing: 1px; text-transform: uppercase;
+  font-weight: 600;
+  border-bottom: 1px solid rgba(201,168,76,0.3);
+  padding-bottom: 2px;
+  transition: border-color .2s;
+}
+.rist-card:hover .rist-card-cta { border-color: var(--oro); }
+
+/* ── CENTRALINO ── */
+.centralino { padding: 100px 48px; background: var(--nero); }
+.centralino-inner {
+  max-width: 1100px; margin: 0 auto;
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 80px; align-items: center;
+}
+@media(max-width:768px) {
+  .centralino { padding: 70px 24px; }
+  .centralino-inner { grid-template-columns: 1fr; gap: 48px; }
+}
+.centralino-testo p {
+  font-size: 15px; color: rgba(240,234,214,0.7);
+  line-height: 1.8; font-weight: 300; margin-bottom: 14px;
+}
+.centralino-tag {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(201,168,76,0.1);
+  border: 1px solid rgba(201,168,76,0.25);
+  color: var(--oro);
+  padding: 8px 18px; margin-bottom: 28px;
+  font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+}
+/* Mockup telefono */
+.phone-mockup {
+  background: var(--nero2);
+  border: 1px solid rgba(201,168,76,0.2);
+  border-radius: 28px;
+  padding: 20px;
+  max-width: 300px;
+  margin: 0 auto;
+  box-shadow: 0 24px 64px rgba(0,0,0,0.5), 0 0 0 1px rgba(201,168,76,0.08);
+  position: relative;
+}
+.phone-notch {
+  width: 80px; height: 20px;
+  background: var(--nero3);
+  border-radius: 12px;
+  margin: 0 auto 16px;
+}
+.phone-screen { background: var(--nero3); border-radius: 18px; overflow: hidden; }
+/* Schermata chiamata in arrivo */
+.call-screen {
+  padding: 28px 20px; text-align: center;
+  background: linear-gradient(160deg, #1a1a1a 0%, #0f0f0f 100%);
+}
+.call-label {
+  font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+  color: var(--grigio); margin-bottom: 16px;
+}
+.call-icon {
+  width: 64px; height: 64px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--oro), var(--oro2));
+  display: flex; align-items: center; justify-content: center;
+  font-size: 26px; margin: 0 auto 14px;
+  box-shadow: 0 0 0 8px rgba(201,168,76,0.1), 0 0 0 16px rgba(201,168,76,0.05);
+  animation: ring 2s infinite;
+}
+@keyframes ring {
+  0%,100% { box-shadow: 0 0 0 8px rgba(201,168,76,0.1), 0 0 0 16px rgba(201,168,76,0.05); }
+  50% { box-shadow: 0 0 0 12px rgba(201,168,76,0.15), 0 0 0 24px rgba(201,168,76,0.04); }
+}
+.call-nome { font-size: 18px; font-weight: 600; color: var(--crema); margin-bottom: 4px; }
+.call-numero { font-size: 13px; color: var(--grigio); margin-bottom: 20px; }
+.call-rispondi {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: #2e7d32; color: #fff;
+  padding: 10px 22px; border-radius: 24px;
+  font-size: 12px; font-weight: 600;
+}
+/* Freccia */
+.phone-arrow {
+  text-align: center; padding: 10px 0;
+  color: var(--oro); font-size: 20px; opacity: .7;
+}
+/* Chat WhatsApp */
+.wa-screen {
+  background: #0a1612;
+  padding: 12px;
+}
+.wa-header {
+  display: flex; align-items: center; gap: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  margin-bottom: 12px;
+}
+.wa-avatar {
+  width: 32px; height: 32px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--oro), var(--oro2));
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px; flex-shrink: 0;
+}
+.wa-nome-header { font-size: 12px; font-weight: 600; color: #e9edef; }
+.wa-stato { font-size: 10px; color: #8696a0; }
+.wa-bubble {
+  background: #202c33;
+  border-radius: 0 10px 10px 10px;
+  padding: 10px 12px; margin-bottom: 6px;
+  max-width: 90%;
+}
+.wa-bubble p { font-size: 12px; color: #e9edef; line-height: 1.5; margin-bottom: 6px; }
+.wa-link {
+  display: block;
+  background: rgba(201,168,76,0.15);
+  border-left: 3px solid var(--oro);
+  padding: 8px 10px; border-radius: 4px;
+  font-size: 11px; color: var(--oro);
+  font-weight: 600;
+}
+.wa-ora { font-size: 10px; color: #8696a0; text-align: right; margin-top: 4px; }
+.wa-reply {
+  background: #005c4b;
+  border-radius: 10px 10px 0 10px;
+  padding: 10px 12px;
+  margin-left: auto; max-width: 75%;
+  font-size: 12px; color: #e9edef;
+  line-height: 1.5;
+}
+/* Passi del centralino */
+.centralino-steps { margin-top: 32px; display: flex; flex-direction: column; gap: 16px; }
+.c-step {
+  display: flex; align-items: flex-start; gap: 16px;
+  padding: 16px 20px;
+  background: var(--nero2);
+  border-left: 2px solid rgba(201,168,76,0.3);
+  transition: border-color .2s;
+}
+.c-step:hover { border-color: var(--oro); }
+.c-step-num {
+  width: 28px; height: 28px; flex-shrink: 0;
+  background: linear-gradient(135deg, var(--oro), var(--oro2));
+  color: var(--nero); border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 800;
+}
+.c-step-txt strong { font-size: 13px; color: var(--crema); display: block; margin-bottom: 3px; }
+.c-step-txt span { font-size: 12px; color: var(--grigio); line-height: 1.5; }
+
+/* ── VS THEFORK ── */
+.vs-section { padding: 100px 48px; }
+.vs-inner { max-width: 860px; margin: 0 auto; }
+.vs-table { width: 100%; border-collapse: collapse; margin-top: 0; }
+.vs-table th {
+  padding: 16px 24px; text-align: left;
+  font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+  border-bottom: 1px solid rgba(201,168,76,0.2);
+}
+.vs-table th:first-child { color: var(--grigio); }
+.vs-table th.fb-col { color: var(--oro); }
+.vs-table th.comp-col { color: var(--grigio); }
+.vs-table td {
+  padding: 14px 24px; font-size: 14px;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+}
+.vs-table td:first-child { color: rgba(240,234,214,0.75); font-weight: 500; }
+.vs-table .check { color: var(--oro); font-size: 16px; }
+.vs-table .cross { color: #555; font-size: 16px; }
+.vs-table tr:hover td { background: rgba(201,168,76,0.02); }
+@media(max-width:768px) { .vs-section { padding: 70px 24px; } .vs-table td, .vs-table th { padding: 12px 14px; font-size: 12px; } }
+
+/* ── CTA FINALE ── */
+.cta-finale {
+  background: var(--nero2);
+  border-top: 1px solid rgba(201,168,76,0.15);
+  padding: 120px 48px;
+  text-align: center;
+}
+.cta-finale .section-titolo { margin-bottom: 14px; }
+.cta-finale p {
+  font-size: 16px; color: rgba(240,234,214,0.6);
+  max-width: 520px; margin: 0 auto 48px;
+  line-height: 1.7; font-weight: 300;
+}
+.wa-btn {
+  display: inline-flex; align-items: center; gap: 12px;
+  background: #25d366; color: #fff;
+  padding: 18px 44px;
+  font-size: 14px; font-weight: 700; letter-spacing: 1px;
+  transition: opacity .2s, transform .2s;
+}
+.wa-btn:hover { opacity:.9; transform: translateY(-2px); }
+.wa-btn svg { width:22px; height:22px; fill:#fff; }
+@media(max-width:768px) { .cta-finale { padding: 80px 24px; } }
+
+/* ── FOOTER ── */
+footer {
+  background: var(--nero);
+  border-top: 1px solid rgba(201,168,76,0.1);
+  padding: 48px;
+  display: flex; justify-content: space-between; align-items: center;
+  flex-wrap: wrap; gap: 20px;
+}
+.footer-logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 18px; letter-spacing: 4px; color: var(--crema);
+}
+.footer-logo span { color: var(--oro); }
+.footer-info { font-size: 12px; color: var(--grigio); line-height: 1.8; }
+.footer-copy { font-size: 11px; color: rgba(138,138,138,0.4); letter-spacing:.5px; }
+@media(max-width:768px) { footer { padding: 40px 24px; flex-direction: column; } }
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div class="nav-logo">FULL<span>BOOKING</span></div>
+  <div class="nav-links">
+    <a href="#chisiamo">Chi siamo</a>
+    <a href="#come-funziona">Come funziona</a>
+    <a href="#centralino">Centralino</a>
+    <a href="#vantaggi">Vantaggi</a>
+    <a href="#contatti">Contatti</a>
+    <a href="https://wa.me/393888842343?text=Ciao%20Gennaro%2C%20voglio%20attivare%20Full%20Booking%20per%20il%20mio%20ristorante" class="nav-cta">Attiva Gratis</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-content">
+    <div class="hero-badge">Nuovo · Campania 2025</div>
+    <h1>Il tuo ristorante<br>merita un sito<br><em>e le prenotazioni</em></h1>
+    <p class="hero-sub">
+      Ti regaliamo il sito web del tuo ristorante con il sistema di prenotazione online integrato.
+      I tuoi clienti prenotano 24 ore su 24 — tu ricevi conferma su WhatsApp in pochi secondi.
+    </p>
+    <div class="hero-cta-group">
+      <a href="https://wa.me/393888842343?text=Ciao%20Gennaro%2C%20voglio%20attivare%20Full%20Booking%20per%20il%20mio%20ristorante" class="btn-primary">
+        Attiva Gratuitamente
+      </a>
+      <a href="#come-funziona" class="btn-ghost">Scopri come →</a>
+    </div>
+    <p class="hero-note">Zero commissioni · <span>Attivazione gratuita</span> · Conferma via WhatsApp</p>
+  </div>
+</section>
+
+<!-- NUMERI -->
+<div class="numeri">
+  <div class="numero-item">
+    <div class="numero-val">0€</div>
+    <div class="numero-label">Commissioni</div>
+  </div>
+  <div class="numero-item">
+    <div class="numero-val">24h</div>
+    <div class="numero-label">Prenotazioni attive</div>
+  </div>
+  <div class="numero-item">
+    <div class="numero-val">30s</div>
+    <div class="numero-label">Conferma WhatsApp</div>
+  </div>
+  <div class="numero-item">
+    <div class="numero-val">100%</div>
+    <div class="numero-label">Gratis per i clienti</div>
+  </div>
+</div>
+
+<!-- CHI SIAMO -->
+<section id="chisiamo" class="chisiamo">
+  <div class="chisiamo-inner">
+
+    <div class="chisiamo-testo">
+      <div class="section-label">Chi siamo</div>
+      <div class="netfood-logo">Net<span>food</span> Software</div>
+      <div class="netfood-sub">La tecnologia dietro Full Booking</div>
+      <div class="gold-line left"></div>
+      <p>
+        Full Booking nasce dall'esperienza di <strong style="color:var(--crema)">Netfood Software</strong>, azienda italiana specializzata nello sviluppo di software per la ristorazione con oltre <strong style="color:var(--oro)">15 anni di presenza</strong> sul mercato nazionale.
+      </p>
+      <p>
+        Siamo presenti in tutta Italia con <strong style="color:var(--oro)">oltre 1.500 ristoranti clienti attivi</strong> — dalle trattorie di quartiere ai ristoranti stellati. Conosciamo il settore della ristorazione dall'interno, sappiamo cosa funziona e cosa no.
+      </p>
+      <p>
+        Full Booking è la nostra risposta a un problema reale: i ristoratori perdono prenotazioni ogni giorno perché i sistemi esistenti costano troppo, sono complicati, o portano via i loro clienti. Noi abbiamo costruito qualcosa di diverso.
+      </p>
+
+      <!-- Settori serviti -->
+      <div style="margin-bottom:28px;display:flex;flex-wrap:wrap;gap:8px">
+        <span style="font-size:11px;color:var(--grigio);letter-spacing:1px;text-transform:uppercase;background:var(--nero3);border:1px solid rgba(201,168,76,0.12);padding:5px 12px">🍕 Pizzerie</span>
+        <span style="font-size:11px;color:var(--grigio);letter-spacing:1px;text-transform:uppercase;background:var(--nero3);border:1px solid rgba(201,168,76,0.12);padding:5px 12px">🍽️ Ristoranti</span>
+        <span style="font-size:11px;color:var(--grigio);letter-spacing:1px;text-transform:uppercase;background:var(--nero3);border:1px solid rgba(201,168,76,0.12);padding:5px 12px">☕ Bar</span>
+        <span style="font-size:11px;color:var(--grigio);letter-spacing:1px;text-transform:uppercase;background:var(--nero3);border:1px solid rgba(201,168,76,0.12);padding:5px 12px">🍦 Gelaterie</span>
+        <span style="font-size:11px;color:var(--grigio);letter-spacing:1px;text-transform:uppercase;background:var(--nero3);border:1px solid rgba(201,168,76,0.12);padding:5px 12px">🏨 Hotel</span>
+        <span style="font-size:11px;color:var(--grigio);letter-spacing:1px;text-transform:uppercase;background:var(--nero3);border:1px solid rgba(201,168,76,0.12);padding:5px 12px">🔗 Franchising</span>
+      </div>
+
+      <div class="chisiamo-numeri">
+        <div class="cn-item">
+          <div class="cn-val">15+</div>
+          <div class="cn-label">Anni sul mercato</div>
+        </div>
+        <div class="cn-item">
+          <div class="cn-val">1.500+</div>
+          <div class="cn-label">Clienti attivi</div>
+        </div>
+        <div class="cn-item">
+          <div class="cn-val">100%</div>
+          <div class="cn-label">Made in Italy</div>
+        </div>
+        <div class="cn-item">
+          <div class="cn-val">0€</div>
+          <div class="cn-label">Commissioni</div>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <!-- Prodotti Netfood reali -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:3px;margin-bottom:3px">
+        <div style="background:var(--nero3);border:1px solid rgba(201,168,76,0.10);padding:20px 16px">
+          <div style="font-size:22px;margin-bottom:8px">🖥️</div>
+          <div style="font-size:12px;font-weight:600;color:var(--crema);letter-spacing:1px;text-transform:uppercase;margin-bottom:4px">Management</div>
+          <div style="font-size:11px;color:var(--grigio);line-height:1.5">Cassa, tavoli, ordini, magazzino, fatturazione</div>
+        </div>
+        <div style="background:var(--nero3);border:1px solid rgba(201,168,76,0.10);padding:20px 16px">
+          <div style="font-size:22px;margin-bottom:8px">📱</div>
+          <div style="font-size:12px;font-weight:600;color:var(--crema);letter-spacing:1px;text-transform:uppercase;margin-bottom:4px">Order App</div>
+          <div style="font-size:11px;color:var(--grigio);line-height:1.5">Comande al tavolo da smartphone per camerieri</div>
+        </div>
+        <div style="background:var(--nero3);border:1px solid rgba(201,168,76,0.10);padding:20px 16px">
+          <div style="font-size:22px;margin-bottom:8px">👨‍🍳</div>
+          <div style="font-size:12px;font-weight:600;color:var(--crema);letter-spacing:1px;text-transform:uppercase;margin-bottom:4px">Kitchen</div>
+          <div style="font-size:11px;color:var(--grigio);line-height:1.5">Monitor comande digitale, zero carta in cucina</div>
+        </div>
+        <div style="background:var(--nero3);border:1px solid rgba(201,168,76,0.10);padding:20px 16px">
+          <div style="font-size:22px;margin-bottom:8px">🛵</div>
+          <div style="font-size:12px;font-weight:600;color:var(--crema);letter-spacing:1px;text-transform:uppercase;margin-bottom:4px">Delivery</div>
+          <div style="font-size:11px;color:var(--grigio);line-height:1.5">Ordini a domicilio con webapp personalizzata</div>
+        </div>
+      </div>
+      <div style="background:var(--nero3);border:1px solid rgba(201,168,76,0.18);padding:24px;text-align:center">
+        <div style="font-size:11px;color:var(--grigio);letter-spacing:2px;margin-bottom:10px;text-transform:uppercase">Il nostro motto</div>
+        <div style="font-family:'Playfair Display',serif;font-size:20px;color:var(--oro);line-height:1.4;letter-spacing:1px">
+          Veloce · Affidabile · Completo
+        </div>
+        <div style="margin-top:10px;font-size:12px;color:var(--grigio)">Installazione e assistenza in tutta Italia, isole comprese</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- RISTORANTI ATTIVI -->
+<section class="ristoranti-section">
+  <div style="max-width:1100px;margin:0 auto">
+    <div class="section-label">I nostri ristoranti</div>
+    <h2 class="section-titolo">Già su Full Booking</h2>
+    <div class="gold-line"></div>
+    <div class="ristoranti-grid" id="ristoranti-grid">
+
+      <a href="bistro-sorrento.html" class="rist-card">
+        <img class="rist-card-img"
+             src="https://places.googleapis.com/v1/places/ChIJQ_YHWb6TbxMRu-QXbhh6dog/photos/AelY_CuoAtmCJWcl4hMqM85E0I5LNKuUSERfirZ0wbVxO9r6hDm9bLAGE1aNKxEKVq3ueMzj8-UYnmUJvFuU0gDT8E9hxdVjIFalLzI_CjCCKt1CXxbDNLNvxGvSBFJcTcJFkn3QG5vGjLiI4FVvFJvXtlcGnmfpyYcLvM0InLr5GMkOhfq/media?maxWidthPx=600&key=AIzaSyC1pQxgyEA66BJ_F2ZLkHJvQeYDawXItEg"
+             alt="Bistro Sorrento"
+             onerror="this.style.display='none'">
+        <div class="rist-card-body">
+          <div class="rist-card-nome">Bistro Sorrento</div>
+          <div class="rist-card-citta">📍 Sorrento</div>
+          <div class="rist-card-stars">★★★★★</div>
+          <span class="rist-card-cta">Vedi pagina →</span>
+        </div>
+      </a>
+
+      <!-- Altri ristoranti verranno aggiunti man mano che si attivano -->
+      <div class="rist-card" style="display:flex;align-items:center;justify-content:center;min-height:260px;border:1px dashed rgba(201,168,76,0.15);cursor:default">
+        <div style="text-align:center;padding:24px">
+          <div style="font-size:32px;margin-bottom:12px;opacity:.3">🍕</div>
+          <div style="font-size:12px;color:var(--grigio);letter-spacing:1px">Il tuo ristorante<br>potrebbe essere qui</div>
+          <div style="margin-top:16px">
+            <a href="https://wa.me/393888842343?text=Voglio%20attivare%20Full%20Booking"
+               style="font-size:11px;color:var(--oro);letter-spacing:1px;text-transform:uppercase;border-bottom:1px solid rgba(201,168,76,0.3);padding-bottom:2px">
+              Attiva gratis →
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="rist-card" style="display:flex;align-items:center;justify-content:center;min-height:260px;border:1px dashed rgba(201,168,76,0.15);cursor:default">
+        <div style="text-align:center;padding:24px">
+          <div style="font-size:32px;margin-bottom:12px;opacity:.3">🍽️</div>
+          <div style="font-size:12px;color:var(--grigio);letter-spacing:1px">Il tuo ristorante<br>potrebbe essere qui</div>
+          <div style="margin-top:16px">
+            <a href="https://wa.me/393888842343?text=Voglio%20attivare%20Full%20Booking"
+               style="font-size:11px;color:var(--oro);letter-spacing:1px;text-transform:uppercase;border-bottom:1px solid rgba(201,168,76,0.3);padding-bottom:2px">
+              Attiva gratis →
+            </a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <p style="text-align:center;margin-top:32px;font-size:13px;color:var(--grigio)">
+      Man mano che i ristoranti si attivano, le loro pagine appaiono qui come vetrina pubblica.
+    </p>
+  </div>
+</section>
+
+<!-- COME FUNZIONA -->
+<div id="come-funziona">
+  <div class="section">
+    <div class="section-label">Il processo</div>
+    <h2 class="section-titolo">Tre passi e sei online</h2>
+    <div class="gold-line"></div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">01</div>
+        <div class="step-titolo">Ti creiamo il sito</div>
+        <div class="step-testo">Costruiamo la tua pagina personalizzata con le foto reali del tuo ristorante, il menu, gli orari e le informazioni di contatto. Gratis, in 24 ore.</div>
+      </div>
+      <div class="step">
+        <div class="step-num">02</div>
+        <div class="step-titolo">I clienti prenotano</div>
+        <div class="step-testo">Dal tuo sito Full Booking i clienti scelgono data, orario e numero di persone. Funziona 24 ore su 24, anche la domenica a mezzanotte.</div>
+      </div>
+      <div class="step">
+        <div class="step-num">03</div>
+        <div class="step-titolo">Tu confermi su WhatsApp</div>
+        <div class="step-testo">Ricevi la notifica di prenotazione direttamente su WhatsApp. Confermi con un tap. Il cliente riceve la conferma in pochi secondi.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CENTRALINO VIRTUALE -->
+<section id="centralino" class="centralino">
+  <div class="centralino-inner">
+
+    <!-- TESTO SINISTRA -->
+    <div class="centralino-testo">
+      <div class="centralino-tag">⚡ Funzione esclusiva</div>
+      <div class="section-label">Centralino Virtuale</div>
+      <h2 class="section-titolo">Quando tu sei in cucina,<br>Full Booking risponde</h2>
+      <div class="gold-line left"></div>
+      <p>
+        Ogni giorno i ristoranti perdono prenotazioni perché il telefono squilla durante il servizio e nessuno può rispondere. <strong style="color:var(--crema)">Full Booking risponde al posto tuo.</strong>
+      </p>
+      <p>
+        Quando un cliente chiama e il ristorante non risponde, il nostro centralino intercetta la chiamata e invia automaticamente un messaggio WhatsApp con il link diretto alla prenotazione online.
+      </p>
+      <p>
+        Il cliente prenota in 30 secondi. Tu trovi la prenotazione confermata su WhatsApp quando esci dalla cucina. <strong style="color:var(--oro)">Zero chiamate perse. Zero tavoli vuoti.</strong>
+      </p>
+
+      <div class="centralino-steps">
+        <div class="c-step">
+          <div class="c-step-num">1</div>
+          <div class="c-step-txt">
+            <strong>Il cliente chiama il tuo ristorante</strong>
+            <span>Tu sei occupato, la linea non risponde</span>
+          </div>
+        </div>
+        <div class="c-step">
+          <div class="c-step-num">2</div>
+          <div class="c-step-txt">
+            <strong>Full Booking intercetta la chiamata</strong>
+            <span>Il centralino risponde automaticamente in pochi secondi</span>
+          </div>
+        </div>
+        <div class="c-step">
+          <div class="c-step-num">3</div>
+          <div class="c-step-txt">
+            <strong>WhatsApp con link prenotazione inviato</strong>
+            <span>Il cliente riceve il link e prenota il tavolo in autonomia</span>
+          </div>
+        </div>
+        <div class="c-step">
+          <div class="c-step-num">4</div>
+          <div class="c-step-txt">
+            <strong>Tu ricevi la notifica di prenotazione</strong>
+            <span>Tutto confermato su WhatsApp — nessun tavolo perso</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MOCKUP TELEFONO DESTRA -->
+    <div>
+      <div class="phone-mockup">
+        <div class="phone-notch"></div>
+        <div class="phone-screen">
+
+          <!-- SCHERMATA CHIAMATA -->
+          <div class="call-screen">
+            <div class="call-label">Chiamata in arrivo</div>
+            <div class="call-icon">📞</div>
+            <div class="call-nome">Cliente</div>
+            <div class="call-numero">+39 333 456 7890</div>
+            <div class="call-rispondi">✓ Full Booking risponde</div>
+          </div>
+
+          <!-- FRECCIA -->
+          <div class="phone-arrow">↓</div>
+
+          <!-- CHAT WHATSAPP -->
+          <div class="wa-screen">
+            <div class="wa-header">
+              <div class="wa-avatar">🍽️</div>
+              <div>
+                <div class="wa-nome-header">Full Booking</div>
+                <div class="wa-stato">Messaggio automatico</div>
+              </div>
+            </div>
+
+            <div class="wa-bubble">
+              <p>Ciao! 👋 Hai chiamato <strong>Ristorante Da Mario</strong>.<br>Prenota il tuo tavolo direttamente qui:</p>
+              <a class="wa-link">📅 Prenota ora → fullbooking-it.netlify.app/da-mario-prenota</a>
+              <div class="wa-ora">14:32 ✓✓</div>
+            </div>
+
+            <div class="wa-reply">
+              Grazie! Ho prenotato per 2 persone sabato sera 🙏
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- PERCHE FULL BOOKING -->
+<div id="vantaggi" class="perche">
+  <div class="perche-inner">
+    <div class="section-label">Perché sceglierci</div>
+    <h2 class="section-titolo">Full Booking vs. il resto</h2>
+    <div class="gold-line"></div>
+    <div class="features">
+      <div class="feature">
+        <div class="feature-ico">🎁</div>
+        <div>
+          <div class="feature-titolo">Sito web incluso gratis</div>
+          <div class="feature-testo">Niente agenzia, niente costi. Ti costruiamo noi la pagina del tuo ristorante con foto reali e informazioni aggiornate.</div>
+        </div>
+      </div>
+      <div class="feature">
+        <div class="feature-ico">💸</div>
+        <div>
+          <div class="feature-titolo">Zero commissioni</div>
+          <div class="feature-testo">TheFork ti prende 2€–4€ per ogni copertura. Con Full Booking la prenotazione diretta è sempre gratuita — per te e per i tuoi clienti.</div>
+        </div>
+      </div>
+      <div class="feature">
+        <div class="feature-ico">📱</div>
+        <div>
+          <div class="feature-titolo">Tutto su WhatsApp</div>
+          <div class="feature-testo">Nessuna app da installare, nessun gestionale complicato. Ricevi le prenotazioni sul WhatsApp che usi già ogni giorno.</div>
+        </div>
+      </div>
+      <div class="feature">
+        <div class="feature-ico">📍</div>
+        <div>
+          <div class="feature-titolo">Assistenza locale a Napoli</div>
+          <div class="feature-testo">Non un call center, non un ticket. Siamo a Napoli e gestiamo tutto direttamente — una chiamata e risolviamo.</div>
+        </div>
+      </div>
+      <div class="feature">
+        <div class="feature-ico">⚡</div>
+        <div>
+          <div class="feature-titolo">Attivazione in 24 ore</div>
+          <div class="feature-testo">Dal primo contatto al sito online: massimo 24 ore. Nessuna attesa, nessuna burocrazia.</div>
+        </div>
+      </div>
+      <div class="feature">
+        <div class="feature-ico">🔒</div>
+        <div>
+          <div class="feature-titolo">I tuoi dati restano tuoi</div>
+          <div class="feature-testo">Nessuna piattaforma terza che possiede i dati dei tuoi clienti. La relazione è diretta, sempre tra te e il tuo cliente.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- VS THEFORK -->
+<div class="vs-section">
+  <div class="vs-inner">
+    <div class="section-label">Confronto trasparente</div>
+    <h2 class="section-titolo">Full Booking vs TheFork</h2>
+    <div class="gold-line"></div>
+    <p style="font-size:14px;color:var(--grigio);margin-bottom:32px;line-height:1.7">
+      Nessun costo nascosto. Nessuna sorpresa in bolletta. Tutto quello che vedi sotto è esattamente quello che ottieni.
+    </p>
+    <table class="vs-table">
+      <thead>
+        <tr>
+          <th></th>
+          <th class="fb-col">✦ Full Booking</th>
+          <th class="comp-col">TheFork / altri</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Commissione per copertura</td><td><span class="check">✓ 0€ sempre</span></td><td><span class="cross">✗ 2€–4€ a tavolo</span></td></tr>
+        <tr><td>Canone mensile</td><td><span class="check">✓ 0€</span></td><td><span class="cross">✗ Abbonamento fisso</span></td></tr>
+        <tr><td>Costi di attivazione</td><td><span class="check">✓ Gratis</span></td><td><span class="cross">✗ A pagamento</span></td></tr>
+        <tr><td>Costi nascosti</td><td><span class="check">✓ Zero</span></td><td><span class="cross">✗ Sì (promozioni, visibilità)</span></td></tr>
+        <tr style="background:rgba(201,168,76,0.04)"><td><strong style="color:var(--oro)">Centralino virtuale</strong></td><td><span class="check">✓ Incluso</span></td><td><span class="cross">✗ Non esiste</span></td></tr>
+        <tr><td>Sito web personalizzato</td><td><span class="check">✓ Incluso gratis</span></td><td><span class="cross">✗ A pagamento</span></td></tr>
+        <tr><td>Conferma via WhatsApp</td><td><span class="check">✓ Automatica</span></td><td><span class="cross">✗ No</span></td></tr>
+        <tr><td>I dati dei clienti</td><td><span class="check">✓ Sono tuoi</span></td><td><span class="cross">✗ Della piattaforma</span></td></tr>
+        <tr><td>Assistenza</td><td><span class="check">✓ Napoli — diretta</span></td><td><span class="cross">✗ Call center</span></td></tr>
+      </tbody>
+    </table>
+    <div style="margin-top:20px;padding:16px 20px;background:rgba(201,168,76,0.06);border-left:3px solid var(--oro)">
+      <p style="font-size:13px;color:var(--crema);line-height:1.7">
+        💡 <strong>Esempio reale:</strong> un ristorante con 200 coperti al mese su TheFork paga fino a <strong style="color:#e57373">800€ di commissioni</strong>. Con Full Booking paga <strong style="color:var(--oro)">0€</strong>.
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- CTA FINALE -->
+<section id="contatti" class="cta-finale">
+  <div class="section-label">Inizia oggi</div>
+  <h2 class="section-titolo">Attiva Full Booking<br>per il tuo ristorante</h2>
+  <div class="gold-line" style="margin:0 auto 20px"></div>
+  <p>Scrivici su WhatsApp — ti creiamo il sito e attiviamo il sistema di prenotazione in 24 ore. Gratis, senza impegno.</p>
+  <a href="https://wa.me/393888842343?text=Ciao%20Gennaro%2C%20voglio%20attivare%20Full%20Booking%20per%20il%20mio%20ristorante" class="wa-btn">
+    <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    Scrivici su WhatsApp
+  </a>
+  <p style="margin-top:20px;font-size:12px;color:rgba(138,138,138,0.5)">
+    Gennaro Fusco · +39 388 884 2343 · Napoli e Campania
+  </p>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div>
+    <div class="footer-logo">FULL<span>BOOKING</span></div>
+    <div style="font-size:11px;color:var(--grigio);margin-top:6px;letter-spacing:1px">
+      Sistema di prenotazione online per ristoranti · Campania
+    </div>
+  </div>
+  <div class="footer-info">
+    Powered by <strong style="color:var(--oro)">Netfood Software</strong><br>
+    15 anni di software per la ristorazione · 1.500+ clienti in Italia<br>
+    Gennaro Fusco · +39 388 884 2343 · Napoli
+  </div>
+  <div class="footer-copy">© 2025 Full Booking · Netfood Software</div>
+</footer>
+
+</body>
+</html>

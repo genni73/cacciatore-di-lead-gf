@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Euforia 14 Gastronomia Contemporanea — Pozzuoli | Full Booking</title>
+<meta name="description" content="Cucina autentica nel cuore di Pozzuoli">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root { 
+  --nero:     #0a0a0a;
+  --nero2:    #141414;
+  --nero3:    #1e1e1e;
+  --oro:      #c9a84c;
+  --oro2:     #e8c96b;
+  --crema:    #f0ead6;
+  --grigio:   #8a8a8a;
+  --bianco:   #ffffff;
+ }
+
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--nero);
+  color: var(--crema);
+  -webkit-font-smoothing: antialiased;
+}
+a { color: inherit; text-decoration: none; }
+img { display: block; }
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--nero2); }
+::-webkit-scrollbar-thumb { background: var(--oro); border-radius: 3px; }
+
+/* Topbar Full Booking */
+.fb-topbar {
+  background: var(--nero);
+  border-bottom: 1px solid rgba(201,168,76,0.2);
+  padding: 10px 32px;
+  display: flex; align-items: center; justify-content: space-between;
+  position: sticky; top: 0; z-index: 200;
+  backdrop-filter: blur(12px);
+}
+.fb-logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 18px; letter-spacing: 3px; font-weight: 700;
+  color: var(--bianco);
+}
+.fb-logo span { color: var(--oro); }
+.fb-topbar-cta {
+  font-size: 11px; color: var(--grigio);
+  letter-spacing: 1px; text-transform: uppercase;
+}
+
+/* Bottone oro */
+.btn-oro {
+  display: inline-block;
+  background: linear-gradient(135deg, var(--oro), var(--oro2));
+  color: var(--nero);
+  padding: 14px 36px;
+  font-size: 12px; font-weight: 700;
+  letter-spacing: 2px; text-transform: uppercase;
+  border: none; cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  transition: opacity .2s, transform .2s;
+}
+.btn-oro:hover { opacity: .88; transform: translateY(-1px); }
+
+/* Linea oro decorativa */
+.gold-line {
+  width: 48px; height: 2px;
+  background: linear-gradient(90deg, var(--oro), var(--oro2));
+  margin: 0 auto 20px;
+}
+.gold-line.left { margin: 0 0 20px; }
+
+
+/* NAVBAR */
+.navbar {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 300;
+  background: rgba(10,10,10,0.92);
+  border-bottom: 1px solid rgba(201,168,76,0.15);
+  padding: 0 40px;
+  display: flex; align-items: center; justify-content: space-between;
+  height: 68px;
+  backdrop-filter: blur(16px);
+  transition: background .3s;
+}
+.navbar-brand {
+  display: flex; align-items: center; gap: 14px;
+}
+.nav-logo { height: 40px; width: auto; max-width: 130px; object-fit: contain; }
+.navbar-nome {
+  font-family: 'Playfair Display', serif;
+  font-size: 17px; color: var(--crema); letter-spacing: .5px;
+}
+.navbar-links {
+  display: flex; align-items: center; gap: 32px;
+}
+.navbar-links a {
+  font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+  color: var(--grigio); transition: color .2s;
+}
+.navbar-links a:hover { color: var(--oro); }
+.navbar-prenota {
+  background: linear-gradient(135deg, var(--oro), var(--oro2));
+  color: var(--nero) !important;
+  padding: 10px 22px;
+  font-size: 11px !important; font-weight: 700 !important;
+  letter-spacing: 2px;
+}
+.navbar-prenota:hover { opacity: .88; }
+@media(max-width: 768px) {
+  .navbar { padding: 0 20px; }
+  .navbar-links { display: none; }
+}
+
+/* HERO */
+.hero {
+  height: 100vh; min-height: 600px;
+  position: relative; overflow: hidden;
+}
+.hero-img {
+  width: 100%; height: 100%; object-fit: cover;
+  transform: scale(1.04);
+  transition: transform 8s ease;
+}
+.hero:hover .hero-img { transform: scale(1); }
+.hero-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(10,10,10,0.3) 0%,
+    rgba(10,10,10,0.1) 40%,
+    rgba(10,10,10,0.85) 100%
+  );
+}
+.hero-content {
+  position: absolute; bottom: 80px; left: 0; right: 0;
+  padding: 0 60px;
+  max-width: 900px;
+}
+.hero-badge {
+  display: inline-block;
+  border: 1px solid var(--oro);
+  color: var(--oro);
+  font-size: 10px; letter-spacing: 3px; text-transform: uppercase;
+  padding: 6px 16px; margin-bottom: 20px;
+}
+.hero-titolo {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(36px, 6vw, 72px);
+  font-weight: 700; line-height: 1.1;
+  color: var(--bianco);
+  text-shadow: 0 2px 40px rgba(0,0,0,0.5);
+  margin-bottom: 16px;
+}
+.hero-tagline {
+  font-size: 15px; color: rgba(240,234,214,0.8);
+  line-height: 1.7; max-width: 540px; margin-bottom: 24px;
+  font-weight: 300;
+}
+.hero-meta {
+  display: flex; align-items: center; gap: 20px; flex-wrap: wrap;
+}
+.rating-pill {
+  display: flex; align-items: center; gap: 8px;
+  background: rgba(201,168,76,0.12);
+  border: 1px solid rgba(201,168,76,0.3);
+  padding: 8px 18px;
+}
+.star { font-size: 14px; }
+.star.full, .star.half { color: var(--oro); }
+.star.empty { color: rgba(201,168,76,0.25); }
+.rating-num { color: var(--oro); font-weight: 700; font-size: 15px; }
+.rating-cnt { color: rgba(240,234,214,0.6); font-size: 12px; }
+.hero-citta { color: rgba(240,234,214,0.75); font-size: 13px; letter-spacing: 1px; }
+@media(max-width: 768px) {
+  .hero-content { padding: 0 24px; bottom: 60px; }
+}
+
+/* SCROLL INDICATOR */
+.scroll-ind {
+  position: absolute; bottom: 28px; left: 50%;
+  transform: translateX(-50%);
+  display: flex; flex-direction: column; align-items: center; gap: 6px;
+  color: rgba(201,168,76,0.5); font-size: 10px; letter-spacing: 2px;
+  text-transform: uppercase;
+  animation: bounce 2s infinite;
+}
+.scroll-ind::after {
+  content: ''; width: 1px; height: 40px;
+  background: linear-gradient(to bottom, var(--oro), transparent);
+}
+@keyframes bounce {
+  0%,100% { opacity: .5; transform: translateX(-50%) translateY(0); }
+  50% { opacity: 1; transform: translateX(-50%) translateY(6px); }
+}
+
+/* BOTTONE PRENOTA FLOTTANTE */
+.btn-prenota-float {
+  position: fixed;
+  bottom: 36px; right: 36px;
+  z-index: 500;
+  width: 96px; height: 96px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--oro), var(--oro2));
+  color: var(--nero);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 4px;
+  font-family: 'Inter', sans-serif;
+  font-size: 11px; font-weight: 800;
+  letter-spacing: 2px; text-transform: uppercase;
+  text-decoration: none;
+  box-shadow: 0 8px 32px rgba(201,168,76,0.35), 0 2px 8px rgba(0,0,0,0.4);
+  transition: transform .25s, box-shadow .25s, opacity .25s;
+  opacity: 0;
+  transform: scale(0.7) translateY(20px);
+  pointer-events: none;
+}
+.btn-prenota-float.visible {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+  pointer-events: auto;
+}
+.btn-prenota-float:hover {
+  transform: scale(1.07) translateY(-3px);
+  box-shadow: 0 14px 40px rgba(201,168,76,0.5), 0 4px 12px rgba(0,0,0,0.4);
+}
+.btn-prenota-float .float-arrow {
+  font-size: 18px; line-height: 1;
+  transition: transform .2s;
+}
+.btn-prenota-float:hover .float-arrow {
+  transform: translateY(3px);
+}
+@media(max-width: 768px) {
+  .btn-prenota-float {
+    width: 80px; height: 80px;
+    bottom: 24px; right: 20px;
+    font-size: 10px;
+    opacity: 1; transform: scale(1) translateY(0);
+    pointer-events: auto;
+  }
+}
+
+/* SEZIONI */
+section { padding: 100px 60px; }
+@media(max-width: 768px) { section { padding: 60px 24px; } }
+
+.section-label {
+  font-size: 10px; letter-spacing: 4px; text-transform: uppercase;
+  color: var(--oro); margin-bottom: 14px;
+}
+.section-titolo {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(28px, 4vw, 42px); font-weight: 600;
+  color: var(--crema); line-height: 1.2; margin-bottom: 20px;
+}
+
+/* CHI SIAMO */
+.chi-siamo {
+  max-width: 1100px; margin: 0 auto;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
+}
+@media(max-width: 768px) { .chi-siamo { grid-template-columns: 1fr; gap: 40px; } }
+.chi-siamo-testo p {
+  font-size: 16px; line-height: 1.9; color: rgba(240,234,214,0.75);
+  font-weight: 300; margin-bottom: 16px;
+}
+.chi-siamo-foto {
+  position: relative; height: 480px;
+}
+.chi-siamo-foto img {
+  width: 100%; height: 100%; object-fit: cover;
+}
+.chi-siamo-foto::before {
+  content: '';
+  position: absolute; inset: -12px -12px 12px 12px;
+  border: 1px solid rgba(201,168,76,0.25);
+  z-index: -1;
+}
+
+/* GALLERY */
+.gallery-section { background: var(--nero2); }
+.gallery-grid {
+  max-width: 1200px; margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: 280px 280px;
+  gap: 4px;
+}
+.gallery-item { overflow: hidden; position: relative; }
+.gallery-item:first-child {
+  grid-column: span 2; grid-row: span 2;
+}
+.gallery-item img {
+  width: 100%; height: 100%; object-fit: cover;
+  transition: transform .6s ease;
+}
+.gallery-item:hover img { transform: scale(1.05); }
+@media(max-width: 768px) {
+  .gallery-grid { grid-template-columns: 1fr 1fr; grid-template-rows: auto; }
+  .gallery-item:first-child { grid-column: span 2; height: 220px; }
+  .gallery-item { height: 160px; }
+}
+
+/* INFO + ORARI */
+.info-section {
+  max-width: 1100px; margin: 0 auto;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 80px;
+}
+@media(max-width: 768px) { .info-section { grid-template-columns: 1fr; gap: 48px; } }
+.info-card {
+  border-top: 1px solid rgba(201,168,76,0.2);
+  padding-top: 32px;
+}
+.info-row {
+  display: flex; align-items: flex-start; gap: 16px;
+  margin-bottom: 20px; padding-bottom: 20px;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+.info-row:last-child { border-bottom: none; }
+.info-ico {
+  width: 36px; height: 36px; flex-shrink: 0;
+  background: rgba(201,168,76,0.1);
+  border: 1px solid rgba(201,168,76,0.2);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 15px;
+}
+.info-txt { font-size: 14px; color: rgba(240,234,214,0.75); line-height: 1.6; }
+.info-txt strong { color: var(--crema); font-size: 12px; letter-spacing: 1px; text-transform: uppercase; display: block; margin-bottom: 4px; }
+.orario-row {
+  display: flex; justify-content: space-between;
+  padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.05);
+  font-size: 13px;
+}
+.orario-giorno { color: var(--crema); }
+.orario-ore { color: var(--grigio); text-align: right; }
+.no-info { font-size: 13px; color: var(--grigio); font-style: italic; }
+
+/* CTA PRENOTA */
+.cta-section {
+  background: var(--nero2);
+  border-top: 1px solid rgba(201,168,76,0.15);
+  border-bottom: 1px solid rgba(201,168,76,0.15);
+  text-align: center;
+  padding: 120px 60px;
+}
+.cta-section .section-titolo { margin-bottom: 14px; }
+.cta-section p {
+  font-size: 15px; color: rgba(240,234,214,0.6);
+  max-width: 500px; margin: 0 auto 40px;
+  line-height: 1.7; font-weight: 300;
+}
+.cta-duo {
+  display: flex; align-items: center; justify-content: center;
+  gap: 20px; flex-wrap: wrap;
+}
+.btn-outline {
+  display: inline-block;
+  border: 1px solid var(--oro);
+  color: var(--oro);
+  padding: 14px 36px;
+  font-size: 12px; font-weight: 600;
+  letter-spacing: 2px; text-transform: uppercase;
+  transition: all .2s;
+}
+.btn-outline:hover { background: var(--oro); color: var(--nero); }
+
+/* FOOTER */
+footer {
+  background: var(--nero);
+  border-top: 1px solid rgba(201,168,76,0.1);
+  padding: 48px 60px 32px;
+  display: flex; justify-content: space-between; align-items: flex-end;
+  flex-wrap: wrap; gap: 24px;
+}
+.footer-brand {
+  font-family: 'Playfair Display', serif;
+  font-size: 20px; letter-spacing: 3px; color: var(--crema);
+}
+.footer-brand span { color: var(--oro); }
+.footer-copy {
+  font-size: 11px; color: rgba(138,138,138,0.5);
+  letter-spacing: 1px;
+}
+@media(max-width: 768px) {
+  footer { padding: 40px 24px 28px; flex-direction: column; align-items: flex-start; }
+}
+</style>
+</head>
+<body>
+
+<!-- BOTTONE PRENOTA FLOTTANTE -->
+<a href="euforia-14-gastronomia-contemporanea-prenota.html" class="btn-prenota-float" id="floatBtn">
+  <span>PRENOTA</span>
+  <span class="float-arrow">↓</span>
+</a>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div class="navbar-brand">
+    
+    <span class="navbar-nome">Euforia 14 Gastronomia Contemporanea</span>
+  </div>
+  <div class="navbar-links">
+    <a href="#ristorante">Il Ristorante</a>
+    <a href="#galleria">Galleria</a>
+    <a href="#orari">Orari</a>
+    <a href="euforia-14-gastronomia-contemporanea-prenota.html" class="navbar-prenota">Prenota</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <img class="hero-img" src="https://places.googleapis.com/v1/places/ChIJM8_hLRsROxMREYfc2BKgqRs/photos/Ab43m-tHpBbCpnrvnTVikmsHm6oNoN0C6rP7zUE80JEaVg5SJ_1BjpCXInmbh-yCTKEN1zpzHEMab049Q5kN9GJyvjwtEpmIvMcRMJh-fgJaHXXqI6YtO-kiy_On8x821ZCqv78g6xCz_fPozApm6YK1rA4r9Td-ydMwNQtlsmnrW9d6WenqauyI5f_7fSxizsXgWHfO5g0B69uM_GExsDr1f3ZYzWW6Nu0o5rJ3RpUDDHYB4Y6ofGdswIKiPab5Gy8of7dFjGkfdonY551WjK9EoMFIk3CAHTV7-ilIQBhyNOKBaS11x_zMSKk8mlTV98fOsixKQbRTI93KCe2Mec95DPiHmO2x2Vp3hUMAQfR3Bly7-2XiL7U1s8fvUT5Dwdko3xQiPUjIqR0g4cAiC1wNKZE9kherfc-Z3wr-fvy_czs/media?maxWidthPx=1200&key=AIzaSyC1pQxgyEA66BJ_F2ZLkHJvQeYDawXItEg" alt="Euforia 14 Gastronomia Contemporanea"
+       onerror="this.src='https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1600'">
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-badge">Full Booking · Pozzuoli</div>
+    <h1 class="hero-titolo">Euforia 14 Gastronomia Contemporanea</h1>
+    <p class="hero-tagline">Cucina autentica nel cuore di Pozzuoli</p>
+    <div class="hero-meta">
+      <div class="rating-pill">
+        <span class="star full">★</span><span class="star full">★</span><span class="star full">★</span><span class="star full">★</span><span class="star half">★</span>
+        <span class="rating-num">4.5</span>
+        <span class="rating-cnt">(107 recensioni)</span>
+      </div>
+      <span class="hero-citta">📍 Pozzuoli</span>
+    </div>
+  </div>
+  <div class="scroll-ind">Scopri</div>
+</section>
+
+<!-- CHI SIAMO -->
+<section id="ristorante">
+  <div class="chi-siamo">
+    <div class="chi-siamo-testo">
+      <div class="section-label">Il Ristorante</div>
+      <h2 class="section-titolo">Euforia 14 Gastronomia Contemporanea</h2>
+      <div class="gold-line left"></div>
+      <p>Cucina autentica nel cuore di Pozzuoli</p>
+      <p>Prenota il tuo tavolo online in pochi secondi — conferma immediata su WhatsApp, zero commissioni.</p>
+      <br>
+      <a href="euforia-14-gastronomia-contemporanea-prenota.html" class="btn-oro">Prenota Ora</a>
+    </div>
+    <div class="chi-siamo-foto">
+      <img src="https://places.googleapis.com/v1/places/ChIJM8_hLRsROxMREYfc2BKgqRs/photos/Ab43m-tKZkB6ahLrPoQkTQ6NUFQTfT37X8xSuTsCEztLSCprCw-422lUO8spqJAgVGKDudo4m0ictWlH8HOHTzHFJE9zM4_32RCxZlRYS7Q1NPtx0N_YuZG9mjtEE34OKI5boSGmbiZ9L1fkocPQvxcOTvG9-tbFDuCQ21pRceIUQeUZLxSwo_NUfCgAmuqw9L62nycfswC1ySxTi5MgIbhR0kxqSSOHfBEMLUKzJbQEIm2FE6GqblOQ41TzcaUwOIJDCkeHlNc3CmRLxHebylBUlgHl2GrrTUxrccGWdLuuxhH2oWDbxLy7fUJgMJdvV9LDaBnZ1C6GCkyrgWR6XjaSjWisv3205eo-JFVMzyYC_YGDJSECyOeMrV6q4OqW6L7ofg_Xw7-jiM71CpCGFn4V0n3danrQLtD6MiwDWA-zhfEatj5Z/media?maxWidthPx=1200&key=AIzaSyC1pQxgyEA66BJ_F2ZLkHJvQeYDawXItEg" alt="Euforia 14 Gastronomia Contemporanea"
+           onerror="this.src='https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800'">
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section id="galleria" class="gallery-section">
+  <div style="max-width:1200px;margin:0 auto 40px">
+    <div class="section-label">Galleria</div>
+    <h2 class="section-titolo">Le nostre immagini</h2>
+    <div class="gold-line left"></div>
+  </div>
+  <div class="gallery-grid"><div class="gallery-item"><img src="https://places.googleapis.com/v1/places/ChIJM8_hLRsROxMREYfc2BKgqRs/photos/Ab43m-tHpBbCpnrvnTVikmsHm6oNoN0C6rP7zUE80JEaVg5SJ_1BjpCXInmbh-yCTKEN1zpzHEMab049Q5kN9GJyvjwtEpmIvMcRMJh-fgJaHXXqI6YtO-kiy_On8x821ZCqv78g6xCz_fPozApm6YK1rA4r9Td-ydMwNQtlsmnrW9d6WenqauyI5f_7fSxizsXgWHfO5g0B69uM_GExsDr1f3ZYzWW6Nu0o5rJ3RpUDDHYB4Y6ofGdswIKiPab5Gy8of7dFjGkfdonY551WjK9EoMFIk3CAHTV7-ilIQBhyNOKBaS11x_zMSKk8mlTV98fOsixKQbRTI93KCe2Mec95DPiHmO2x2Vp3hUMAQfR3Bly7-2XiL7U1s8fvUT5Dwdko3xQiPUjIqR0g4cAiC1wNKZE9kherfc-Z3wr-fvy_czs/media?maxWidthPx=1200&key=AIzaSyC1pQxgyEA66BJ_F2ZLkHJvQeYDawXItEg" alt="Euforia 14 Gastronomia Contemporanea" loading="lazy" onerror="this.parentElement.style.display:none"></div><div class="gallery-item"><img src="https://places.googleapis.com/v1/places/ChIJM8_hLRsROxMREYfc2BKgqRs/photos/Ab43m-tKZkB6ahLrPoQkTQ6NUFQTfT37X8xSuTsCEztLSCprCw-422lUO8spqJAgVGKDudo4m0ictWlH8HOHTzHFJE9zM4_32RCxZlRYS7Q1NPtx0N_YuZG9mjtEE34OKI5boSGmbiZ9L1fkocPQvxcOTvG9-tbFDuCQ21pRceIUQeUZLxSwo_NUfCgAmuqw9L62nycfswC1ySxTi5MgIbhR0kxqSSOHfBEMLUKzJbQEIm2FE6GqblOQ41TzcaUwOIJDCkeHlNc3CmRLxHebylBUlgHl2GrrTUxrccGWdLuuxhH2oWDbxLy7fUJgMJdvV9LDaBnZ1C6GCkyrgWR6XjaSjWisv3205eo-JFVMzyYC_YGDJSECyOeMrV6q4OqW6L7ofg_Xw7-jiM71CpCGFn4V0n3danrQLtD6MiwDWA-zhfEatj5Z/media?maxWidthPx=1200&key=AIzaSyC1pQxgyEA66BJ_F2ZLkHJvQeYDawXItEg" alt="Euforia 14 Gastronomia Contemporanea" loading="lazy" onerror="this.parentElement.style.display:none"></div><div class="gallery-item"><img src="https://places.googleapis.com/v1/places/ChIJM8_hLRsROxMREYfc2BKgqRs/photos/Ab43m-tqKqOnnWqpuR3NLKrVGJu_y9ormHxty1oBWPUj-cRivYlY-9qrMtNxcP50qqooPOlhPB5zhyrYm1JlrXa1T2EFjzXjkobhRP_vyCwNEVfyC3Riixsm6GjuaZwbyWPWXp9qfSeT34__57vCrfRew8l9uZIQggLU7L7kiIfsLi2bPallJW6aBWv0lKs_tZSaRdAqffNWtJ0K-wlk78prtgcmdYCd1xXuwsGD1iyvTKq1rjcJg7Mg-BlgOR1cgTQ0gydfGUQGPUeEW-nqfbKS6fCmPwmvUZtTChqWhfDHSPQ0SgtbcmvP5rCoUZYUyFbm4aBpW1vgOthV51K4ZymTzU-XxsH-iHz5mSYLLDmwNQqRki_j-xdOLKiATIJJtFjB34vVSO2XWipUTQKY3_18WGM3eZAzSFxXOIOD3GWnmkBLfSyAPmo0gj6IVUXCLxQO/media?maxWidthPx=1200&key=AIzaSyC1pQxgyEA66BJ_F2ZLkHJvQeYDawXItEg" alt="Euforia 14 Gastronomia Contemporanea" loading="lazy" onerror="this.parentElement.style.display:none"></div><div class="gallery-item"><img src="https://places.googleapis.com/v1/places/ChIJM8_hLRsROxMREYfc2BKgqRs/photos/Ab43m-tEubcrrCTrgK5E61_KQTW7PhDq6BZ0Eq8YjJKBLa1m-9RsmWT24BN8_kTh7PGKp22ndGCHM7KEOQmgKhaTYpuCsOmYtlv-x9qf57QWpRuK6lCoAvtO7VOxk2h_kuFS6miDE-YEeRujXymhSWNItdnjPTGmIje_YwR60UKp8QmKllU7vpVqxdKy00nPHAfRCwPLl8QdZGFOyoDyJR3Fd0HI2Laxo9QhXvyEDRYsEoF3UcYY6sSdrVQzFw6mw-cYE4uQ9e6tohI-vqdo97TfrCXA8w3ZzxyPudLQhtNVIqadHaCdiDUoE9g8V15wSfrI1BrXp3Y-5NK9bcWpBN79ua-z8aArcoum_i1bzVw44FvTizyFlykmG1y4r3EK-A2PYEUbZ6yn1Ihqfryhd3XD9_uYqeEJDWXfh0SO4s4m8WnXCRSU/media?maxWidthPx=1200&key=AIzaSyC1pQxgyEA66BJ_F2ZLkHJvQeYDawXItEg" alt="Euforia 14 Gastronomia Contemporanea" loading="lazy" onerror="this.parentElement.style.display:none"></div><div class="gallery-item"><img src="https://places.googleapis.com/v1/places/ChIJM8_hLRsROxMREYfc2BKgqRs/photos/Ab43m-utFpnlUvtyOUJOVsnxsHn_e1_7nn9OnSCinYJ90nsqA8xX726C3oo6t6p21a4ndZmstioeoYD51OciffF2scQ5jhsx1MfECZamGbXCvxm8S0gJQEFgFJOohtagCruvh3NqsJrCNTwFHxRmgpMYlZd6Y0QJ0snzxTQPAIOsH5T6JwXa-nZtUZl_E89o32cCurBxXN3b6jzp-7Ts7FEpRsQlWUcE8YhlkX2m7NJJ28eIOvNcUzMr9wTExc5KEPvV4EN1x6xsrlRU2amHYXR24dc4M-TSlC_-nYMPIfHXkGoAs1tZILqpkk1_XaR8_YW1cMl-KvzqE84IVQkdDoC6d5Y5PcYREedA6FjvP9_usPsl1KmHceTF6_XCXdIZp3N7aGBgnelDlyho4FCwLkE9QtgXvwPrLUC5y04vlFcbYM5yl12Muh68zQO7KQPJNtJd/media?maxWidthPx=1200&key=AIzaSyC1pQxgyEA66BJ_F2ZLkHJvQeYDawXItEg" alt="Euforia 14 Gastronomia Contemporanea" loading="lazy" onerror="this.parentElement.style.display:none"></div></div>
+</section>
+
+<!-- ORARI E INFO -->
+<section id="orari">
+  <div class="info-section">
+    <div class="info-card">
+      <div class="section-label">Informazioni</div>
+      <h2 class="section-titolo" style="font-size:26px">Dove siamo</h2>
+      <div class="gold-line left"></div>
+      <div class="info-row">
+        <div class="info-ico">📍</div>
+        <div class="info-txt"><strong>Indirizzo</strong>Via Miliscola, 360, 80078 Arco Felice NA</div>
+      </div>
+      <div class="info-row"><div class="info-ico">📞</div><div class="info-txt"><strong>Telefono</strong>349 588 1954</div></div>
+      <div class="info-row">
+        <div class="info-ico">⭐</div>
+        <div class="info-txt"><strong>Valutazione Google</strong>4.5/5 su 107 recensioni</div>
+      </div>
+      <div class="info-row"><div class="info-ico">🌐</div><div class="info-txt"><strong>Sito web</strong><a href="https://www.instagram.com/euforiaquattordici" style="color:var(--oro)">https://www.instagram.com/euforiaquattordici</a></div></div>
+    </div>
+    <div class="info-card">
+      <div class="section-label">Orari</div>
+      <h2 class="section-titolo" style="font-size:26px">Quando apriremo</h2>
+      <div class="gold-line left"></div>
+      <div class="orario-row"><span class="orario-giorno">Monday</span><span class="orario-ore">6:30 PM – 1:00 AM</span></div><div class="orario-row"><span class="orario-giorno">Tuesday</span><span class="orario-ore">Closed</span></div><div class="orario-row"><span class="orario-giorno">Wednesday</span><span class="orario-ore">6:30 PM – 1:00 AM</span></div><div class="orario-row"><span class="orario-giorno">Thursday</span><span class="orario-ore">6:30 PM – 1:00 AM</span></div><div class="orario-row"><span class="orario-giorno">Friday</span><span class="orario-ore">6:30 PM – 2:00 AM</span></div><div class="orario-row"><span class="orario-giorno">Saturday</span><span class="orario-ore">6:00 PM – 2:00 AM</span></div><div class="orario-row"><span class="orario-giorno">Sunday</span><span class="orario-ore">12:30 PM – 2:00 AM</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="section-label">Prenotazione Online</div>
+  <h2 class="section-titolo">Riserva il tuo tavolo</h2>
+  <div class="gold-line"></div>
+  <p>Prenota in 30 secondi. Conferma immediata su WhatsApp.<br>Zero commissioni — sempre gratuito per i clienti.</p>
+  <div class="cta-duo">
+    <a href="euforia-14-gastronomia-contemporanea-prenota.html" class="btn-oro">📅 Prenota Ora</a>
+    <a href="tel:349 588 1954" class="btn-outline">📞 Chiama</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div>
+    <div class="footer-brand">FULL<span>BOOKING</span></div>
+    <div style="font-size:12px;color:var(--grigio);margin-top:6px;letter-spacing:1px">
+      Sistema di prenotazione online · Euforia 14 Gastronomia Contemporanea · Pozzuoli
+    </div>
+  </div>
+  <div class="footer-copy">
+    © 2025 fullbooking.cloud · Powered by GF Technological System
+  </div>
+</footer>
+
+<script>
+  // Bottone prenota flottante — appare dopo 80% dell'altezza hero
+  const floatBtn = document.getElementById('floatBtn');
+  const heroH = document.querySelector('.hero').offsetHeight;
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > heroH * 0.8) {
+      floatBtn.classList.add('visible');
+    } else {
+      floatBtn.classList.remove('visible');
+    }
+  }, { passive: true });
+</script>
+</body>
+</html>

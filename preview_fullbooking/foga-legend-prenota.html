@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prenota – FOGA Meat the Legends</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --nero:   #0a0a0a;
+  --nero2:  #141414;
+  --nero3:  #1e1e1e;
+  --oro:    #c9a84c;
+  --oro2:   #e8c96b;
+  --crema:  #f0ead6;
+  --grigio: #8a8a8a;
+  --bianco: #ffffff;
+}
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body {
+  font-family:'Inter',sans-serif;
+  background:var(--nero);
+  color:var(--crema);
+  min-height:100vh;
+  -webkit-font-smoothing:antialiased;
+}
+a { color:inherit; text-decoration:none; }
+
+/* TOPBAR */
+.fb-topbar {
+  background:rgba(10,10,10,0.97);
+  border-bottom:1px solid rgba(201,168,76,0.15);
+  padding:10px 28px;
+  display:flex; align-items:center; justify-content:space-between;
+  position:sticky; top:0; z-index:200;
+  backdrop-filter:blur(12px);
+}
+.fb-logo {
+  font-family:'Playfair Display',serif;
+  font-size:17px; letter-spacing:3px; font-weight:700; color:var(--bianco);
+}
+.fb-logo span { color:var(--oro); }
+.back-link {
+  font-size:11px; color:var(--grigio); letter-spacing:1px;
+  text-transform:uppercase; display:flex; align-items:center; gap:6px;
+  transition:color .2s;
+}
+.back-link:hover { color:var(--oro); }
+
+/* HERO PRENOTA */
+.hero-prenota {
+  background:linear-gradient(135deg, #0a0a0a 0%, #1a1208 50%, #0a0a0a 100%);
+  padding:64px 24px 48px;
+  text-align:center;
+  border-bottom:1px solid rgba(201,168,76,0.1);
+  position:relative; overflow:hidden;
+}
+.hero-prenota::before {
+  content:'';
+  position:absolute; top:-80px; left:50%; transform:translateX(-50%);
+  width:400px; height:400px;
+  background:radial-gradient(circle, rgba(201,168,76,0.06), transparent);
+  border-radius:50%; pointer-events:none;
+}
+.rist-badge {
+  display:inline-flex; align-items:center; gap:8px;
+  background:rgba(201,168,76,0.08);
+  border:1px solid rgba(201,168,76,0.25);
+  border-radius:20px; padding:6px 18px; margin-bottom:20px;
+  font-size:11px; color:var(--oro); letter-spacing:2px; text-transform:uppercase;
+}
+.rist-nome {
+  font-family:'Playfair Display',serif;
+  font-size:clamp(38px,7vw,72px);
+  font-weight:900; color:var(--bianco);
+  line-height:1; margin-bottom:6px; letter-spacing:-1px;
+}
+.rist-tagline {
+  font-family:'Playfair Display',serif;
+  font-style:italic; color:var(--oro);
+  font-size:18px; letter-spacing:2px; margin-bottom:12px;
+}
+.rist-info {
+  font-size:13px; color:var(--grigio); letter-spacing:1px;
+}
+.rist-info span { color:var(--crema); }
+
+/* FORM WRAPPER */
+.form-wrap {
+  max-width:580px; margin:0 auto;
+  padding:40px 24px 80px;
+}
+
+/* STEP INDICATOR */
+.steps {
+  display:flex; align-items:center; gap:0; margin-bottom:40px;
+}
+.step {
+  flex:1; text-align:center; position:relative;
+}
+.step-dot {
+  width:32px; height:32px; border-radius:50%;
+  background:var(--nero3); border:2px solid rgba(201,168,76,0.2);
+  display:flex; align-items:center; justify-content:center;
+  margin:0 auto 8px; font-size:13px; font-weight:600; color:var(--grigio);
+  transition:all .3s;
+}
+.step.active .step-dot { background:var(--oro); border-color:var(--oro); color:var(--nero); }
+.step.done .step-dot { background:rgba(201,168,76,0.15); border-color:var(--oro); color:var(--oro); }
+.step-label { font-size:10px; letter-spacing:1px; color:var(--grigio); text-transform:uppercase; }
+.step.active .step-label { color:var(--oro); }
+.step-line {
+  flex:1; height:1px;
+  background:rgba(201,168,76,0.15);
+  margin-bottom:24px;
+}
+
+/* FORM CARD */
+.form-card {
+  background:var(--nero2);
+  border:1px solid rgba(201,168,76,0.12);
+  border-radius:8px; padding:36px 32px;
+}
+@media(max-width:480px){ .form-card{padding:24px 18px;} }
+.form-title {
+  font-family:'Playfair Display',serif;
+  font-size:24px; color:var(--bianco);
+  margin-bottom:6px;
+}
+.form-subtitle {
+  font-size:13px; color:var(--grigio); margin-bottom:28px;
+}
+
+.field-group {
+  display:grid; grid-template-columns:1fr 1fr; gap:16px;
+  margin-bottom:16px;
+}
+@media(max-width:480px){ .field-group{grid-template-columns:1fr;} }
+.field-full { margin-bottom:16px; }
+.field-label {
+  display:block; font-size:11px; letter-spacing:1.5px;
+  color:var(--oro); text-transform:uppercase; margin-bottom:8px;
+}
+.field-input, .field-select {
+  width:100%; background:var(--nero3);
+  border:1px solid rgba(201,168,76,0.15);
+  color:var(--crema); padding:13px 16px;
+  font-size:14px; border-radius:4px;
+  font-family:'Inter',sans-serif;
+  transition:border-color .2s;
+  -webkit-appearance:none; appearance:none;
+}
+.field-input:focus, .field-select:focus {
+  outline:none; border-color:var(--oro);
+  box-shadow:0 0 0 3px rgba(201,168,76,0.08);
+}
+.field-input::placeholder { color:rgba(138,138,138,0.6); }
+.field-select option { background:var(--nero3); color:var(--crema); }
+
+.select-wrap { position:relative; }
+.select-wrap::after {
+  content:'▾'; position:absolute; right:14px; top:50%;
+  transform:translateY(-50%); color:var(--oro); pointer-events:none;
+  font-size:14px;
+}
+
+/* DIVIDER */
+.form-divider {
+  border:none; border-top:1px solid rgba(201,168,76,0.08);
+  margin:24px 0;
+}
+
+/* RICHIESTE */
+.field-textarea {
+  width:100%; background:var(--nero3);
+  border:1px solid rgba(201,168,76,0.15);
+  color:var(--crema); padding:13px 16px;
+  font-size:14px; border-radius:4px;
+  font-family:'Inter',sans-serif;
+  resize:vertical; min-height:90px;
+  transition:border-color .2s;
+}
+.field-textarea:focus { outline:none; border-color:var(--oro); }
+.field-textarea::placeholder { color:rgba(138,138,138,0.6); }
+
+/* NOTE */
+.form-note {
+  font-size:12px; color:var(--grigio);
+  margin-top:20px; line-height:1.6; text-align:center;
+}
+
+/* BTN PRENOTA */
+.btn-prenota-full {
+  width:100%; margin-top:24px;
+  background:linear-gradient(135deg,var(--oro),var(--oro2));
+  color:var(--nero); border:none; cursor:pointer;
+  padding:17px; font-size:13px; font-weight:700;
+  letter-spacing:2px; text-transform:uppercase;
+  border-radius:4px; transition:all .3s ease;
+  font-family:'Inter',sans-serif;
+}
+.btn-prenota-full:hover:not(:disabled) {
+  transform:translateY(-2px);
+  box-shadow:0 12px 32px rgba(201,168,76,0.3);
+}
+.btn-prenota-full:disabled { opacity:0.7; cursor:not-allowed; }
+
+/* GARANZIA */
+.garanzie {
+  display:flex; gap:16px; margin-top:24px; flex-wrap:wrap;
+  justify-content:center;
+}
+.garanzia {
+  display:flex; align-items:center; gap:6px;
+  font-size:11px; color:rgba(138,138,138,0.7);
+}
+.garanzia-icon { color:var(--oro); font-size:13px; }
+
+/* INFO BOX */
+.info-box {
+  background:var(--nero3);
+  border:1px solid rgba(201,168,76,0.1);
+  border-radius:8px; padding:24px;
+  margin-top:24px;
+}
+.info-box-title {
+  font-size:11px; letter-spacing:2px; color:var(--oro);
+  text-transform:uppercase; margin-bottom:14px;
+}
+.info-row {
+  display:flex; gap:12px; align-items:flex-start;
+  font-size:13px; color:var(--grigio); margin-bottom:10px;
+}
+.info-row:last-child { margin-bottom:0; }
+.info-row-icon { color:var(--oro); flex-shrink:0; width:18px; text-align:center; }
+.info-row span { color:var(--crema); }
+
+/* FOOTER */
+.form-footer {
+  text-align:center; margin-top:48px;
+  font-size:11px; color:rgba(138,138,138,0.4); letter-spacing:1px;
+}
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<nav class="fb-topbar">
+  <div class="fb-logo">FULL<span>BOOKING</span></div>
+  <a href="foga-legend.html" class="back-link">← Torna al ristorante</a>
+</nav>
+
+<!-- HERO -->
+<div class="hero-prenota">
+  <div class="rist-badge">🔥 Prenota il tuo tavolo</div>
+  <h1 class="rist-nome">FOGA</h1>
+  <p class="rist-tagline">Meat the Legends</p>
+  <p class="rist-info">📍 <span>Via Giovanni Virginio 1, Torino</span> &nbsp;·&nbsp; 📞 <span>+39 392 038 2526</span></p>
+</div>
+
+<!-- FORM -->
+<div class="form-wrap">
+
+  <!-- STEP INDICATOR -->
+  <div class="steps">
+    <div class="step active">
+      <div class="step-dot">1</div>
+      <div class="step-label">Dettagli</div>
+    </div>
+    <div class="step-line"></div>
+    <div class="step">
+      <div class="step-dot">2</div>
+      <div class="step-label">Conferma</div>
+    </div>
+  </div>
+
+  <!-- FORM CARD -->
+  <form class="form-card" onsubmit="inviaPrenotazione(event)">
+    <h2 class="form-title">Quando vieni da noi?</h2>
+    <p class="form-subtitle">Compila i dettagli — conferma immediata</p>
+
+    <!-- DATA E ORARIO -->
+    <div class="field-group">
+      <div>
+        <label class="field-label">📅 Data</label>
+        <input type="date" id="data-input" class="field-input" required>
+      </div>
+      <div>
+        <label class="field-label">🕐 Orario</label>
+        <div class="select-wrap">
+          <select id="orario" class="field-select" required>
+            <option value="">Scegli orario</option>
+            <optgroup label="Pranzo">
+              <option value="12:00">12:00</option>
+              <option value="12:30">12:30</option>
+              <option value="13:00">13:00</option>
+              <option value="13:30">13:30</option>
+              <option value="14:00">14:00</option>
+            </optgroup>
+            <optgroup label="Cena">
+              <option value="19:00">19:00</option>
+              <option value="19:30">19:30</option>
+              <option value="20:00">20:00</option>
+              <option value="20:30">20:30</option>
+              <option value="21:00">21:00</option>
+              <option value="21:30">21:30</option>
+              <option value="22:00">22:00</option>
+            </optgroup>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- PERSONE -->
+    <div class="field-full">
+      <label class="field-label">👥 Numero di persone</label>
+      <div class="select-wrap">
+        <select id="persone" class="field-select" required>
+          <option value="">Quante persone?</option>
+          <option value="1 persona">1 persona</option>
+          <option value="2 persone">2 persone</option>
+          <option value="3 persone">3 persone</option>
+          <option value="4 persone">4 persone</option>
+          <option value="5 persone">5 persone</option>
+          <option value="6 persone">6 persone</option>
+          <option value="7 persone">7 persone</option>
+          <option value="8 persone">8 persone</option>
+          <option value="9-12 persone">9–12 persone</option>
+          <option value="Gruppo +12">Gruppo +12 persone</option>
+        </select>
+      </div>
+    </div>
+
+    <hr class="form-divider">
+
+    <!-- DATI PERSONALI -->
+    <div class="field-group">
+      <div>
+        <label class="field-label">👤 Nome e Cognome</label>
+        <input type="text" id="nome-cliente" class="field-input" placeholder="Mario Rossi" required>
+      </div>
+      <div>
+        <label class="field-label">📱 Telefono</label>
+        <input type="tel" id="tel-cliente" class="field-input" placeholder="+39 333 1234567" required>
+      </div>
+    </div>
+
+    <!-- RICHIESTE SPECIALI -->
+    <div class="field-full">
+      <label class="field-label">💬 Richieste speciali (opzionale)</label>
+      <textarea id="note-cliente" class="field-textarea" placeholder="Allergie, tavolo specifico, occasione speciale..."></textarea>
+    </div>
+
+    <!-- NOTE -->
+    <p class="form-note">Prenotazione gratuita e senza carta di credito. Riceverai conferma su WhatsApp.</p>
+
+    <!-- BTN -->
+    <button type="submit" class="btn-prenota-full">🔥 Conferma Prenotazione</button>
+
+    <!-- GARANZIE -->
+    <div class="garanzie">
+      <div class="garanzia"><span class="garanzia-icon">✓</span> Gratuito</div>
+      <div class="garanzia"><span class="garanzia-icon">✓</span> Nessuna carta richiesta</div>
+      <div class="garanzia"><span class="garanzia-icon">✓</span> Conferma immediata</div>
+    </div>
+  </form>
+
+  <!-- INFO BOX -->
+  <div class="info-box">
+    <p class="info-box-title">📍 Informazioni sul locale</p>
+    <div class="info-row">
+      <span class="info-row-icon">📍</span>
+      <div>Via Giovanni Virginio 1 — <span>10124 Torino TO</span></div>
+    </div>
+    <div class="info-row">
+      <span class="info-row-icon">📞</span>
+      <div><a href="tel:+393920382526" style="color:var(--oro)">+39 392 038 2526</a></div>
+    </div>
+    <div class="info-row">
+      <span class="info-row-icon">🕐</span>
+      <div>Mar–Dom &nbsp;<span>12:00–15:00 · 19:00–23:00</span></div>
+    </div>
+    <div class="info-row">
+      <span class="info-row-icon">🔥</span>
+      <div>Steakhouse · Carni alla fiamma · Burger artigianali</div>
+    </div>
+  </div>
+
+  <p class="form-footer">Powered by FullBooking.cloud</p>
+</div>
+
+<script>
+// Imposta data minima = oggi
+document.addEventListener('DOMContentLoaded', function() {
+  const today = new Date();
+  const yyyy = today.getFullYear();
+  const mm = String(today.getMonth()+1).padStart(2,'0');
+  const dd = String(today.getDate()).padStart(2,'0');
+  document.getElementById('data-input').min = `${yyyy}-${mm}-${dd}`;
+  document.getElementById('data-input').value = `${yyyy}-${mm}-${dd}`;
+});
+
+function inviaPrenotazione(e) {
+  e.preventDefault();
+  const nome_cl  = document.getElementById('nome-cliente').value.trim();
+  const tel_cl   = document.getElementById('tel-cliente').value.trim();
+  const data_r   = document.getElementById('data-input').value;
+  const orario_r = document.getElementById('orario').value;
+  const persone  = document.getElementById('persone').value;
+  const note_cl  = document.getElementById('note-cliente').value.trim();
+
+  if (!nome_cl || !tel_cl || !data_r || !orario_r || !persone) {
+    alert('Compila tutti i campi obbligatori.');
+    return;
+  }
+
+  const btn = e.target.querySelector('.btn-prenota-full');
+  const noteEl = document.querySelector('.form-note');
+
+  // Simulazione invio (demo promozionale)
+  btn.textContent = '⏳ Invio in corso...';
+  btn.disabled = true;
+
+  setTimeout(function() {
+    // Step 2 attivo
+    document.querySelectorAll('.step')[1].classList.add('active');
+
+    btn.textContent = '✅ Prenotazione confermata!';
+    btn.style.background = 'linear-gradient(135deg, #1a5a2a, #2a7a3a)';
+    btn.style.color = '#fff';
+
+    noteEl.innerHTML = '<strong style="color:var(--oro)">🎉 Perfetto! Riceverai la conferma su WhatsApp entro pochi minuti. Grazie!</strong>';
+
+    const riepilogo = document.createElement('div');
+    riepilogo.style.cssText = 'margin-top:1.5rem;padding:1.4rem;background:rgba(201,168,76,0.07);border:1px solid rgba(201,168,76,0.25);border-radius:6px;font-size:14px;line-height:1.9;';
+    const [y,m,gg] = data_r.split('-');
+    riepilogo.innerHTML =
+      '<div style="color:var(--oro);font-weight:700;font-size:12px;letter-spacing:2px;text-transform:uppercase;margin-bottom:10px">Riepilogo prenotazione</div>' +
+      '<div>🏠 Ristorante: <strong>FOGA – Meat the Legends</strong></div>' +
+      '<div>📅 Data: <strong>' + gg+'/'+m+'/'+y + '</strong></div>' +
+      '<div>🕐 Orario: <strong>' + orario_r + '</strong></div>' +
+      '<div>👥 Persone: <strong>' + persone + '</strong></div>' +
+      '<div>👤 Nome: <strong>' + nome_cl + '</strong></div>' +
+      (note_cl ? '<div>💬 Note: <em>' + note_cl + '</em></div>' : '') +
+      '<div style="margin-top:12px;padding-top:12px;border-top:1px solid rgba(201,168,76,0.15);font-size:12px;color:var(--grigio)">📍 Via Giovanni Virginio 1, Torino</div>';
+    e.target.appendChild(riepilogo);
+  }, 1200);
+}
+</script>
+
+</body>
+</html>

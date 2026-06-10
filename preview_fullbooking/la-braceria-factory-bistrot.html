@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>La Braceria Factory Bistrot — Aversa | Full Booking</title>
+<meta name="description" content="Cucina autentica nel cuore di Aversa">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root { 
+  --nero:     #0a0a0a;
+  --nero2:    #141414;
+  --nero3:    #1e1e1e;
+  --oro:      #c9a84c;
+  --oro2:     #e8c96b;
+  --crema:    #f0ead6;
+  --grigio:   #8a8a8a;
+  --bianco:   #ffffff;
+ }
+
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--nero);
+  color: var(--crema);
+  -webkit-font-smoothing: antialiased;
+}
+a { color: inherit; text-decoration: none; }
+img { display: block; }
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--nero2); }
+::-webkit-scrollbar-thumb { background: var(--oro); border-radius: 3px; }
+
+/* Topbar Full Booking */
+.fb-topbar {
+  background: var(--nero);
+  border-bottom: 1px solid rgba(201,168,76,0.2);
+  padding: 10px 32px;
+  display: flex; align-items: center; justify-content: space-between;
+  position: sticky; top: 0; z-index: 200;
+  backdrop-filter: blur(12px);
+}
+.fb-logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 18px; letter-spacing: 3px; font-weight: 700;
+  color: var(--bianco);
+}
+.fb-logo span { color: var(--oro); }
+.fb-topbar-cta {
+  font-size: 11px; color: var(--grigio);
+  letter-spacing: 1px; text-transform: uppercase;
+}
+
+/* Bottone oro */
+.btn-oro {
+  display: inline-block;
+  background: linear-gradient(135deg, var(--oro), var(--oro2));
+  color: var(--nero);
+  padding: 14px 36px;
+  font-size: 12px; font-weight: 700;
+  letter-spacing: 2px; text-transform: uppercase;
+  border: none; cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  transition: opacity .2s, transform .2s;
+}
+.btn-oro:hover { opacity: .88; transform: translateY(-1px); }
+
+/* Linea oro decorativa */
+.gold-line {
+  width: 48px; height: 2px;
+  background: linear-gradient(90deg, var(--oro), var(--oro2));
+  margin: 0 auto 20px;
+}
+.gold-line.left { margin: 0 0 20px; }
+
+
+/* NAVBAR */
+.navbar {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 300;
+  background: rgba(10,10,10,0.92);
+  border-bottom: 1px solid rgba(201,168,76,0.15);
+  padding: 0 40px;
+  display: flex; align-items: center; justify-content: space-between;
+  height: 68px;
+  backdrop-filter: blur(16px);
+  transition: background .3s;
+}
+.navbar-brand {
+  display: flex; align-items: center; gap: 14px;
+}
+.nav-logo { height: 40px; width: auto; max-width: 130px; object-fit: contain; }
+.navbar-nome {
+  font-family: 'Playfair Display', serif;
+  font-size: 17px; color: var(--crema); letter-spacing: .5px;
+}
+.navbar-links {
+  display: flex; align-items: center; gap: 32px;
+}
+.navbar-links a {
+  font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+  color: var(--grigio); transition: color .2s;
+}
+.navbar-links a:hover { color: var(--oro); }
+.navbar-prenota {
+  background: linear-gradient(135deg, var(--oro), var(--oro2));
+  color: var(--nero) !important;
+  padding: 10px 22px;
+  font-size: 11px !important; font-weight: 700 !important;
+  letter-spacing: 2px;
+}
+.navbar-prenota:hover { opacity: .88; }
+@media(max-width: 768px) {
+  .navbar { padding: 0 20px; }
+  .navbar-links { display: none; }
+}
+
+/* HERO */
+.hero {
+  height: 100vh; min-height: 600px;
+  position: relative; overflow: hidden;
+}
+.hero-img {
+  width: 100%; height: 100%; object-fit: cover;
+  transform: scale(1.04);
+  transition: transform 8s ease;
+}
+.hero:hover .hero-img { transform: scale(1); }
+.hero-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(10,10,10,0.3) 0%,
+    rgba(10,10,10,0.1) 40%,
+    rgba(10,10,10,0.85) 100%
+  );
+}
+.hero-content {
+  position: absolute; bottom: 80px; left: 0; right: 0;
+  padding: 0 60px;
+  max-width: 900px;
+}
+.hero-badge {
+  display: inline-block;
+  border: 1px solid var(--oro);
+  color: var(--oro);
+  font-size: 10px; letter-spacing: 3px; text-transform: uppercase;
+  padding: 6px 16px; margin-bottom: 20px;
+}
+.hero-titolo {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(36px, 6vw, 72px);
+  font-weight: 700; line-height: 1.1;
+  color: var(--bianco);
+  text-shadow: 0 2px 40px rgba(0,0,0,0.5);
+  margin-bottom: 16px;
+}
+.hero-tagline {
+  font-size: 15px; color: rgba(240,234,214,0.8);
+  line-height: 1.7; max-width: 540px; margin-bottom: 24px;
+  font-weight: 300;
+}
+.hero-meta {
+  display: flex; align-items: center; gap: 20px; flex-wrap: wrap;
+}
+.rating-pill {
+  display: flex; align-items: center; gap: 8px;
+  background: rgba(201,168,76,0.12);
+  border: 1px solid rgba(201,168,76,0.3);
+  padding: 8px 18px;
+}
+.star { font-size: 14px; }
+.star.full, .star.half { color: var(--oro); }
+.star.empty { color: rgba(201,168,76,0.25); }
+.rating-num { color: var(--oro); font-weight: 700; font-size: 15px; }
+.rating-cnt { color: rgba(240,234,214,0.6); font-size: 12px; }
+.hero-citta { color: rgba(240,234,214,0.75); font-size: 13px; letter-spacing: 1px; }
+@media(max-width: 768px) {
+  .hero-content { padding: 0 24px; bottom: 60px; }
+}
+
+/* SCROLL INDICATOR */
+.scroll-ind {
+  position: absolute; bottom: 28px; left: 50%;
+  transform: translateX(-50%);
+  display: flex; flex-direction: column; align-items: center; gap: 6px;
+  color: rgba(201,168,76,0.5); font-size: 10px; letter-spacing: 2px;
+  text-transform: uppercase;
+  animation: bounce 2s infinite;
+}
+.scroll-ind::after {
+  content: ''; width: 1px; height: 40px;
+  background: linear-gradient(to bottom, var(--oro), transparent);
+}
+@keyframes bounce {
+  0%,100% { opacity: .5; transform: translateX(-50%) translateY(0); }
+  50% { opacity: 1; transform: translateX(-50%) translateY(6px); }
+}
+
+/* BOTTONE PRENOTA FLOTTANTE */
+.btn-prenota-float {
+  position: fixed;
+  bottom: 36px; right: 36px;
+  z-index: 500;
+  width: 96px; height: 96px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--oro), var(--oro2));
+  color: var(--nero);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 4px;
+  font-family: 'Inter', sans-serif;
+  font-size: 11px; font-weight: 800;
+  letter-spacing: 2px; text-transform: uppercase;
+  text-decoration: none;
+  box-shadow: 0 8px 32px rgba(201,168,76,0.35), 0 2px 8px rgba(0,0,0,0.4);
+  transition: transform .25s, box-shadow .25s, opacity .25s;
+  opacity: 0;
+  transform: scale(0.7) translateY(20px);
+  pointer-events: none;
+}
+.btn-prenota-float.visible {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+  pointer-events: auto;
+}
+.btn-prenota-float:hover {
+  transform: scale(1.07) translateY(-3px);
+  box-shadow: 0 14px 40px rgba(201,168,76,0.5), 0 4px 12px rgba(0,0,0,0.4);
+}
+.btn-prenota-float .float-arrow {
+  font-size: 18px; line-height: 1;
+  transition: transform .2s;
+}
+.btn-prenota-float:hover .float-arrow {
+  transform: translateY(3px);
+}
+@media(max-width: 768px) {
+  .btn-prenota-float {
+    width: 80px; height: 80px;
+    bottom: 24px; right: 20px;
+    font-size: 10px;
+    opacity: 1; transform: scale(1) translateY(0);
+    pointer-events: auto;
+  }
+}
+
+/* SEZIONI */
+section { padding: 100px 60px; }
+@media(max-width: 768px) { section { padding: 60px 24px; } }
+
+.section-label {
+  font-size: 10px; letter-spacing: 4px; text-transform: uppercase;
+  color: var(--oro); margin-bottom: 14px;
+}
+.section-titolo {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(28px, 4vw, 42px); font-weight: 600;
+  color: var(--crema); line-height: 1.2; margin-bottom: 20px;
+}
+
+/* CHI SIAMO */
+.chi-siamo {
+  max-width: 1100px; margin: 0 auto;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
+}
+@media(max-width: 768px) { .chi-siamo { grid-template-columns: 1fr; gap: 40px; } }
+.chi-siamo-testo p {
+  font-size: 16px; line-height: 1.9; color: rgba(240,234,214,0.75);
+  font-weight: 300; margin-bottom: 16px;
+}
+.chi-siamo-foto {
+  position: relative; height: 480px;
+}
+.chi-siamo-foto img {
+  width: 100%; height: 100%; object-fit: cover;
+}
+.chi-siamo-foto::before {
+  content: '';
+  position: absolute; inset: -12px -12px 12px 12px;
+  border: 1px solid rgba(201,168,76,0.25);
+  z-index: -1;
+}
+
+/* GALLERY */
+.gallery-section { background: var(--nero2); }
+.gallery-grid {
+  max-width: 1200px; margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: 280px 280px;
+  gap: 4px;
+}
+.gallery-item { overflow: hidden; position: relative; }
+.gallery-item:first-child {
+  grid-column: span 2; grid-row: span 2;
+}
+.gallery-item img {
+  width: 100%; height: 100%; object-fit: cover;
+  transition: transform .6s ease;
+}
+.gallery-item:hover img { transform: scale(1.05); }
+@media(max-width: 768px) {
+  .gallery-grid { grid-template-columns: 1fr 1fr; grid-template-rows: auto; }
+  .gallery-item:first-child { grid-column: span 2; height: 220px; }
+  .gallery-item { height: 160px; }
+}
+
+/* INFO + ORARI */
+.info-section {
+  max-width: 1100px; margin: 0 auto;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 80px;
+}
+@media(max-width: 768px) { .info-section { grid-template-columns: 1fr; gap: 48px; } }
+.info-card {
+  border-top: 1px solid rgba(201,168,76,0.2);
+  padding-top: 32px;
+}
+.info-row {
+  display: flex; align-items: flex-start; gap: 16px;
+  margin-bottom: 20px; padding-bottom: 20px;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+.info-row:last-child { border-bottom: none; }
+.info-ico {
+  width: 36px; height: 36px; flex-shrink: 0;
+  background: rgba(201,168,76,0.1);
+  border: 1px solid rgba(201,168,76,0.2);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 15px;
+}
+.info-txt { font-size: 14px; color: rgba(240,234,214,0.75); line-height: 1.6; }
+.info-txt strong { color: var(--crema); font-size: 12px; letter-spacing: 1px; text-transform: uppercase; display: block; margin-bottom: 4px; }
+.orario-row {
+  display: flex; justify-content: space-between;
+  padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.05);
+  font-size: 13px;
+}
+.orario-giorno { color: var(--crema); }
+.orario-ore { color: var(--grigio); text-align: right; }
+.no-info { font-size: 13px; color: var(--grigio); font-style: italic; }
+
+/* CTA PRENOTA */
+.cta-section {
+  background: var(--nero2);
+  border-top: 1px solid rgba(201,168,76,0.15);
+  border-bottom: 1px solid rgba(201,168,76,0.15);
+  text-align: center;
+  padding: 120px 60px;
+}
+.cta-section .section-titolo { margin-bottom: 14px; }
+.cta-section p {
+  font-size: 15px; color: rgba(240,234,214,0.6);
+  max-width: 500px; margin: 0 auto 40px;
+  line-height: 1.7; font-weight: 300;
+}
+.cta-duo {
+  display: flex; align-items: center; justify-content: center;
+  gap: 20px; flex-wrap: wrap;
+}
+.btn-outline {
+  display: inline-block;
+  border: 1px solid var(--oro);
+  color: var(--oro);
+  padding: 14px 36px;
+  font-size: 12px; font-weight: 600;
+  letter-spacing: 2px; text-transform: uppercase;
+  transition: all .2s;
+}
+.btn-outline:hover { background: var(--oro); color: var(--nero); }
+
+/* FOOTER */
+footer {
+  background: var(--nero);
+  border-top: 1px solid rgba(201,168,76,0.1);
+  padding: 48px 60px 32px;
+  display: flex; justify-content: space-between; align-items: flex-end;
+  flex-wrap: wrap; gap: 24px;
+}
+.footer-brand {
+  font-family: 'Playfair Display', serif;
+  font-size: 20px; letter-spacing: 3px; color: var(--crema);
+}
+.footer-brand span { color: var(--oro); }
+.footer-copy {
+  font-size: 11px; color: rgba(138,138,138,0.5);
+  letter-spacing: 1px;
+}
+@media(max-width: 768px) {
+  footer { padding: 40px 24px 28px; flex-direction: column; align-items: flex-start; }
+}
+</style>
+</head>
+<body>
+
+<!-- BOTTONE PRENOTA FLOTTANTE -->
+<a href="la-braceria-factory-bistrot-prenota.html" class="btn-prenota-float" id="floatBtn">
+  <span>PRENOTA</span>
+  <span class="float-arrow">↓</span>
+</a>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div class="navbar-brand">
+    <img src="https://social.quandoo.com/img/logo.png" alt="Logo La Braceria Factory Bistrot" class="nav-logo" onerror="this.style.display='none'">
+    <span class="navbar-nome">La Braceria Factory Bistrot</span>
+  </div>
+  <div class="navbar-links">
+    <a href="#ristorante">Il Ristorante</a>
+    <a href="#galleria">Galleria</a>
+    <a href="#orari">Orari</a>
+    <a href="la-braceria-factory-bistrot-prenota.html" class="navbar-prenota">Prenota</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <img class="hero-img" src="https://places.googleapis.com/v1/places/ChIJw5DvtpUBOxMR87R-lcp5MOw/photos/Ab43m-ucMj9Uy7MeyxC9mVjuPsE11l5f9dfvuS00tVhb6NCGIQo4Ud1XlmqmXu3ibI3V49JPHu8ofx2rtED8jdv_KknLADzcvTlVwbhkT2UDqLbouS0wycvGz-ENvkuSzp-bVDC53-VedZWiUnRk-3n9QWz0JXJDTmrFZ7YOeg4qj3EhVEb8ysAOP5FlwUt70eJxVNcfc5dpO2gtgCl1tsWxmWuOTKC-Vyrqw18Q3rr7dsjZ-USx8EyTPt22ceSigNEgsOAM2F6Y0JKjTNOnBeqGowcLLdHfVUiZFnqgK_hV4ugW_A/media?maxWidthPx=1200&key=AIzaSyC1pQxgyEA66BJ_F2ZLkHJvQeYDawXItEg" alt="La Braceria Factory Bistrot"
+       onerror="this.src='https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1600'">
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-badge">Full Booking · Aversa</div>
+    <h1 class="hero-titolo">La Braceria Factory Bistrot</h1>
+    <p class="hero-tagline">Cucina autentica nel cuore di Aversa</p>
+    <div class="hero-meta">
+      <div class="rating-pill">
+        <span class="star full">★</span><span class="star full">★</span><span class="star full">★</span><span class="star full">★</span><span class="star empty">☆</span>
+        <span class="rating-num">4.2</span>
+        <span class="rating-cnt">(265 recensioni)</span>
+      </div>
+      <span class="hero-citta">📍 Aversa</span>
+    </div>
+  </div>
+  <div class="scroll-ind">Scopri</div>
+</section>
+
+<!-- CHI SIAMO -->
+<section id="ristorante">
+  <div class="chi-siamo">
+    <div class="chi-siamo-testo">
+      <div class="section-label">Il Ristorante</div>
+      <h2 class="section-titolo">La Braceria Factory Bistrot</h2>
+      <div class="gold-line left"></div>
+      <p>Cucina autentica nel cuore di Aversa</p>
+      <p>Prenota il tuo tavolo online in pochi secondi — conferma immediata su WhatsApp, zero commissioni.</p>
+      <br>
+      <a href="la-braceria-factory-bistrot-prenota.html" class="btn-oro">Prenota Ora</a>
+    </div>
+    <div class="chi-siamo-foto">
+      <img src="https://places.googleapis.com/v1/places/ChIJw5DvtpUBOxMR87R-lcp5MOw/photos/Ab43m-sG9m0-0KluApDKge-9C1yf0uoxVHkiibzQ9FkhKfDBHnNwI7rysC3XtHs2PO-xkSfRc01k-BJwnXJS5bCPBT-9DHPao79TsRhjYPkeUfD1nK-A9HVewkD8BqNkSbW4Jekel_xiJaci3OiDOevm3rU9nlyQZd7PLRs9_MMAJMQz_MJ2SqWi8pv0QcRPtCVFCVn44RyfagAXpLTg-FXWStaKtuoKdZwwhXEoGKpcvbpV6-vowdu4v6Fo9_Y9p3a5zZu37CK5td58PkzyCu1Nl33KNPNle60MzZeEE-9u29Pf8A/media?maxWidthPx=1200&key=AIzaSyC1pQxgyEA66BJ_F2ZLkHJvQeYDawXItEg" alt="La Braceria Factory Bistrot"
+           onerror="this.src='https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800'">
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section id="galleria" class="gallery-section">
+  <div style="max-width:1200px;margin:0 auto 40px">
+    <div class="section-label">Galleria</div>
+    <h2 class="section-titolo">Le nostre immagini</h2>
+    <div class="gold-line left"></div>
+  </div>
+  <div class="gallery-grid"><div class="gallery-item"><img src="https://places.googleapis.com/v1/places/ChIJw5DvtpUBOxMR87R-lcp5MOw/photos/Ab43m-ucMj9Uy7MeyxC9mVjuPsE11l5f9dfvuS00tVhb6NCGIQo4Ud1XlmqmXu3ibI3V49JPHu8ofx2rtED8jdv_KknLADzcvTlVwbhkT2UDqLbouS0wycvGz-ENvkuSzp-bVDC53-VedZWiUnRk-3n9QWz0JXJDTmrFZ7YOeg4qj3EhVEb8ysAOP5FlwUt70eJxVNcfc5dpO2gtgCl1tsWxmWuOTKC-Vyrqw18Q3rr7dsjZ-USx8EyTPt22ceSigNEgsOAM2F6Y0JKjTNOnBeqGowcLLdHfVUiZFnqgK_hV4ugW_A/media?maxWidthPx=1200&key=AIzaSyC1pQxgyEA66BJ_F2ZLkHJvQeYDawXItEg" alt="La Braceria Factory Bistrot" loading="lazy" onerror="this.parentElement.style.display:none"></div><div class="gallery-item"><img src="https://places.googleapis.com/v1/places/ChIJw5DvtpUBOxMR87R-lcp5MOw/photos/Ab43m-sG9m0-0KluApDKge-9C1yf0uoxVHkiibzQ9FkhKfDBHnNwI7rysC3XtHs2PO-xkSfRc01k-BJwnXJS5bCPBT-9DHPao79TsRhjYPkeUfD1nK-A9HVewkD8BqNkSbW4Jekel_xiJaci3OiDOevm3rU9nlyQZd7PLRs9_MMAJMQz_MJ2SqWi8pv0QcRPtCVFCVn44RyfagAXpLTg-FXWStaKtuoKdZwwhXEoGKpcvbpV6-vowdu4v6Fo9_Y9p3a5zZu37CK5td58PkzyCu1Nl33KNPNle60MzZeEE-9u29Pf8A/media?maxWidthPx=1200&key=AIzaSyC1pQxgyEA66BJ_F2ZLkHJvQeYDawXItEg" alt="La Braceria Factory Bistrot" loading="lazy" onerror="this.parentElement.style.display:none"></div><div class="gallery-item"><img src="https://places.googleapis.com/v1/places/ChIJw5DvtpUBOxMR87R-lcp5MOw/photos/Ab43m-vYT_FdyJS6eEGWk3tKsLO-6hTAPcpXNbbz4cckIGa3JVkn9e3tRFXyR-ChBhfXQaNXWJg8-rnyHLxRyQRmd6Fq8vyPPEVQt0c5AjqfoB1uUQnKQqaNMguXrOxsohvW7ALxWiurpz2HMJ4k7APIYAy7UGXiKy6FGWH7mOQY6MwUPQp_8c5hOnmI4FB1OM3AziYNYWs4S9krGH-PANTf9faADpZrsLiW1N6sMbRSwQ3BnaRpfoOvMFqbMqx59bVVmTOFaGFV4K1VoaZe8Shcdl-7RTZUIUFKkQPlYzxZy_tM1stt4sx-uP8ws3ATDBmMSCkfPejqW5CW3jcOZ9uhUnMKdrbF8Go4yBNiuqzO3cALV-hafF2pwhtVqigNyEnmqQlNNpg0mS9eZc94cTlnxIdim-_u3MkcPOBguPE5jS8C1BsndnvhoLIrrfVsaPDq/media?maxWidthPx=1200&key=AIzaSyC1pQxgyEA66BJ_F2ZLkHJvQeYDawXItEg" alt="La Braceria Factory Bistrot" loading="lazy" onerror="this.parentElement.style.display:none"></div><div class="gallery-item"><img src="https://places.googleapis.com/v1/places/ChIJw5DvtpUBOxMR87R-lcp5MOw/photos/Ab43m-uBrgtR1cJovS7xx0FQzSuDLixb6qO73FQVBzfFwHyntFayRq8ils4Dd_XNh6Jo7hXlyo4Rjar5WYd_Lu1wa1VXevDyvA9Bg2XWzOmfpAMkMJXx4C7kviMXk7oXS3ut0oPsSyCXywplneGHKd7z9-c-z483Amix_iX1vFqmgEdnhR0GNHIiMqYe-1719jttSW6t0OBU5etoLnaN8e5dGjvkOwsZbNcLaeoRxdRCmpuUyS56YRk4jKMUhlHQ2riKw9gWg1UIW7-zeA0MLvQZf7pbsdXvhXJw6dRc7o7ddoaJHw/media?maxWidthPx=1200&key=AIzaSyC1pQxgyEA66BJ_F2ZLkHJvQeYDawXItEg" alt="La Braceria Factory Bistrot" loading="lazy" onerror="this.parentElement.style.display:none"></div><div class="gallery-item"><img src="https://places.googleapis.com/v1/places/ChIJw5DvtpUBOxMR87R-lcp5MOw/photos/Ab43m-th5joTBMOq3b5cQNdF1HNa2gN3OczNQRHrVoPNw6iFHYqaz5m-fU0wm2eXJ_dKjBgyU_RcYRFRGR0Y9QYnnHYnE8f_kNYpH1KM3mG48_9JxOj9KiIiyEC55cR-Szwq1Rqjccbb_cNA8tHch74siqSMAaxTsR6lzdw6WJ8322UbzmbhU8QA5-kPsS2wrsy5FMleP5g_4IAaSvrVehgfa5NYjlPYEJKnM0jsNGYy8BiznIu_ChtlCTSKe5VyfceCxXXkbfIVE-IwIazPqjAJvjsMSN9Y_Y9gutEd6ThepPtl8A/media?maxWidthPx=1200&key=AIzaSyC1pQxgyEA66BJ_F2ZLkHJvQeYDawXItEg" alt="La Braceria Factory Bistrot" loading="lazy" onerror="this.parentElement.style.display:none"></div></div>
+</section>
+
+<!-- ORARI E INFO -->
+<section id="orari">
+  <div class="info-section">
+    <div class="info-card">
+      <div class="section-label">Informazioni</div>
+      <h2 class="section-titolo" style="font-size:26px">Dove siamo</h2>
+      <div class="gold-line left"></div>
+      <div class="info-row">
+        <div class="info-ico">📍</div>
+        <div class="info-txt"><strong>Indirizzo</strong>Viale John Fitzgerald Kennedy, 57, 81031 Aversa CE</div>
+      </div>
+      
+      <div class="info-row">
+        <div class="info-ico">⭐</div>
+        <div class="info-txt"><strong>Valutazione Google</strong>4.2/5 su 265 recensioni</div>
+      </div>
+      <div class="info-row"><div class="info-ico">🌐</div><div class="info-txt"><strong>Sito web</strong><a href="https://social.quandoo.com/en/groups/la-braceria-factory-bistrot-aversa-108337" style="color:var(--oro)">https://social.quandoo.com/en/groups/la-brace</a></div></div>
+    </div>
+    <div class="info-card">
+      <div class="section-label">Orari</div>
+      <h2 class="section-titolo" style="font-size:26px">Quando apriremo</h2>
+      <div class="gold-line left"></div>
+      <p class="no-info">Contatta il ristorante per gli orari aggiornati</p>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="section-label">Prenotazione Online</div>
+  <h2 class="section-titolo">Riserva il tuo tavolo</h2>
+  <div class="gold-line"></div>
+  <p>Prenota in 30 secondi. Conferma immediata su WhatsApp.<br>Zero commissioni — sempre gratuito per i clienti.</p>
+  <div class="cta-duo">
+    <a href="la-braceria-factory-bistrot-prenota.html" class="btn-oro">📅 Prenota Ora</a>
+    
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div>
+    <div class="footer-brand">FULL<span>BOOKING</span></div>
+    <div style="font-size:12px;color:var(--grigio);margin-top:6px;letter-spacing:1px">
+      Sistema di prenotazione online · La Braceria Factory Bistrot · Aversa
+    </div>
+  </div>
+  <div class="footer-copy">
+    © 2025 fullbooking.cloud · Powered by GF Technological System
+  </div>
+</footer>
+
+<script>
+  // Bottone prenota flottante — appare dopo 80% dell'altezza hero
+  const floatBtn = document.getElementById('floatBtn');
+  const heroH = document.querySelector('.hero').offsetHeight;
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > heroH * 0.8) {
+      floatBtn.classList.add('visible');
+    } else {
+      floatBtn.classList.remove('visible');
+    }
+  }, { passive: true });
+</script>
+</body>
+</html>

@@ -10,7 +10,7 @@ from email.mime.base import MIMEBase
 from email import encoders
 from config import (MAKE_WEBHOOK_URL, GMAIL_USER, GMAIL_APP_PASSWORD,
                     NOME_AZIENDA, NOME_VENDITORE, TELEFONO, CATEGORIE,
-                    WA_TOKEN, WA_API_URL, WA_INSTANCE_ID)
+                    WA_TOKEN, WA_API_URL, WA_INSTANCE_ID, FULLBOOKING_BASE_URL)
 from database import get_leads, aggiorna_stato, salva_messaggio
 
 
@@ -254,6 +254,86 @@ def campagna_whatsapp(categoria: str = None, citta: str = None, limite: int = 50
         time.sleep(3)
 
     print(f"\n📊 Risultato: {inviati} inviati, {errori} errori")
+    return inviati
+
+
+def campagna_fullbooking_wa(limite: int = 50):
+    """
+    Invia WhatsApp ai ristoranti che hanno una preview Full Booking generata.
+    Il messaggio include il link personalizzato Netlify (sempre online).
+    """
+    from database import get_conn as _get_conn
+    conn = _get_conn()
+    rows = conn.execute("""
+        SELECT * FROM leads
+        WHERE (note LIKE 'FB:preview:%' OR note LIKE 'FB:inviato:%')
+        AND telefono IS NOT NULL AND telefono != ''
+        AND stato != 'FB:inviato'
+        ORDER BY num_recensioni DESC, rating DESC
+        LIMIT ?
+    """, (limite,)).fetchall()
+    conn.close()
+
+    leads_fb = [dict(r) for r in rows]
+    print(f"\nCAMPAGNA FULL BOOKING -- {len(leads_fb)} ristoranti da contattare")
+
+    if not leads_fb:
+        print("   Nessun lead con preview generata. Esegui prima: python genera_preview_fullbooking.py")
+        return 0
+
+    inviati = 0
+    errori = 0
+
+    for i, lead in enumerate(leads_fb, 1):
+        nome    = lead["nome"]
+        citta   = lead["citta"]
+        nota    = lead.get("note", "")
+
+        # Estrai il nome del file dalla nota (es: "FB:preview:pizzeria-da-franco.html")
+        filename = nota.replace("FB:preview:", "").replace("FB:inviato:", "").strip()
+        slug = filename.replace(".html", "")
+        link_sito    = f"{FULLBOOKING_BASE_URL}/{slug}"
+        link_prenota = f"{FULLBOOKING_BASE_URL}/{slug}-prenota"
+
+        messaggio = (
+            f"Buongiorno {nome}!\n\n"
+            f"Le facciamo un regalo \U0001f381\n\n"
+            f"Abbiamo creato il *sito del suo ristorante* con sistema di prenotazione online -- *completamente gratis*.\n\n"
+            f"\U0001f310 Il suo sito:\n"
+            f"{link_sito}\n\n"
+            f"\U0001f4c5 Prenotazione diretta:\n"
+            f"{link_prenota}\n\n"
+            f"L'*assistente virtuale Full Booking* risponde ai clienti *al posto suo* -- anche di domenica, anche a mezzanotte.\n"
+            f"Nessuna telefonata persa. Nessuna prenotazione mancata.\n\n"
+            f"I clienti prenotano in 30 secondi e ricevono conferma immediata su WhatsApp.\n"
+            f"*Zero commissioni* -- sempre.\n\n"
+            f"Vuole attivarlo per {nome} a {citta}?\n"
+            f"La chiamo io personalmente: {TELEFONO}\n\n"
+            f"Gennaro Fusco | Full Booking | https://fullbooking.cloud"
+        )
+
+        print(f"[{i:3d}/{len(leads_fb)}] {nome[:40]:<40}", end=" ", flush=True)
+        ok = invia_whatsapp(lead["telefono"], messaggio)
+
+        if ok:
+            print("OK Inviato")
+            salva_messaggio(lead["id"], "whatsapp_fb", messaggio, "inviato")
+            # Aggiorna nota a FB:inviato per non reinviare
+            from database import get_conn as _gc
+            c2 = _gc()
+            c2.execute("UPDATE leads SET stato='FB:inviato', note=? WHERE id=?",
+                       (f"FB:inviato:{filename}", lead["id"]))
+            c2.commit()
+            c2.close()
+            inviati += 1
+        else:
+            print("ERRORE")
+            errori += 1
+
+        import time
+        time.sleep(3)
+
+    print(f"\nRisultato Full Booking: {inviati} inviati, {errori} errori")
     return inviati
 
 

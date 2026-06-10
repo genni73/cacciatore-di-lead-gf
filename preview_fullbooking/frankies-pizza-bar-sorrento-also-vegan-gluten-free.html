@@ -3,316 +3,531 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Frankie's Pizza Bar Sorrento (also vegan & gluten free) — Prenota su Full Booking</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<title>Frankie's Pizza Bar Sorrento (also vegan & gluten free) — Sorrento | Full Booking</title>
+<meta name="description" content="Cucina autentica nel cuore di Sorrento">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-:root {
-  --primary:   #1a3a2a;
-  --secondary: #c9a84c;
-  --bg:        #f7f5f0;
-  --on-primary:   #ffffff;
-  --on-secondary: #1a1a1a;
-}
-*{ margin:0; padding:0; box-sizing:border-box; }
-body{ font-family:'Inter',sans-serif; background:var(--bg); color:#2c2c2c; }
+:root { 
+  --nero:     #0a0a0a;
+  --nero2:    #141414;
+  --nero3:    #1e1e1e;
+  --oro:      #c9a84c;
+  --oro2:     #e8c96b;
+  --crema:    #f0ead6;
+  --grigio:   #8a8a8a;
+  --bianco:   #ffffff;
+ }
 
-/* TOPBAR FULL BOOKING */
-.fb-bar{
-  background:#111; padding:7px 20px;
-  display:flex; align-items:center; justify-content:space-between;
-  font-size:11px; color:#aaa;
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--nero);
+  color: var(--crema);
+  -webkit-font-smoothing: antialiased;
 }
-.fb-brand{ color:#fff; font-weight:700; letter-spacing:1px; font-size:13px; }
-.fb-brand span{ color:var(--secondary); }
-.fb-preview-tag{
-  background:var(--secondary); color:var(--on-secondary);
-  padding:3px 10px; border-radius:20px; font-size:10px; font-weight:700;
-  letter-spacing:0.5px;
+a { color: inherit; text-decoration: none; }
+img { display: block; }
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--nero2); }
+::-webkit-scrollbar-thumb { background: var(--oro); border-radius: 3px; }
+
+/* Topbar Full Booking */
+.fb-topbar {
+  background: var(--nero);
+  border-bottom: 1px solid rgba(201,168,76,0.2);
+  padding: 10px 32px;
+  display: flex; align-items: center; justify-content: space-between;
+  position: sticky; top: 0; z-index: 200;
+  backdrop-filter: blur(12px);
+}
+.fb-logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 18px; letter-spacing: 3px; font-weight: 700;
+  color: var(--bianco);
+}
+.fb-logo span { color: var(--oro); }
+.fb-topbar-cta {
+  font-size: 11px; color: var(--grigio);
+  letter-spacing: 1px; text-transform: uppercase;
 }
 
-/* HEADER RISTORANTE — colori reali del cliente */
-.header{
-  background:var(--primary); padding:14px 24px;
-  display:flex; align-items:center; justify-content:space-between;
-  position:sticky; top:0; z-index:100;
-  box-shadow:0 2px 16px rgba(0,0,0,0.25);
+/* Bottone oro */
+.btn-oro {
+  display: inline-block;
+  background: linear-gradient(135deg, var(--oro), var(--oro2));
+  color: var(--nero);
+  padding: 14px 36px;
+  font-size: 12px; font-weight: 700;
+  letter-spacing: 2px; text-transform: uppercase;
+  border: none; cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  transition: opacity .2s, transform .2s;
 }
-.header-left{ display:flex; align-items:center; gap:14px; }
-.rist-logo{ height:44px; width:auto; max-width:140px; object-fit:contain; }
-.rist-nome{
-  font-family:'Playfair Display',serif; font-size:20px;
-  color:var(--on-primary); letter-spacing:0.5px;
+.btn-oro:hover { opacity: .88; transform: translateY(-1px); }
+
+/* Linea oro decorativa */
+.gold-line {
+  width: 48px; height: 2px;
+  background: linear-gradient(90deg, var(--oro), var(--oro2));
+  margin: 0 auto 20px;
 }
-.btn-prenota-top{
-  background:var(--secondary); color:var(--on-secondary);
-  border:none; padding:10px 22px; border-radius:6px;
-  font-size:13px; font-weight:700; cursor:pointer; letter-spacing:0.5px;
+.gold-line.left { margin: 0 0 20px; }
+
+
+/* NAVBAR */
+.navbar {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 300;
+  background: rgba(10,10,10,0.92);
+  border-bottom: 1px solid rgba(201,168,76,0.15);
+  padding: 0 40px;
+  display: flex; align-items: center; justify-content: space-between;
+  height: 68px;
+  backdrop-filter: blur(16px);
+  transition: background .3s;
+}
+.navbar-brand {
+  display: flex; align-items: center; gap: 14px;
+}
+.nav-logo { height: 40px; width: auto; max-width: 130px; object-fit: contain; }
+.navbar-nome {
+  font-family: 'Playfair Display', serif;
+  font-size: 17px; color: var(--crema); letter-spacing: .5px;
+}
+.navbar-links {
+  display: flex; align-items: center; gap: 32px;
+}
+.navbar-links a {
+  font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+  color: var(--grigio); transition: color .2s;
+}
+.navbar-links a:hover { color: var(--oro); }
+.navbar-prenota {
+  background: linear-gradient(135deg, var(--oro), var(--oro2));
+  color: var(--nero) !important;
+  padding: 10px 22px;
+  font-size: 11px !important; font-weight: 700 !important;
+  letter-spacing: 2px;
+}
+.navbar-prenota:hover { opacity: .88; }
+@media(max-width: 768px) {
+  .navbar { padding: 0 20px; }
+  .navbar-links { display: none; }
 }
 
 /* HERO */
-.hero{ position:relative; height:420px; overflow:hidden; }
-.hero img{ width:100%; height:100%; object-fit:cover; }
-.hero-ov{
-  position:absolute; inset:0;
-  background:linear-gradient(to top,rgba(0,0,0,0.80) 0%,rgba(0,0,0,0.05) 55%);
+.hero {
+  height: 100vh; min-height: 600px;
+  position: relative; overflow: hidden;
 }
-.hero-info{ position:absolute; bottom:30px; left:30px; right:30px; color:#fff; }
-.hero-info h1{
-  font-family:'Playfair Display',serif;
-  font-size:clamp(24px,4vw,40px); margin-bottom:10px;
-  text-shadow:0 2px 12px rgba(0,0,0,0.6);
+.hero-img {
+  width: 100%; height: 100%; object-fit: cover;
+  transform: scale(1.04);
+  transition: transform 8s ease;
 }
-.hero-tagline{
-  font-size:14px; color:rgba(255,255,255,0.85);
-  margin-bottom:12px; max-width:560px; line-height:1.6;
+.hero:hover .hero-img { transform: scale(1); }
+.hero-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(10,10,10,0.3) 0%,
+    rgba(10,10,10,0.1) 40%,
+    rgba(10,10,10,0.85) 100%
+  );
 }
-.hero-meta{ display:flex; align-items:center; gap:14px; flex-wrap:wrap; }
-.rating-pill{
-  display:flex; align-items:center; gap:5px;
-  background:rgba(255,255,255,0.15); backdrop-filter:blur(6px);
-  padding:6px 14px; border-radius:20px;
+.hero-content {
+  position: absolute; bottom: 80px; left: 0; right: 0;
+  padding: 0 60px;
+  max-width: 900px;
 }
-.s{ font-size:15px; }
-.s.full,.s.half{ color:#f5c518; }
-.s.empty{ color:rgba(255,255,255,0.35); }
-.r-num{ color:#fff; font-weight:700; font-size:15px; }
-.r-cnt{ color:rgba(255,255,255,0.75); font-size:12px; }
-.hero-citta{ color:rgba(255,255,255,0.9); font-size:14px; }
+.hero-badge {
+  display: inline-block;
+  border: 1px solid var(--oro);
+  color: var(--oro);
+  font-size: 10px; letter-spacing: 3px; text-transform: uppercase;
+  padding: 6px 16px; margin-bottom: 20px;
+}
+.hero-titolo {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(36px, 6vw, 72px);
+  font-weight: 700; line-height: 1.1;
+  color: var(--bianco);
+  text-shadow: 0 2px 40px rgba(0,0,0,0.5);
+  margin-bottom: 16px;
+}
+.hero-tagline {
+  font-size: 15px; color: rgba(240,234,214,0.8);
+  line-height: 1.7; max-width: 540px; margin-bottom: 24px;
+  font-weight: 300;
+}
+.hero-meta {
+  display: flex; align-items: center; gap: 20px; flex-wrap: wrap;
+}
+.rating-pill {
+  display: flex; align-items: center; gap: 8px;
+  background: rgba(201,168,76,0.12);
+  border: 1px solid rgba(201,168,76,0.3);
+  padding: 8px 18px;
+}
+.star { font-size: 14px; }
+.star.full, .star.half { color: var(--oro); }
+.star.empty { color: rgba(201,168,76,0.25); }
+.rating-num { color: var(--oro); font-weight: 700; font-size: 15px; }
+.rating-cnt { color: rgba(240,234,214,0.6); font-size: 12px; }
+.hero-citta { color: rgba(240,234,214,0.75); font-size: 13px; letter-spacing: 1px; }
+@media(max-width: 768px) {
+  .hero-content { padding: 0 24px; bottom: 60px; }
+}
 
-/* LAYOUT */
-.wrap{
-  max-width:960px; margin:0 auto; padding:30px 18px;
-  display:grid; grid-template-columns:1fr 370px; gap:26px;
+/* SCROLL INDICATOR */
+.scroll-ind {
+  position: absolute; bottom: 28px; left: 50%;
+  transform: translateX(-50%);
+  display: flex; flex-direction: column; align-items: center; gap: 6px;
+  color: rgba(201,168,76,0.5); font-size: 10px; letter-spacing: 2px;
+  text-transform: uppercase;
+  animation: bounce 2s infinite;
 }
-@media(max-width:720px){.wrap{grid-template-columns:1fr;}}
+.scroll-ind::after {
+  content: ''; width: 1px; height: 40px;
+  background: linear-gradient(to bottom, var(--oro), transparent);
+}
+@keyframes bounce {
+  0%,100% { opacity: .5; transform: translateX(-50%) translateY(0); }
+  50% { opacity: 1; transform: translateX(-50%) translateY(6px); }
+}
+
+/* BOTTONE PRENOTA FLOTTANTE */
+.btn-prenota-float {
+  position: fixed;
+  bottom: 36px; right: 36px;
+  z-index: 500;
+  width: 96px; height: 96px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--oro), var(--oro2));
+  color: var(--nero);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 4px;
+  font-family: 'Inter', sans-serif;
+  font-size: 11px; font-weight: 800;
+  letter-spacing: 2px; text-transform: uppercase;
+  text-decoration: none;
+  box-shadow: 0 8px 32px rgba(201,168,76,0.35), 0 2px 8px rgba(0,0,0,0.4);
+  transition: transform .25s, box-shadow .25s, opacity .25s;
+  opacity: 0;
+  transform: scale(0.7) translateY(20px);
+  pointer-events: none;
+}
+.btn-prenota-float.visible {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+  pointer-events: auto;
+}
+.btn-prenota-float:hover {
+  transform: scale(1.07) translateY(-3px);
+  box-shadow: 0 14px 40px rgba(201,168,76,0.5), 0 4px 12px rgba(0,0,0,0.4);
+}
+.btn-prenota-float .float-arrow {
+  font-size: 18px; line-height: 1;
+  transition: transform .2s;
+}
+.btn-prenota-float:hover .float-arrow {
+  transform: translateY(3px);
+}
+@media(max-width: 768px) {
+  .btn-prenota-float {
+    width: 80px; height: 80px;
+    bottom: 24px; right: 20px;
+    font-size: 10px;
+    opacity: 1; transform: scale(1) translateY(0);
+    pointer-events: auto;
+  }
+}
+
+/* SEZIONI */
+section { padding: 100px 60px; }
+@media(max-width: 768px) { section { padding: 60px 24px; } }
+
+.section-label {
+  font-size: 10px; letter-spacing: 4px; text-transform: uppercase;
+  color: var(--oro); margin-bottom: 14px;
+}
+.section-titolo {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(28px, 4vw, 42px); font-weight: 600;
+  color: var(--crema); line-height: 1.2; margin-bottom: 20px;
+}
+
+/* CHI SIAMO */
+.chi-siamo {
+  max-width: 1100px; margin: 0 auto;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
+}
+@media(max-width: 768px) { .chi-siamo { grid-template-columns: 1fr; gap: 40px; } }
+.chi-siamo-testo p {
+  font-size: 16px; line-height: 1.9; color: rgba(240,234,214,0.75);
+  font-weight: 300; margin-bottom: 16px;
+}
+.chi-siamo-foto {
+  position: relative; height: 480px;
+}
+.chi-siamo-foto img {
+  width: 100%; height: 100%; object-fit: cover;
+}
+.chi-siamo-foto::before {
+  content: '';
+  position: absolute; inset: -12px -12px 12px 12px;
+  border: 1px solid rgba(201,168,76,0.25);
+  z-index: -1;
+}
 
 /* GALLERY */
-.gallery{ display:grid; grid-template-columns:1fr 1fr; gap:6px; border-radius:10px; overflow:hidden; margin-bottom:22px; }
-.gimg img{ width:100%; height:145px; object-fit:cover; display:block; }
+.gallery-section { background: var(--nero2); }
+.gallery-grid {
+  max-width: 1200px; margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: 280px 280px;
+  gap: 4px;
+}
+.gallery-item { overflow: hidden; position: relative; }
+.gallery-item:first-child {
+  grid-column: span 2; grid-row: span 2;
+}
+.gallery-item img {
+  width: 100%; height: 100%; object-fit: cover;
+  transition: transform .6s ease;
+}
+.gallery-item:hover img { transform: scale(1.05); }
+@media(max-width: 768px) {
+  .gallery-grid { grid-template-columns: 1fr 1fr; grid-template-rows: auto; }
+  .gallery-item:first-child { grid-column: span 2; height: 220px; }
+  .gallery-item { height: 160px; }
+}
 
-/* INFO CARDS */
-.card{
-  background:#fff; border-radius:12px; padding:22px;
-  margin-bottom:18px; box-shadow:0 2px 14px rgba(0,0,0,0.06);
+/* INFO + ORARI */
+.info-section {
+  max-width: 1100px; margin: 0 auto;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 80px;
 }
-.card h3{
-  font-family:'Playfair Display',serif; font-size:16px;
-  color:var(--primary); margin-bottom:14px;
-  padding-bottom:10px; border-bottom:2px solid var(--bg);
+@media(max-width: 768px) { .info-section { grid-template-columns: 1fr; gap: 48px; } }
+.info-card {
+  border-top: 1px solid rgba(201,168,76,0.2);
+  padding-top: 32px;
 }
-.info-r{ display:flex; gap:10px; margin-bottom:9px; font-size:14px; color:#555; }
-.info-r .ico{ font-size:17px; flex-shrink:0; }
-.orario-row{
-  display:flex; justify-content:space-between;
-  font-size:13px; color:#555; padding:4px 0;
-  border-bottom:1px solid #f5f5f5;
+.info-row {
+  display: flex; align-items: flex-start; gap: 16px;
+  margin-bottom: 20px; padding-bottom: 20px;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
 }
+.info-row:last-child { border-bottom: none; }
+.info-ico {
+  width: 36px; height: 36px; flex-shrink: 0;
+  background: rgba(201,168,76,0.1);
+  border: 1px solid rgba(201,168,76,0.2);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 15px;
+}
+.info-txt { font-size: 14px; color: rgba(240,234,214,0.75); line-height: 1.6; }
+.info-txt strong { color: var(--crema); font-size: 12px; letter-spacing: 1px; text-transform: uppercase; display: block; margin-bottom: 4px; }
+.orario-row {
+  display: flex; justify-content: space-between;
+  padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.05);
+  font-size: 13px;
+}
+.orario-giorno { color: var(--crema); }
+.orario-ore { color: var(--grigio); text-align: right; }
+.no-info { font-size: 13px; color: var(--grigio); font-style: italic; }
 
-/* PERCHE FULL BOOKING */
-.why-item{ display:flex; align-items:flex-start; gap:10px; margin-bottom:10px; }
-.why-icon{
-  width:30px; height:30px; border-radius:50%;
-  background:var(--primary); color:var(--on-primary);
-  display:flex; align-items:center; justify-content:center;
-  font-size:13px; flex-shrink:0;
+/* CTA PRENOTA */
+.cta-section {
+  background: var(--nero2);
+  border-top: 1px solid rgba(201,168,76,0.15);
+  border-bottom: 1px solid rgba(201,168,76,0.15);
+  text-align: center;
+  padding: 120px 60px;
 }
-.why-text{ font-size:13px; color:#555; line-height:1.5; }
-.why-text strong{ color:#2c2c2c; font-size:13px; }
-
-/* BOOKING CARD */
-.booking-card{
-  background:#fff; border-radius:14px; padding:26px;
-  box-shadow:0 4px 28px rgba(0,0,0,0.11);
-  border-top:4px solid var(--primary);
-  position:sticky; top:68px; height:fit-content;
+.cta-section .section-titolo { margin-bottom: 14px; }
+.cta-section p {
+  font-size: 15px; color: rgba(240,234,214,0.6);
+  max-width: 500px; margin: 0 auto 40px;
+  line-height: 1.7; font-weight: 300;
 }
-.booking-card h2{
-  font-family:'Playfair Display',serif; font-size:20px;
-  color:var(--primary); margin-bottom:4px;
+.cta-duo {
+  display: flex; align-items: center; justify-content: center;
+  gap: 20px; flex-wrap: wrap;
 }
-.bk-sub{ font-size:13px; color:#999; margin-bottom:20px; }
-.fg{ margin-bottom:14px; }
-.fg label{
-  display:block; font-size:11px; font-weight:700;
-  color:#777; margin-bottom:5px;
-  text-transform:uppercase; letter-spacing:0.5px;
+.btn-outline {
+  display: inline-block;
+  border: 1px solid var(--oro);
+  color: var(--oro);
+  padding: 14px 36px;
+  font-size: 12px; font-weight: 600;
+  letter-spacing: 2px; text-transform: uppercase;
+  transition: all .2s;
 }
-.fg input,.fg select{
-  width:100%; padding:11px 13px;
-  border:1.5px solid #e8e0d5; border-radius:8px;
-  font-size:14px; color:#2c2c2c; background:#fafaf8;
-  font-family:'Inter',sans-serif; appearance:none;
-}
-.fg input:focus,.fg select:focus{
-  outline:none; border-color:var(--primary); background:#fff;
-}
-.fg-row{ display:grid; grid-template-columns:1fr 1fr; gap:11px; }
-.btn-book{
-  width:100%; padding:15px; margin-top:6px;
-  background:var(--primary); color:var(--on-primary);
-  border:none; border-radius:10px; font-size:15px; font-weight:700;
-  cursor:pointer; font-family:'Inter',sans-serif; letter-spacing:0.5px;
-  transition:opacity 0.2s;
-}
-.btn-book:hover{opacity:0.88;}
-.bk-note{ text-align:center; font-size:11px; color:#bbb; margin-top:12px; }
-.bk-note span{ color:var(--secondary); font-weight:700; }
+.btn-outline:hover { background: var(--oro); color: var(--nero); }
 
 /* FOOTER */
-footer{
-  background:#111; color:rgba(255,255,255,0.5);
-  text-align:center; padding:22px; font-size:12px; margin-top:36px;
+footer {
+  background: var(--nero);
+  border-top: 1px solid rgba(201,168,76,0.1);
+  padding: 48px 60px 32px;
+  display: flex; justify-content: space-between; align-items: flex-end;
+  flex-wrap: wrap; gap: 24px;
 }
-footer strong{ color:var(--secondary); }
+.footer-brand {
+  font-family: 'Playfair Display', serif;
+  font-size: 20px; letter-spacing: 3px; color: var(--crema);
+}
+.footer-brand span { color: var(--oro); }
+.footer-copy {
+  font-size: 11px; color: rgba(138,138,138,0.5);
+  letter-spacing: 1px;
+}
+@media(max-width: 768px) {
+  footer { padding: 40px 24px 28px; flex-direction: column; align-items: flex-start; }
+}
 </style>
 </head>
 <body>
 
-<!-- TOPBAR FULL BOOKING -->
-<div class="fb-bar">
-  <span class="fb-brand">FULL<span>BOOKING</span>.it</span>
-  
-</div>
+<!-- BOTTONE PRENOTA FLOTTANTE -->
+<a href="frankies-pizza-bar-sorrento-also-vegan-gluten-free-prenota.html" class="btn-prenota-float" id="floatBtn">
+  <span>PRENOTA</span>
+  <span class="float-arrow">↓</span>
+</a>
 
-<!-- HEADER con colori reali del ristorante -->
-<header class="header">
-  <div class="header-left">
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div class="navbar-brand">
     
-    <span class="rist-nome">Frankie's Pizza Bar Sorrento (also vegan & gluten free)</span>
+    <span class="navbar-nome">Frankie's Pizza Bar Sorrento (also vegan & gluten free)</span>
   </div>
-  <button class="btn-prenota-top" onclick="document.querySelector('.booking-card').scrollIntoView({behavior:'smooth'})">
-    📅 Prenota Ora
-  </button>
-</header>
+  <div class="navbar-links">
+    <a href="#ristorante">Il Ristorante</a>
+    <a href="#galleria">Galleria</a>
+    <a href="#orari">Orari</a>
+    <a href="frankies-pizza-bar-sorrento-also-vegan-gluten-free-prenota.html" class="navbar-prenota">Prenota</a>
+  </div>
+</nav>
 
 <!-- HERO -->
-<div class="hero">
-  <img src="https://places.googleapis.com/v1/places/ChIJ1wpXka6eOxMRa7Ad-3xVVXg/photos/Ab43m-sODHz2ZEsW81809zCdI8zIcU9WSPDjOM1pTvQn1-ZV6jezxoVUjyIHkJ0di0IfjO1Sc85UNNRriTaVVu1-fi79HkqvEpQYgHVy0piorE97fcKXytGbkHTzfuIc08pnQ7Dcj4wBxS_LM6MFUji6YpEmkBnbi1SzvsEioC0XVuY5Z0UL0HHkdA-fv-VG-mNJYeBMJydEAF1Ylb9oiSSULbbl_eVogW1sa_ax3sKDQIGTL8MoynH1KxRkKJ46YnqIG4Se27rWOZvSlcZbDBznjrZcOqEBza5mpV_nN8HZMFaJn3vwDMNHKbxpB7pACgdBrbmlWcTNAKY9tI4yooUl2IwILZcYem1NzL52mYnVUNBBSkS0rcT3x8ckNtaR3MHIgVEleT_j54Q8VVqiuSByopyMWPmYNaVigu61fjgDTFngxdq4/media?maxWidthPx=800&key=AIzaSyC1pQxgyEA66BJ_F2ZLkHJvQeYDawXItEg" alt="Frankie's Pizza Bar Sorrento (also vegan & gluten free)"
-       onerror="this.src='https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1200'">
-  <div class="hero-ov"></div>
-  <div class="hero-info">
-    <h1>Frankie's Pizza Bar Sorrento (also vegan & gluten free)</h1>
-    <p class="hero-tagline">Benvenuti da Frankie's Pizza Bar Sorrento (also vegan & gluten free) — prenota il tuo tavolo online</p>
+<section class="hero">
+  <img class="hero-img" src="https://places.googleapis.com/v1/places/ChIJ1wpXka6eOxMRa7Ad-3xVVXg/photos/Ab43m-uxwDENeAmBw70_DUJ_u-Bkz5D6LPRl21Hw0An4VYGK-5M9384UDORjtZx8H92x74aryKgQtac5kwzAwxWjBqggGIF4L6dZgHAO62mmlFmdmxffy3KNrsk0Jn5Loe3rQluEubeTzWvlNmNqangZFxIDxpnP10rx7dG5U7f3TKeaGMpScbMHwoK-974_fISQfTdIBdU0StlM_dcvb3cUuysORNIzy7M1Mv0tAnbWwLJIySDGZAZ1HSYCN-uvGrWZ0ZP83Az42pSo85s0M48iFYkEyR5IwG0l-SrH86_8BDe0XCIqMja9Yd4YheIks6NI0LdgDcq2uofqHodX8T6oofRMqLie0ySiSx6WbIsdvZSL2o_UwCn411XS9e83V1pZrf5j_vD7_N188xSEDKPiZ2haqPkkRaq8mKm_b9LKGMkbupLQ/media?maxWidthPx=1200&key=AIzaSyC1pQxgyEA66BJ_F2ZLkHJvQeYDawXItEg" alt="Frankie's Pizza Bar Sorrento (also vegan & gluten free)"
+       onerror="this.src='https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1600'">
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-badge">Full Booking · Sorrento</div>
+    <h1 class="hero-titolo">Frankie's Pizza Bar Sorrento (also vegan & gluten free)</h1>
+    <p class="hero-tagline">Cucina autentica nel cuore di Sorrento</p>
     <div class="hero-meta">
       <div class="rating-pill">
-        <span class="s full">★</span><span class="s full">★</span><span class="s full">★</span><span class="s full">★</span><span class="s half">★</span>
-        <span class="r-num">4.5</span>
-        <span class="r-cnt">(3,494 recensioni Google)</span>
+        <span class="star full">★</span><span class="star full">★</span><span class="star full">★</span><span class="star full">★</span><span class="star half">★</span>
+        <span class="rating-num">4.5</span>
+        <span class="rating-cnt">(3,494 recensioni)</span>
       </div>
       <span class="hero-citta">📍 Sorrento</span>
     </div>
   </div>
-</div>
+  <div class="scroll-ind">Scopri</div>
+</section>
 
-<!-- CONTENUTO -->
-<div class="wrap">
-
-  <!-- SINISTRA -->
-  <div>
-
-    <div class="gallery"><div class="gimg"><img src="https://places.googleapis.com/v1/places/ChIJ1wpXka6eOxMRa7Ad-3xVVXg/photos/Ab43m-tsYonLMNvDlNr0VtJA0faRbp6hCTxd_3lQOQm5tcLqEVc7Rp4jvsd6kz2LjQ2G_wPeCtxMwyawql-XSsAs6MiC7Jt9A_GThTwXAg07i2Q1ArXGBgZN0sFsxf81bFIU2ZnY7YrSkb-sWBHFJkSZml3WMVgyF5k5acxRwCQK3sSXv6xTqcBbUzT0RHF5NEcT3DIJtLTaghFjcTy7nmOHEGNx4OeWckdh_KcOaGC-2OW4ED4IAOn3Q7E-aNoLR7LvE7aqDLw9YGsNDuNlfmwTV5Valq3ktp6rrRXAYBTkliWF69t8ZRML5JuhcLopUQ6QvqYXescjFMKJFsTK2sgC-4isXONyJbxKAR0vK2vmbGD4MQjLMRZAX6UiTZbmHB3S8RKSfdWiZndclEBG5J-RqpvxaZW8Rciqge2NVAp3h_noVVM/media?maxWidthPx=800&key=AIzaSyC1pQxgyEA66BJ_F2ZLkHJvQeYDawXItEg" alt="Frankie's Pizza Bar Sorrento (also vegan & gluten free)" loading="lazy" onerror="this.parentElement.style.display='none'"></div><div class="gimg"><img src="https://places.googleapis.com/v1/places/ChIJ1wpXka6eOxMRa7Ad-3xVVXg/photos/Ab43m-scsU_h2VPCh3Ycahu4Dm54sPIrgR1MJnzY3rMZICfr_kg-nsEn7sO6jg_nOzvDXugaiy-qYZ1KYOHPC1tJya5mWRHH_p41UguybKaCLOClRAqB_9EhlCGc3gMjqWchl_bycYDGj4i3HzMJQP5Lb7hb5h01ZuFIoVchf2DGZ60J4IXCYoIodYy7ERhF9fvDtYx3GHeiMnF_EHKJVGENtYdegaJ9_OAGN_9OSs4R_LmVgG0WNWraeZucChkkFQ-vEk-dICIV_ollX8wIIxSc_nXNztVfD3GB703WYSPJtuuIbh_Ik0uRkwKXf269-SHyPlQ-yaf7ErsuRANVg131FwQajJtQiMITbZ6-yJnqLT2W9TLbveXJDhHYt_83k6NySs6X63O8TMS77umEGqBCr-heLWS0m0AD15Q3CXbFGCPMYBotfobY-q_jeAbsmPMf/media?maxWidthPx=800&key=AIzaSyC1pQxgyEA66BJ_F2ZLkHJvQeYDawXItEg" alt="Frankie's Pizza Bar Sorrento (also vegan & gluten free)" loading="lazy" onerror="this.parentElement.style.display='none'"></div><div class="gimg"><img src="https://places.googleapis.com/v1/places/ChIJ1wpXka6eOxMRa7Ad-3xVVXg/photos/Ab43m-uBpuSlGelJuD0PdV8vPTGGL_W8OH7me0keUXgFt-pNZsM5Xavw42d0pA5Nd1498J3mIBUjET8-ik35c7yb4yH_9SsN3JVLKAi8SJd3PJa-aQ5ZZ1GdlFlAOijEtDyDayswiijL9q2Xza4EoxTcRf4zZNd6e1GKk6RtabaSNmqklVd9sppSioKJNzSFUcWHmhDEqtNgXgALaayfHhO7-iHNVfRQS0ApaqKQWUhfqGPIM-ERyQirQLTUujjsPafDMRdJakRyTrPbSv3oz5GqCcRGfpgj1KZxLUBGJhUrsPL5SrWebI-OGnJU1798LIMF4Tv9mCf-nZII-oF6zT3ubml9vtUHhEiAuQnIt3kzrEql5j2qnPn20Ve05zvhKVRkmqxRReHDnEfkNKo1vWWDI814Qy-j1ipcVXNuP1INLXSAuxSkUxzNGt9PqDcgSb6q/media?maxWidthPx=800&key=AIzaSyC1pQxgyEA66BJ_F2ZLkHJvQeYDawXItEg" alt="Frankie's Pizza Bar Sorrento (also vegan & gluten free)" loading="lazy" onerror="this.parentElement.style.display='none'"></div></div>
-
-    <div class="card">
-      <h3>📍 Dove siamo</h3>
-      <div class="info-r"><span class="ico">🏠</span><span>Via Torquato Tasso, 4, 80067 Sorrento NA</span></div>
-      <div class="info-r"><span class="ico">📞</span><span>366 247 9749</span></div>
-      <div class="info-r"><span class="ico">⭐</span><span><strong>4.5/5</strong> su 3,494 recensioni Google</span></div>
+<!-- CHI SIAMO -->
+<section id="ristorante">
+  <div class="chi-siamo">
+    <div class="chi-siamo-testo">
+      <div class="section-label">Il Ristorante</div>
+      <h2 class="section-titolo">Frankie's Pizza Bar Sorrento (also vegan & gluten free)</h2>
+      <div class="gold-line left"></div>
+      <p>Snug, upbeat, casual spot providing traditional Neapolitan pizzas, pasta & gelato, plus beer & wine.</p>
+      <p>Prenota il tuo tavolo online in pochi secondi — conferma immediata su WhatsApp, zero commissioni.</p>
+      <br>
+      <a href="frankies-pizza-bar-sorrento-also-vegan-gluten-free-prenota.html" class="btn-oro">Prenota Ora</a>
     </div>
-
-    <div class="card">
-      <h3>🕐 Orari di apertura</h3>
-      <div class="orario-row"><span>Monday</span><span>10:30 AM – 11:30 PM</span></div><div class="orario-row"><span>Tuesday</span><span>Closed</span></div><div class="orario-row"><span>Wednesday</span><span>10:30 AM – 11:30 PM</span></div><div class="orario-row"><span>Thursday</span><span>10:30 AM – 11:30 PM</span></div><div class="orario-row"><span>Friday</span><span>10:30 AM – 11:30 PM</span></div><div class="orario-row"><span>Saturday</span><span>10:30 AM – 11:30 PM</span></div><div class="orario-row"><span>Sunday</span><span>10:30 AM – 11:30 PM</span></div>
-    </div>
-
-    <div class="card">
-      <h3>🏆 Perché prenotare online con Full Booking?</h3>
-
-      <div class="why-item">
-        <div class="why-icon">24</div>
-        <div class="why-text"><strong>Prenota quando vuoi</strong><br>Il sistema accetta prenotazioni 24 ore su 24, anche a mezzanotte.</div>
-      </div>
-      <div class="why-item">
-        <div class="why-icon">✓</div>
-        <div class="why-text"><strong>Conferma immediata via WhatsApp</strong><br>Ricevi la conferma sul cellulare in pochi secondi.</div>
-      </div>
-      <div class="why-item">
-        <div class="why-icon">0€</div>
-        <div class="why-text"><strong>Nessuna commissione</strong><br>La prenotazione diretta è sempre gratuita per il cliente.</div>
-      </div>
-
-      <div class="why-item">
-        <div class="why-icon">📧</div>
-        <div class="why-text"><strong>Riepilogo via email</strong><br>Ricevi anche un'email con tutti i dettagli della prenotazione.</div>
-      </div>
-    </div>
-
-  </div>
-
-  <!-- DESTRA — FORM -->
-  <div>
-    <div class="booking-card">
-      <h2>Prenota il tuo tavolo</h2>
-      <p class="bk-sub">da Frankie's Pizza Bar Sorrento (also vegan & gluten free) · Sorrento</p>
-
-      <div class="fg">
-        <label>Data</label>
-        <input type="date" id="data-input">
-      </div>
-      <div class="fg-row">
-        <div class="fg">
-          <label>Orario</label>
-          <select>
-            <option>12:30</option><option>13:00</option><option>13:30</option>
-            <option>20:00</option><option selected>20:30</option>
-            <option>21:00</option><option>21:30</option><option>22:00</option>
-          </select>
-        </div>
-        <div class="fg">
-          <label>Persone</label>
-          <select>
-            <option>1</option><option selected>2</option>
-            <option>3</option><option>4</option><option>5</option><option>6+</option>
-          </select>
-        </div>
-      </div>
-      <div class="fg">
-        <label>Nome e Cognome</label>
-        <input type="text" placeholder="Mario Rossi">
-      </div>
-      <div class="fg-row">
-        <div class="fg">
-          <label>Telefono</label>
-          <input type="tel" placeholder="+39 333 000 0000">
-        </div>
-        <div class="fg">
-          <label>Email</label>
-          <input type="email" placeholder="mario@email.it">
-        </div>
-      </div>
-      <div class="fg">
-        <label>Note speciali (opzionale)</label>
-        <input type="text" placeholder="Allergie, occasioni speciali...">
-      </div>
-
-      <button class="btn-book">🗓️ Verifica Disponibilità</button>
-
-      <p class="bk-note">
-        Powered by <span>Full Booking</span> · Prenotazione gratuita · Zero commissioni
-      </p>
+    <div class="chi-siamo-foto">
+      <img src="https://places.googleapis.com/v1/places/ChIJ1wpXka6eOxMRa7Ad-3xVVXg/photos/Ab43m-t5liSIOLcKwuRw-fqt9m0HEvozKaX-Q_SMmj1ZEJHCvx_Lbd_hNrmv-O7hUTRGJlK2noANAU2EDEMv6AEvBHSQUilUkyCk2XnlSgf0lrFtTJgC13OsZHfvlzLMbpIqJ_dbhbPP8bgPbghsp4F7VXm3FfrDxS4_BIhBQ00Yu_S55yn4308E7LJp6t3fScAaHjPnAmswRJMhoa4_aLkql8QtCcUyoIfEZBj3tZHAPTuE4wiQBii1bVEyMrp1mhDut6oOwRXEhrVTXzULZ43AmteycC1XxHmaGgxDlJ0SECgLLvxHgFkFtPPVVzg0L7j9-31zqBMoGquSrxfZCOgGl9_NB-YECpjMWmn956UGhDuQKmAf0V_qOaKC3WiyImrGX1y13qcYO8Tiah-tumhrCU1ze5wgbAg_xRLnd-THWCLfr1c/media?maxWidthPx=1200&key=AIzaSyC1pQxgyEA66BJ_F2ZLkHJvQeYDawXItEg" alt="Frankie's Pizza Bar Sorrento (also vegan & gluten free)"
+           onerror="this.src='https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800'">
     </div>
   </div>
+</section>
 
-</div>
+<!-- GALLERY -->
+<section id="galleria" class="gallery-section">
+  <div style="max-width:1200px;margin:0 auto 40px">
+    <div class="section-label">Galleria</div>
+    <h2 class="section-titolo">Le nostre immagini</h2>
+    <div class="gold-line left"></div>
+  </div>
+  <div class="gallery-grid"><div class="gallery-item"><img src="https://places.googleapis.com/v1/places/ChIJ1wpXka6eOxMRa7Ad-3xVVXg/photos/Ab43m-uxwDENeAmBw70_DUJ_u-Bkz5D6LPRl21Hw0An4VYGK-5M9384UDORjtZx8H92x74aryKgQtac5kwzAwxWjBqggGIF4L6dZgHAO62mmlFmdmxffy3KNrsk0Jn5Loe3rQluEubeTzWvlNmNqangZFxIDxpnP10rx7dG5U7f3TKeaGMpScbMHwoK-974_fISQfTdIBdU0StlM_dcvb3cUuysORNIzy7M1Mv0tAnbWwLJIySDGZAZ1HSYCN-uvGrWZ0ZP83Az42pSo85s0M48iFYkEyR5IwG0l-SrH86_8BDe0XCIqMja9Yd4YheIks6NI0LdgDcq2uofqHodX8T6oofRMqLie0ySiSx6WbIsdvZSL2o_UwCn411XS9e83V1pZrf5j_vD7_N188xSEDKPiZ2haqPkkRaq8mKm_b9LKGMkbupLQ/media?maxWidthPx=1200&key=AIzaSyC1pQxgyEA66BJ_F2ZLkHJvQeYDawXItEg" alt="Frankie's Pizza Bar Sorrento (also vegan & gluten free)" loading="lazy" onerror="this.parentElement.style.display:none"></div><div class="gallery-item"><img src="https://places.googleapis.com/v1/places/ChIJ1wpXka6eOxMRa7Ad-3xVVXg/photos/Ab43m-t5liSIOLcKwuRw-fqt9m0HEvozKaX-Q_SMmj1ZEJHCvx_Lbd_hNrmv-O7hUTRGJlK2noANAU2EDEMv6AEvBHSQUilUkyCk2XnlSgf0lrFtTJgC13OsZHfvlzLMbpIqJ_dbhbPP8bgPbghsp4F7VXm3FfrDxS4_BIhBQ00Yu_S55yn4308E7LJp6t3fScAaHjPnAmswRJMhoa4_aLkql8QtCcUyoIfEZBj3tZHAPTuE4wiQBii1bVEyMrp1mhDut6oOwRXEhrVTXzULZ43AmteycC1XxHmaGgxDlJ0SECgLLvxHgFkFtPPVVzg0L7j9-31zqBMoGquSrxfZCOgGl9_NB-YECpjMWmn956UGhDuQKmAf0V_qOaKC3WiyImrGX1y13qcYO8Tiah-tumhrCU1ze5wgbAg_xRLnd-THWCLfr1c/media?maxWidthPx=1200&key=AIzaSyC1pQxgyEA66BJ_F2ZLkHJvQeYDawXItEg" alt="Frankie's Pizza Bar Sorrento (also vegan & gluten free)" loading="lazy" onerror="this.parentElement.style.display:none"></div><div class="gallery-item"><img src="https://places.googleapis.com/v1/places/ChIJ1wpXka6eOxMRa7Ad-3xVVXg/photos/Ab43m-sxD5DglYZXmFUex035GaRLVt_mU9QE0s3hERhQSujdk04StIbZJtqFTGYgD-U3QHr8J0uJTmuAOZpBwBzyNI8DK_eZjL2FsfZF18-2hOqk4k2GR5kpV8k0bgJ7wqIMa0JWu8Cs4LMkkFL6xJERjhcKFvJsNN5mZBEMRJ21-NfdSq_espiFt3Fbtz-LomoaxeXhZyZTznVaU9x_mNzGY6BtV-yfscQuYzCBxjSFG7NJtYMJUoiRmRgD53q-Sh7DCLL8EVqKxpSa3_tWscbh8LMEu8yJ1LaleqZD5RUbcSNu5TfrDsuKrT79TChzZxz1FvrDKcMGLN9XX3om3IuSkP6zSGiCnAoWxzuPudH_dKQS-Bb2XGEoMXHVa2zzVitQJDHynECMXnJwr9xW7KTY8HVudiOr42G9b9y_ew-i-aPJqG6n4Nq4JQYjtTe-j58n/media?maxWidthPx=1200&key=AIzaSyC1pQxgyEA66BJ_F2ZLkHJvQeYDawXItEg" alt="Frankie's Pizza Bar Sorrento (also vegan & gluten free)" loading="lazy" onerror="this.parentElement.style.display:none"></div><div class="gallery-item"><img src="https://places.googleapis.com/v1/places/ChIJ1wpXka6eOxMRa7Ad-3xVVXg/photos/Ab43m-v6L7GhJbL9jWmSd1qZqX9SGxj_DqsTQ95IWMc24fXKbm6XG5qVC6oyLhzJVsTiUdIrYk73G-5P0wFzsWpUGT7LY2umgyOp5ep_O18kVo4LvbsD95S9cmq5gaVuuyQyI0zTY89Moco9pr9lV6tEvfgrmdLB-Wx0gEl7KlfUqlFX_dRHk7_O5QIuwfnmDUuBY_37zn5Jb5tQPSshIqF7DlMhTPA4vaxuboK_3bjqTF70RvuBj3mo4IJo0XSKeV7ihRwZ1wg7LS0GmhJZQzslC4u3z6DunT8K7N9AlYw5xDUXTnWsiZ6YnWjPiUS2tRsR7tenHkAyincSMNhqcFkVWIdHJ7KSSTA1o_XDf05Gv1pUHLSZm5N-JxQTkrlNzZBMupkyTW2GD0M30yTGSuggu8WZJL-e43wealM_JtdG1EgVS8F99naeZTXFz4creBYT/media?maxWidthPx=1200&key=AIzaSyC1pQxgyEA66BJ_F2ZLkHJvQeYDawXItEg" alt="Frankie's Pizza Bar Sorrento (also vegan & gluten free)" loading="lazy" onerror="this.parentElement.style.display:none"></div><div class="gallery-item"><img src="https://places.googleapis.com/v1/places/ChIJ1wpXka6eOxMRa7Ad-3xVVXg/photos/Ab43m-tIQaGUts2c230DbKaElaOSMCs-9IT7my5RjSRBa8fhQCkZsn-6_PWNSOBa0-eQeCTHjwxm3dyMvsf4zFOzjnVf0uW8ydi8dhRKBUgyFJZ6Bek7LMsLwF2K6vz81tnB-lRvtrvlv8YkDYUZIteMlPe1b_IGipD4xSGdH581WAMaSK10hOpmjbKtx_QbXkpsweY5IVZVmywMwnDJr9xe4CSeNoMfjnQrot5I5E_HXlfuYgd0GkQ3HecfutVlqeQCHRsWvWF_zISsX2dKAo74qt0LBRPcCQYzvpXuXQnlqmqp3tbq1tgfPaOVZc6vXhZ6Bq_YQWWbtscfLqsW08yioHEo0nnhNSikLbc7bWk1-BeJ0gVLJyspi-8n8n7ZHKi_HsBUvxkhmwvYp1d8B3zZB7l9R7b2icXw2GofESi3pHy_GyZhXAfAE56WHJSHeZmY/media?maxWidthPx=1200&key=AIzaSyC1pQxgyEA66BJ_F2ZLkHJvQeYDawXItEg" alt="Frankie's Pizza Bar Sorrento (also vegan & gluten free)" loading="lazy" onerror="this.parentElement.style.display:none"></div></div>
+</section>
 
+<!-- ORARI E INFO -->
+<section id="orari">
+  <div class="info-section">
+    <div class="info-card">
+      <div class="section-label">Informazioni</div>
+      <h2 class="section-titolo" style="font-size:26px">Dove siamo</h2>
+      <div class="gold-line left"></div>
+      <div class="info-row">
+        <div class="info-ico">📍</div>
+        <div class="info-txt"><strong>Indirizzo</strong>Via Torquato Tasso, 4, 80067 Sorrento NA</div>
+      </div>
+      <div class="info-row"><div class="info-ico">📞</div><div class="info-txt"><strong>Telefono</strong>366 247 9749</div></div>
+      <div class="info-row">
+        <div class="info-ico">⭐</div>
+        <div class="info-txt"><strong>Valutazione Google</strong>4.5/5 su 3,494 recensioni</div>
+      </div>
+      <div class="info-row"><div class="info-ico">🌐</div><div class="info-txt"><strong>Sito web</strong><a href="https://frankiesbar.it/" style="color:var(--oro)">https://frankiesbar.it/</a></div></div>
+    </div>
+    <div class="info-card">
+      <div class="section-label">Orari</div>
+      <h2 class="section-titolo" style="font-size:26px">Quando apriremo</h2>
+      <div class="gold-line left"></div>
+      <div class="orario-row"><span class="orario-giorno">Monday</span><span class="orario-ore">10:30 AM – 11:30 PM</span></div><div class="orario-row"><span class="orario-giorno">Tuesday</span><span class="orario-ore">Closed</span></div><div class="orario-row"><span class="orario-giorno">Wednesday</span><span class="orario-ore">10:30 AM – 11:30 PM</span></div><div class="orario-row"><span class="orario-giorno">Thursday</span><span class="orario-ore">10:30 AM – 11:30 PM</span></div><div class="orario-row"><span class="orario-giorno">Friday</span><span class="orario-ore">10:30 AM – 11:30 PM</span></div><div class="orario-row"><span class="orario-giorno">Saturday</span><span class="orario-ore">10:30 AM – 11:30 PM</span></div><div class="orario-row"><span class="orario-giorno">Sunday</span><span class="orario-ore">10:30 AM – 11:30 PM</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="section-label">Prenotazione Online</div>
+  <h2 class="section-titolo">Riserva il tuo tavolo</h2>
+  <div class="gold-line"></div>
+  <p>Prenota in 30 secondi. Conferma immediata su WhatsApp.<br>Zero commissioni — sempre gratuito per i clienti.</p>
+  <div class="cta-duo">
+    <a href="frankies-pizza-bar-sorrento-also-vegan-gluten-free-prenota.html" class="btn-oro">📅 Prenota Ora</a>
+    <a href="tel:366 247 9749" class="btn-outline">📞 Chiama</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
 <footer>
-  <strong><strong>Full Booking</strong> · Sistema di prenotazione online per ristoranti<strong style="color:#fff">Frankie's Pizza Bar Sorrento (also vegan & gluten free)</strong><br>
-  
+  <div>
+    <div class="footer-brand">FULL<span>BOOKING</span></div>
+    <div style="font-size:12px;color:var(--grigio);margin-top:6px;letter-spacing:1px">
+      Sistema di prenotazione online · Frankie's Pizza Bar Sorrento (also vegan & gluten free) · Sorrento
+    </div>
+  </div>
+  <div class="footer-copy">
+    © 2025 fullbooking.cloud · Powered by GF Technological System
+  </div>
 </footer>
 
 <script>
-  const d = new Date(); d.setDate(d.getDate()+1);
-  document.getElementById('data-input').value = d.toISOString().split('T')[0];
-  document.getElementById('data-input').min = d.toISOString().split('T')[0];
+  // Bottone prenota flottante — appare dopo 80% dell'altezza hero
+  const floatBtn = document.getElementById('floatBtn');
+  const heroH = document.querySelector('.hero').offsetHeight;
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > heroH * 0.8) {
+      floatBtn.classList.add('visible');
+    } else {
+      floatBtn.classList.remove('visible');
+    }
+  }, { passive: true });
 </script>
 </body>
 </html>

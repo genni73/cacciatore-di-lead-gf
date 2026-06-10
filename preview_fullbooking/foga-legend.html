@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FOGA – Meat the Legends | Steakhouse Torino & Gaeta</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --nero:   #0a0a0a;
+  --nero2:  #141414;
+  --nero3:  #1e1e1e;
+  --oro:    #c9a84c;
+  --oro2:   #e8c96b;
+  --crema:  #f0ead6;
+  --grigio: #8a8a8a;
+  --bianco: #ffffff;
+  --rosso:  #a0281e;
+}
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body {
+  font-family:'Inter',sans-serif;
+  background:var(--nero);
+  color:var(--crema);
+  -webkit-font-smoothing:antialiased;
+}
+a { color:inherit; text-decoration:none; }
+img { display:block; width:100%; }
+
+::-webkit-scrollbar { width:5px; }
+::-webkit-scrollbar-track { background:var(--nero2); }
+::-webkit-scrollbar-thumb { background:var(--oro); border-radius:3px; }
+
+/* ── TOPBAR ── */
+.fb-topbar {
+  background:rgba(10,10,10,0.95);
+  border-bottom:1px solid rgba(201,168,76,0.15);
+  padding:10px 28px;
+  display:flex; align-items:center; justify-content:space-between;
+  position:sticky; top:0; z-index:200;
+  backdrop-filter:blur(12px);
+}
+.fb-logo {
+  font-family:'Playfair Display',serif;
+  font-size:17px; letter-spacing:3px; font-weight:700;
+  color:var(--bianco);
+}
+.fb-logo span { color:var(--oro); }
+.fb-topbar-note { font-size:10px; color:var(--grigio); letter-spacing:1px; text-transform:uppercase; }
+
+/* ── HERO VIDEO ── */
+.hero {
+  position:relative;
+  height:100vh;
+  min-height:620px;
+  display:flex; align-items:center; justify-content:center;
+  overflow:hidden;
+  background:#0a0a0a;
+}
+.hero-video {
+  position:absolute; inset:0;
+  width:100%; height:100%;
+  object-fit:cover;
+  opacity:0.55;
+}
+.hero-overlay {
+  position:absolute; inset:0;
+  background:linear-gradient(to bottom, rgba(10,10,10,0.3) 0%, rgba(10,10,10,0.1) 40%, rgba(10,10,10,0.85) 100%);
+}
+.hero-content {
+  position:relative; z-index:2;
+  text-align:center; padding:0 24px;
+}
+.hero-badge {
+  display:inline-block;
+  border:1px solid var(--oro);
+  color:var(--oro);
+  font-size:10px; letter-spacing:4px; text-transform:uppercase;
+  padding:6px 20px; border-radius:2px;
+  margin-bottom:24px;
+}
+.hero-title {
+  font-family:'Playfair Display',serif;
+  font-size:clamp(52px,10vw,110px);
+  font-weight:900;
+  line-height:1;
+  color:var(--bianco);
+  letter-spacing:-1px;
+  margin-bottom:8px;
+}
+.hero-tagline {
+  font-family:'Playfair Display',serif;
+  font-size:clamp(16px,3vw,26px);
+  color:var(--oro);
+  font-style:italic;
+  letter-spacing:2px;
+  margin-bottom:32px;
+}
+.hero-desc {
+  font-size:15px; color:rgba(240,234,214,0.75);
+  max-width:520px; margin:0 auto 40px;
+  line-height:1.7;
+}
+.btn-oro {
+  display:inline-block;
+  background:linear-gradient(135deg,var(--oro),var(--oro2));
+  color:var(--nero);
+  padding:16px 44px;
+  font-size:12px; font-weight:700;
+  letter-spacing:2px; text-transform:uppercase;
+  border-radius:2px;
+  transition:all .3s ease;
+  border:none; cursor:pointer;
+}
+.btn-oro:hover { transform:translateY(-2px); box-shadow:0 12px 32px rgba(201,168,76,0.35); }
+
+/* ── SCROLL INDICATOR ── */
+.scroll-hint {
+  position:absolute; bottom:32px; left:50%; transform:translateX(-50%);
+  z-index:2; text-align:center;
+}
+.scroll-arrow {
+  width:1px; height:48px; background:linear-gradient(to bottom, var(--oro), transparent);
+  margin:8px auto 0; animation:scrollDown 1.8s ease-in-out infinite;
+}
+@keyframes scrollDown { 0%,100%{transform:scaleY(1);opacity:1} 50%{transform:scaleY(0.5);opacity:0.4} }
+.scroll-label { font-size:9px; letter-spacing:3px; color:var(--oro); text-transform:uppercase; }
+
+/* ── SECTION ── */
+.section { padding:96px 24px; }
+.section-inner { max-width:1100px; margin:0 auto; }
+.section-label {
+  font-size:10px; letter-spacing:4px; text-transform:uppercase;
+  color:var(--oro); margin-bottom:16px;
+}
+.section-title {
+  font-family:'Playfair Display',serif;
+  font-size:clamp(30px,5vw,54px);
+  color:var(--bianco);
+  line-height:1.15; margin-bottom:24px;
+}
+.divider-oro {
+  width:60px; height:2px;
+  background:linear-gradient(to right, var(--oro), transparent);
+  margin:20px 0;
+}
+.text-body {
+  font-size:16px; color:rgba(240,234,214,0.7);
+  line-height:1.8; max-width:640px;
+}
+
+/* ── FILOSOFIA ── */
+.filosofia-grid {
+  display:grid; grid-template-columns:1fr 1fr;
+  gap:64px; align-items:center;
+}
+@media(max-width:768px){ .filosofia-grid{grid-template-columns:1fr; gap:40px;} }
+.filosofia-img {
+  border-radius:4px; overflow:hidden;
+  position:relative;
+}
+.filosofia-img img { height:480px; object-fit:cover; }
+.filosofia-img::after {
+  content:'';
+  position:absolute; inset:0;
+  border:1px solid rgba(201,168,76,0.2);
+  border-radius:4px; pointer-events:none;
+}
+.quote-block {
+  border-left:3px solid var(--oro);
+  padding:24px 32px;
+  background:rgba(201,168,76,0.05);
+  border-radius:0 4px 4px 0;
+  margin-top:32px;
+}
+.quote-block p {
+  font-family:'Playfair Display',serif;
+  font-size:20px; font-style:italic;
+  color:var(--crema); line-height:1.6;
+}
+.quote-block cite {
+  display:block; margin-top:12px;
+  font-size:11px; letter-spacing:2px;
+  color:var(--oro); text-transform:uppercase; font-style:normal;
+}
+
+/* ── MENU HIGHLIGHTS ── */
+.bg-nero2 { background:var(--nero2); }
+.piatti-grid {
+  display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
+  gap:24px; margin-top:48px;
+}
+.piatto-card {
+  background:var(--nero3);
+  border:1px solid rgba(201,168,76,0.12);
+  border-radius:4px; overflow:hidden;
+  transition:all .3s ease;
+}
+.piatto-card:hover {
+  border-color:var(--oro);
+  transform:translateY(-4px);
+  box-shadow:0 20px 40px rgba(0,0,0,0.4);
+}
+.piatto-img { height:200px; object-fit:cover; }
+.piatto-body { padding:24px; }
+.piatto-cat {
+  font-size:9px; letter-spacing:3px; color:var(--oro);
+  text-transform:uppercase; margin-bottom:8px;
+}
+.piatto-nome {
+  font-family:'Playfair Display',serif;
+  font-size:20px; color:var(--bianco); margin-bottom:8px;
+}
+.piatto-desc { font-size:13px; color:var(--grigio); line-height:1.6; }
+
+/* ── INFO STRIP ── */
+.info-strip {
+  display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr));
+  gap:1px; background:rgba(201,168,76,0.1);
+  border:1px solid rgba(201,168,76,0.15);
+  border-radius:4px; overflow:hidden;
+  margin-top:64px;
+}
+.info-item {
+  background:var(--nero2);
+  padding:32px 28px;
+  display:flex; gap:16px; align-items:flex-start;
+}
+.info-icon { font-size:24px; flex-shrink:0; margin-top:2px; }
+.info-label { font-size:10px; letter-spacing:2px; color:var(--oro); text-transform:uppercase; margin-bottom:6px; }
+.info-val { font-size:14px; color:var(--crema); line-height:1.5; }
+
+/* ── PRENOTAZIONE BANNER ── */
+.prenota-banner {
+  background:linear-gradient(135deg, var(--nero3), #1a1208);
+  border:1px solid rgba(201,168,76,0.2);
+  border-radius:8px;
+  padding:64px 40px;
+  text-align:center;
+  position:relative; overflow:hidden;
+}
+.prenota-banner::before {
+  content:'';
+  position:absolute; top:-60px; right:-60px;
+  width:240px; height:240px;
+  background:radial-gradient(circle, rgba(201,168,76,0.08), transparent);
+  border-radius:50%;
+}
+.prenota-banner .section-title { color:var(--bianco); margin-bottom:16px; }
+.prenota-banner .text-body { margin:0 auto 40px; text-align:center; }
+
+/* ── FOOTER ── */
+.footer {
+  background:var(--nero);
+  border-top:1px solid rgba(201,168,76,0.1);
+  padding:48px 24px;
+  text-align:center;
+}
+.footer-logo {
+  font-family:'Playfair Display',serif;
+  font-size:28px; letter-spacing:4px; color:var(--bianco);
+  margin-bottom:8px;
+}
+.footer-tagline { font-size:12px; color:var(--oro); letter-spacing:3px; margin-bottom:24px; }
+.footer-links { display:flex; gap:24px; justify-content:center; flex-wrap:wrap; margin-bottom:24px; }
+.footer-link { font-size:11px; color:var(--grigio); letter-spacing:1px; text-transform:uppercase; }
+.footer-link:hover { color:var(--oro); }
+.footer-copy { font-size:11px; color:rgba(138,138,138,0.5); }
+.footer-fb {
+  margin-top:24px; font-size:11px; color:rgba(138,138,138,0.4);
+  letter-spacing:1px;
+}
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<nav class="fb-topbar">
+  <div class="fb-logo">FULL<span>BOOKING</span></div>
+  <span class="fb-topbar-note">Prenota il tuo tavolo online</span>
+</nav>
+
+<!-- HERO con VIDEO -->
+<section class="hero">
+  <!-- VIDEO HOMEPAGE FOGA -->
+  <video class="hero-video" autoplay muted loop playsinline poster="https://www.fogalegend.it/wp-content/uploads/2024/01/hero-poster.jpg">
+    <!-- Sostituire src con il link diretto al video -->
+    <source src="VIDEO_URL_QUI" type="video/mp4">
+  </video>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-badge">Steakhouse · Torino & Gaeta</div>
+    <h1 class="hero-title">FOGA</h1>
+    <p class="hero-tagline">Meat the Legends</p>
+    <p class="hero-desc">La materia prima nuda e cruda, la nostra fiamma, il vostro viaggio.<br>Carni selezionate, cotture perfette, un'esperienza unica.</p>
+    <a href="foga-legend-prenota.html" class="btn-oro">Prenota il tuo tavolo</a>
+  </div>
+  <div class="scroll-hint">
+    <span class="scroll-label">Scopri</span>
+    <div class="scroll-arrow"></div>
+  </div>
+</section>
+
+<!-- FILOSOFIA -->
+<section class="section">
+  <div class="section-inner">
+    <div class="filosofia-grid">
+      <div>
+        <p class="section-label">Chi siamo</p>
+        <h2 class="section-title">Il fuoco<br>è la nostra firma</h2>
+        <div class="divider-oro"></div>
+        <p class="text-body">Da FOGA crediamo che la cucina a fuoco vivo sia il modo più autentico di rispettare la materia prima. Ogni carne è scelta con cura da allevamenti non intensivi, ogni cottura è studiata per esaltare sapori veri, senza compromessi.</p>
+        <div class="quote-block" style="margin-top:32px">
+          <p>"La carne non è solo cibo — è un rito. E noi siamo i sacerdoti della fiamma."</p>
+          <cite>— FOGA, Meat the Legends</cite>
+        </div>
+      </div>
+      <div class="filosofia-img">
+        <img src="https://images.unsplash.com/photo-1544025162-d76694265947?w=800&q=80" alt="Carne alla brace FOGA" loading="lazy">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MENU HIGHLIGHTS -->
+<section class="section bg-nero2">
+  <div class="section-inner">
+    <p class="section-label">La nostra proposta</p>
+    <h2 class="section-title">I protagonisti<br>della fiamma</h2>
+    <div class="piatti-grid">
+      <div class="piatto-card">
+        <img class="piatto-img" src="https://images.unsplash.com/photo-1558030006-450675393462?w=600&q=80" alt="Tagliata" loading="lazy">
+        <div class="piatto-body">
+          <p class="piatto-cat">🔥 Carne alla fiamma</p>
+          <h3 class="piatto-nome">Tagliata di Fassona</h3>
+          <p class="piatto-desc">Carne Piemontese selezionata, rucola, grana a scaglie. Cottura al punto esatto.</p>
+        </div>
+      </div>
+      <div class="piatto-card">
+        <img class="piatto-img" src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=600&q=80" alt="Burger" loading="lazy">
+        <div class="piatto-body">
+          <p class="piatto-cat">🍔 Burger artigianali</p>
+          <h3 class="piatto-nome">FOGA Burger</h3>
+          <p class="piatto-desc">Panino brioche, carne macinata al momento, ingredienti freschi selezionati ogni giorno.</p>
+        </div>
+      </div>
+      <div class="piatto-card">
+        <img class="piatto-img" src="https://images.unsplash.com/photo-1600891964092-4316c288032e?w=600&q=80" alt="Tomahawk" loading="lazy">
+        <div class="piatto-body">
+          <p class="piatto-cat">⚡ La specialità</p>
+          <h3 class="piatto-nome">Tomahawk Ribeye</h3>
+          <p class="piatto-desc">Il re della brace. Frollatura superiore ai 30 giorni, cottura reverse sear sulla fiamma viva.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INFO -->
+<section class="section">
+  <div class="section-inner">
+    <p class="section-label">Dove & Quando</p>
+    <h2 class="section-title">Vieni a trovarci</h2>
+    <div class="info-strip">
+      <div class="info-item">
+        <span class="info-icon">📍</span>
+        <div>
+          <p class="info-label">Sede Torino</p>
+          <p class="info-val">Via Giovanni Virginio 1<br>10124 Torino TO</p>
+        </div>
+      </div>
+      <div class="info-item">
+        <span class="info-icon">📞</span>
+        <div>
+          <p class="info-label">Telefono</p>
+          <p class="info-val">+39 392 038 2526</p>
+        </div>
+      </div>
+      <div class="info-item">
+        <span class="info-icon">🕐</span>
+        <div>
+          <p class="info-label">Orari</p>
+          <p class="info-val">Mar–Dom<br>12:00 – 15:00 · 19:00 – 23:00</p>
+        </div>
+      </div>
+      <div class="info-item">
+        <span class="info-icon">✉️</span>
+        <div>
+          <p class="info-label">Email</p>
+          <p class="info-val">info@fogatorino.it</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRENOTA BANNER -->
+<section class="section" style="background:var(--nero2)">
+  <div class="section-inner">
+    <div class="prenota-banner">
+      <p class="section-label">Riservato a te</p>
+      <h2 class="section-title">Prenota il tuo<br>tavolo ora</h2>
+      <p class="text-body">Scegli data, orario e numero di persone. Conferma immediata. Niente attese al telefono.</p>
+      <a href="foga-legend-prenota.html" class="btn-oro">Prenota subito — è gratis</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-logo">FOGA</div>
+  <div class="footer-tagline">Meat the Legends</div>
+  <div class="footer-links">
+    <a href="https://www.fogalegend.it" target="_blank" class="footer-link">Sito ufficiale</a>
+    <a href="foga-legend-prenota.html" class="footer-link">Prenota</a>
+    <a href="tel:+393920382526" class="footer-link">Chiama</a>
+  </div>
+  <p class="footer-copy">Via Giovanni Virginio 1, Torino · +39 392 038 2526</p>
+  <p class="footer-fb">Powered by FullBooking.cloud — Il tuo ristorante, sempre prenotabile.</p>
+</footer>
+
+</body>
+</html>

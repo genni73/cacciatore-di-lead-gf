@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pasticceria Benito — Casal di Principe | Full Booking</title>
+<meta name="description" content="Benito Odorino è il primo pasticciere della provincia di Caserta ad entrare in AMPI donando ancor più prestigio al nostro territorio cambiando irrimediabilmente">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root { 
+  --nero:     #0a0a0a;
+  --nero2:    #141414;
+  --nero3:    #1e1e1e;
+  --oro:      #c9a84c;
+  --oro2:     #e8c96b;
+  --crema:    #f0ead6;
+  --grigio:   #8a8a8a;
+  --bianco:   #ffffff;
+ }
+
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--nero);
+  color: var(--crema);
+  -webkit-font-smoothing: antialiased;
+}
+a { color: inherit; text-decoration: none; }
+img { display: block; }
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--nero2); }
+::-webkit-scrollbar-thumb { background: var(--oro); border-radius: 3px; }
+
+/* Topbar Full Booking */
+.fb-topbar {
+  background: var(--nero);
+  border-bottom: 1px solid rgba(201,168,76,0.2);
+  padding: 10px 32px;
+  display: flex; align-items: center; justify-content: space-between;
+  position: sticky; top: 0; z-index: 200;
+  backdrop-filter: blur(12px);
+}
+.fb-logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 18px; letter-spacing: 3px; font-weight: 700;
+  color: var(--bianco);
+}
+.fb-logo span { color: var(--oro); }
+.fb-topbar-cta {
+  font-size: 11px; color: var(--grigio);
+  letter-spacing: 1px; text-transform: uppercase;
+}
+
+/* Bottone oro */
+.btn-oro {
+  display: inline-block;
+  background: linear-gradient(135deg, var(--oro), var(--oro2));
+  color: var(--nero);
+  padding: 14px 36px;
+  font-size: 12px; font-weight: 700;
+  letter-spacing: 2px; text-transform: uppercase;
+  border: none; cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  transition: opacity .2s, transform .2s;
+}
+.btn-oro:hover { opacity: .88; transform: translateY(-1px); }
+
+/* Linea oro decorativa */
+.gold-line {
+  width: 48px; height: 2px;
+  background: linear-gradient(90deg, var(--oro), var(--oro2));
+  margin: 0 auto 20px;
+}
+.gold-line.left { margin: 0 0 20px; }
+
+
+/* NAVBAR */
+.navbar {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 300;
+  background: rgba(10,10,10,0.92);
+  border-bottom: 1px solid rgba(201,168,76,0.15);
+  padding: 0 40px;
+  display: flex; align-items: center; justify-content: space-between;
+  height: 68px;
+  backdrop-filter: blur(16px);
+  transition: background .3s;
+}
+.navbar-brand {
+  display: flex; align-items: center; gap: 14px;
+}
+.nav-logo { height: 40px; width: auto; max-width: 130px; object-fit: contain; }
+.navbar-nome {
+  font-family: 'Playfair Display', serif;
+  font-size: 17px; color: var(--crema); letter-spacing: .5px;
+}
+.navbar-links {
+  display: flex; align-items: center; gap: 32px;
+}
+.navbar-links a {
+  font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+  color: var(--grigio); transition: color .2s;
+}
+.navbar-links a:hover { color: var(--oro); }
+.navbar-prenota {
+  background: linear-gradient(135deg, var(--oro), var(--oro2));
+  color: var(--nero) !important;
+  padding: 10px 22px;
+  font-size: 11px !important; font-weight: 700 !important;
+  letter-spacing: 2px;
+}
+.navbar-prenota:hover { opacity: .88; }
+@media(max-width: 768px) {
+  .navbar { padding: 0 20px; }
+  .navbar-links { display: none; }
+}
+
+/* HERO */
+.hero {
+  height: 100vh; min-height: 600px;
+  position: relative; overflow: hidden;
+}
+.hero-img {
+  width: 100%; height: 100%; object-fit: cover;
+  transform: scale(1.04);
+  transition: transform 8s ease;
+}
+.hero:hover .hero-img { transform: scale(1); }
+.hero-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(10,10,10,0.3) 0%,
+    rgba(10,10,10,0.1) 40%,
+    rgba(10,10,10,0.85) 100%
+  );
+}
+.hero-content {
+  position: absolute; bottom: 80px; left: 0; right: 0;
+  padding: 0 60px;
+  max-width: 900px;
+}
+.hero-badge {
+  display: inline-block;
+  border: 1px solid var(--oro);
+  color: var(--oro);
+  font-size: 10px; letter-spacing: 3px; text-transform: uppercase;
+  padding: 6px 16px; margin-bottom: 20px;
+}
+.hero-titolo {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(36px, 6vw, 72px);
+  font-weight: 700; line-height: 1.1;
+  color: var(--bianco);
+  text-shadow: 0 2px 40px rgba(0,0,0,0.5);
+  margin-bottom: 16px;
+}
+.hero-tagline {
+  font-size: 15px; color: rgba(240,234,214,0.8);
+  line-height: 1.7; max-width: 540px; margin-bottom: 24px;
+  font-weight: 300;
+}
+.hero-meta {
+  display: flex; align-items: center; gap: 20px; flex-wrap: wrap;
+}
+.rating-pill {
+  display: flex; align-items: center; gap: 8px;
+  background: rgba(201,168,76,0.12);
+  border: 1px solid rgba(201,168,76,0.3);
+  padding: 8px 18px;
+}
+.star { font-size: 14px; }
+.star.full, .star.half { color: var(--oro); }
+.star.empty { color: rgba(201,168,76,0.25); }
+.rating-num { color: var(--oro); font-weight: 700; font-size: 15px; }
+.rating-cnt { color: rgba(240,234,214,0.6); font-size: 12px; }
+.hero-citta { color: rgba(240,234,214,0.75); font-size: 13px; letter-spacing: 1px; }
+@media(max-width: 768px) {
+  .hero-content { padding: 0 24px; bottom: 60px; }
+}
+
+/* SCROLL INDICATOR */
+.scroll-ind {
+  position: absolute; bottom: 28px; left: 50%;
+  transform: translateX(-50%);
+  display: flex; flex-direction: column; align-items: center; gap: 6px;
+  color: rgba(201,168,76,0.5); font-size: 10px; letter-spacing: 2px;
+  text-transform: uppercase;
+  animation: bounce 2s infinite;
+}
+.scroll-ind::after {
+  content: ''; width: 1px; height: 40px;
+  background: linear-gradient(to bottom, var(--oro), transparent);
+}
+@keyframes bounce {
+  0%,100% { opacity: .5; transform: translateX(-50%) translateY(0); }
+  50% { opacity: 1; transform: translateX(-50%) translateY(6px); }
+}
+
+/* BOTTONE PRENOTA FLOTTANTE */
+.btn-prenota-float {
+  position: fixed;
+  bottom: 36px; right: 36px;
+  z-index: 500;
+  width: 96px; height: 96px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--oro), var(--oro2));
+  color: var(--nero);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 4px;
+  font-family: 'Inter', sans-serif;
+  font-size: 11px; font-weight: 800;
+  letter-spacing: 2px; text-transform: uppercase;
+  text-decoration: none;
+  box-shadow: 0 8px 32px rgba(201,168,76,0.35), 0 2px 8px rgba(0,0,0,0.4);
+  transition: transform .25s, box-shadow .25s, opacity .25s;
+  opacity: 0;
+  transform: scale(0.7) translateY(20px);
+  pointer-events: none;
+}
+.btn-prenota-float.visible {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+  pointer-events: auto;
+}
+.btn-prenota-float:hover {
+  transform: scale(1.07) translateY(-3px);
+  box-shadow: 0 14px 40px rgba(201,168,76,0.5), 0 4px 12px rgba(0,0,0,0.4);
+}
+.btn-prenota-float .float-arrow {
+  font-size: 18px; line-height: 1;
+  transition: transform .2s;
+}
+.btn-prenota-float:hover .float-arrow {
+  transform: translateY(3px);
+}
+@media(max-width: 768px) {
+  .btn-prenota-float {
+    width: 80px; height: 80px;
+    bottom: 24px; right: 20px;
+    font-size: 10px;
+    opacity: 1; transform: scale(1) translateY(0);
+    pointer-events: auto;
+  }
+}
+
+/* SEZIONI */
+section { padding: 100px 60px; }
+@media(max-width: 768px) { section { padding: 60px 24px; } }
+
+.section-label {
+  font-size: 10px; letter-spacing: 4px; text-transform: uppercase;
+  color: var(--oro); margin-bottom: 14px;
+}
+.section-titolo {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(28px, 4vw, 42px); font-weight: 600;
+  color: var(--crema); line-height: 1.2; margin-bottom: 20px;
+}
+
+/* CHI SIAMO */
+.chi-siamo {
+  max-width: 1100px; margin: 0 auto;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
+}
+@media(max-width: 768px) { .chi-siamo { grid-template-columns: 1fr; gap: 40px; } }
+.chi-siamo-testo p {
+  font-size: 16px; line-height: 1.9; color: rgba(240,234,214,0.75);
+  font-weight: 300; margin-bottom: 16px;
+}
+.chi-siamo-foto {
+  position: relative; height: 480px;
+}
+.chi-siamo-foto img {
+  width: 100%; height: 100%; object-fit: cover;
+}
+.chi-siamo-foto::before {
+  content: '';
+  position: absolute; inset: -12px -12px 12px 12px;
+  border: 1px solid rgba(201,168,76,0.25);
+  z-index: -1;
+}
+
+/* GALLERY */
+.gallery-section { background: var(--nero2); }
+.gallery-grid {
+  max-width: 1200px; margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: 280px 280px;
+  gap: 4px;
+}
+.gallery-item { overflow: hidden; position: relative; }
+.gallery-item:first-child {
+  grid-column: span 2; grid-row: span 2;
+}
+.gallery-item img {
+  width: 100%; height: 100%; object-fit: cover;
+  transition: transform .6s ease;
+}
+.gallery-item:hover img { transform: scale(1.05); }
+@media(max-width: 768px) {
+  .gallery-grid { grid-template-columns: 1fr 1fr; grid-template-rows: auto; }
+  .gallery-item:first-child { grid-column: span 2; height: 220px; }
+  .gallery-item { height: 160px; }
+}
+
+/* INFO + ORARI */
+.info-section {
+  max-width: 1100px; margin: 0 auto;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 80px;
+}
+@media(max-width: 768px) { .info-section { grid-template-columns: 1fr; gap: 48px; } }
+.info-card {
+  border-top: 1px solid rgba(201,168,76,0.2);
+  padding-top: 32px;
+}
+.info-row {
+  display: flex; align-items: flex-start; gap: 16px;
+  margin-bottom: 20px; padding-bottom: 20px;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+.info-row:last-child { border-bottom: none; }
+.info-ico {
+  width: 36px; height: 36px; flex-shrink: 0;
+  background: rgba(201,168,76,0.1);
+  border: 1px solid rgba(201,168,76,0.2);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 15px;
+}
+.info-txt { font-size: 14px; color: rgba(240,234,214,0.75); line-height: 1.6; }
+.info-txt strong { color: var(--crema); font-size: 12px; letter-spacing: 1px; text-transform: uppercase; display: block; margin-bottom: 4px; }
+.orario-row {
+  display: flex; justify-content: space-between;
+  padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.05);
+  font-size: 13px;
+}
+.orario-giorno { color: var(--crema); }
+.orario-ore { color: var(--grigio); text-align: right; }
+.no-info { font-size: 13px; color: var(--grigio); font-style: italic; }
+
+/* CTA PRENOTA */
+.cta-section {
+  background: var(--nero2);
+  border-top: 1px solid rgba(201,168,76,0.15);
+  border-bottom: 1px solid rgba(201,168,76,0.15);
+  text-align: center;
+  padding: 120px 60px;
+}
+.cta-section .section-titolo { margin-bottom: 14px; }
+.cta-section p {
+  font-size: 15px; color: rgba(240,234,214,0.6);
+  max-width: 500px; margin: 0 auto 40px;
+  line-height: 1.7; font-weight: 300;
+}
+.cta-duo {
+  display: flex; align-items: center; justify-content: center;
+  gap: 20px; flex-wrap: wrap;
+}
+.btn-outline {
+  display: inline-block;
+  border: 1px solid var(--oro);
+  color: var(--oro);
+  padding: 14px 36px;
+  font-size: 12px; font-weight: 600;
+  letter-spacing: 2px; text-transform: uppercase;
+  transition: all .2s;
+}
+.btn-outline:hover { background: var(--oro); color: var(--nero); }
+
+/* FOOTER */
+footer {
+  background: var(--nero);
+  border-top: 1px solid rgba(201,168,76,0.1);
+  padding: 48px 60px 32px;
+  display: flex; justify-content: space-between; align-items: flex-end;
+  flex-wrap: wrap; gap: 24px;
+}
+.footer-brand {
+  font-family: 'Playfair Display', serif;
+  font-size: 20px; letter-spacing: 3px; color: var(--crema);
+}
+.footer-brand span { color: var(--oro); }
+.footer-copy {
+  font-size: 11px; color: rgba(138,138,138,0.5);
+  letter-spacing: 1px;
+}
+@media(max-width: 768px) {
+  footer { padding: 40px 24px 28px; flex-direction: column; align-items: flex-start; }
+}
+</style>
+</head>
+<body>
+
+<!-- BOTTONE PRENOTA FLOTTANTE -->
+<a href="pasticceria-benito-prenota.html" class="btn-prenota-float" id="floatBtn">
+  <span>PRENOTA</span>
+  <span class="float-arrow">↓</span>
+</a>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div class="navbar-brand">
+    
+    <span class="navbar-nome">Pasticceria Benito</span>
+  </div>
+  <div class="navbar-links">
+    <a href="#ristorante">Il Ristorante</a>
+    <a href="#galleria">Galleria</a>
+    <a href="#orari">Orari</a>
+    <a href="pasticceria-benito-prenota.html" class="navbar-prenota">Prenota</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <img class="hero-img" src="https://places.googleapis.com/v1/places/ChIJMwhwrioDOxMRzm7_5qWA-xM/photos/Ab43m-s4RajcKmWsHhDw3mN55XECbAqgmDnkxiwFBWQwtBspFsOxtEdG4dPG5-honFKokeXFkJGTwyuMZJoVMmdNG_VpVNmMI9LpaaH-6gZwo7bd9DbfqhxJ7Hav2czjC7LrJ5rZoCYFaoReRR189ACEkkmmBbuxk__V1ai6rCzU4JiJWN7otuDCxVZLqIqeliYH20ZSOyTxbMuXhYEy3mNL02Hgcf1_SNqhSNzdqVNW9g-8KKRLMp2shGd82QBOBLUiiyaun1-fqX9wvpRz0oLKVFpR9nPLuFBPBebyUmkoojJQcHfR4GBpCtGP7YZ5Fr-YDor0nrqS7bG-PekFv64yq27Gmq1K12xSFVnOfUZhXUH6WUP0v-L2wP5vGhofyBKeinCmK0oleFJNZZ7C2OKcJrRBmi_NFs0p4aqGFiB6HHyQrKNLZEkjbF24GE9eh8Fq/media?maxWidthPx=1200&key=AIzaSyC1pQxgyEA66BJ_F2ZLkHJvQeYDawXItEg" alt="Pasticceria Benito"
+       onerror="this.src='https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1600'">
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-badge">Full Booking · Casal di Principe</div>
+    <h1 class="hero-titolo">Pasticceria Benito</h1>
+    <p class="hero-tagline">Benito Odorino è il primo pasticciere della provincia di Caserta ad entrare in AMPI donando ancor più prestigio al nostro territorio cambiando irrimediabilmente</p>
+    <div class="hero-meta">
+      <div class="rating-pill">
+        <span class="star full">★</span><span class="star full">★</span><span class="star full">★</span><span class="star full">★</span><span class="star half">★</span>
+        <span class="rating-num">4.7</span>
+        <span class="rating-cnt">(337 recensioni)</span>
+      </div>
+      <span class="hero-citta">📍 Casal di Principe</span>
+    </div>
+  </div>
+  <div class="scroll-ind">Scopri</div>
+</section>
+
+<!-- CHI SIAMO -->
+<section id="ristorante">
+  <div class="chi-siamo">
+    <div class="chi-siamo-testo">
+      <div class="section-label">Il Ristorante</div>
+      <h2 class="section-titolo">Pasticceria Benito</h2>
+      <div class="gold-line left"></div>
+      <p>Benito Odorino è il primo pasticciere della provincia di Caserta ad entrare in AMPI donando ancor più prestigio al nostro territorio cambiando irrimediabilmente</p>
+      <p>Prenota il tuo tavolo online in pochi secondi — conferma immediata su WhatsApp, zero commissioni.</p>
+      <br>
+      <a href="pasticceria-benito-prenota.html" class="btn-oro">Prenota Ora</a>
+    </div>
+    <div class="chi-siamo-foto">
+      <img src="https://places.googleapis.com/v1/places/ChIJMwhwrioDOxMRzm7_5qWA-xM/photos/Ab43m-vqMB1OOns1qG9tXIbD8pQdMjwwkAOFHCXGwNVvpYJ9YGmCSvZJ8LrKQRuEw0W6fsdJc77GHCSpYLk3xv-357g27wzb4QZcbaJcbTDUBI6G0Qki-LcyddZ_jMmAaIAWgGC0gi9x88e6l4vsm04ZXWHddqOgAQm4x3gGIGBJ62eEj3FCGBm6s4wx2tBtEAsFlXcaQ2zTSkY6HQiwiXDlE96jJt_kQUmbjSmS5_Ml51zNVfz0tRym0t7sEN8_RgGpKk8RhNCuDHUgRH_0ivz82d2BoguEXR04uAvhL32d2TV0_0U_a-EcJ-whzN1pdiBCF3sZjDDgJuzGe2BF5-FWyoPuI6L_AMRcfoHIhB41LJWWLQacMlNB5BlkgixCR4_1hEgXDXSFfKZM14V5cTQWpOCl091XPNYZsd9OIqp_jBrL6B2YNOG7USWu3Xjl0jP_/media?maxWidthPx=1200&key=AIzaSyC1pQxgyEA66BJ_F2ZLkHJvQeYDawXItEg" alt="Pasticceria Benito"
+           onerror="this.src='https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800'">
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section id="galleria" class="gallery-section">
+  <div style="max-width:1200px;margin:0 auto 40px">
+    <div class="section-label">Galleria</div>
+    <h2 class="section-titolo">Le nostre immagini</h2>
+    <div class="gold-line left"></div>
+  </div>
+  <div class="gallery-grid"><div class="gallery-item"><img src="https://places.googleapis.com/v1/places/ChIJMwhwrioDOxMRzm7_5qWA-xM/photos/Ab43m-s4RajcKmWsHhDw3mN55XECbAqgmDnkxiwFBWQwtBspFsOxtEdG4dPG5-honFKokeXFkJGTwyuMZJoVMmdNG_VpVNmMI9LpaaH-6gZwo7bd9DbfqhxJ7Hav2czjC7LrJ5rZoCYFaoReRR189ACEkkmmBbuxk__V1ai6rCzU4JiJWN7otuDCxVZLqIqeliYH20ZSOyTxbMuXhYEy3mNL02Hgcf1_SNqhSNzdqVNW9g-8KKRLMp2shGd82QBOBLUiiyaun1-fqX9wvpRz0oLKVFpR9nPLuFBPBebyUmkoojJQcHfR4GBpCtGP7YZ5Fr-YDor0nrqS7bG-PekFv64yq27Gmq1K12xSFVnOfUZhXUH6WUP0v-L2wP5vGhofyBKeinCmK0oleFJNZZ7C2OKcJrRBmi_NFs0p4aqGFiB6HHyQrKNLZEkjbF24GE9eh8Fq/media?maxWidthPx=1200&key=AIzaSyC1pQxgyEA66BJ_F2ZLkHJvQeYDawXItEg" alt="Pasticceria Benito" loading="lazy" onerror="this.parentElement.style.display:none"></div><div class="gallery-item"><img src="https://places.googleapis.com/v1/places/ChIJMwhwrioDOxMRzm7_5qWA-xM/photos/Ab43m-vqMB1OOns1qG9tXIbD8pQdMjwwkAOFHCXGwNVvpYJ9YGmCSvZJ8LrKQRuEw0W6fsdJc77GHCSpYLk3xv-357g27wzb4QZcbaJcbTDUBI6G0Qki-LcyddZ_jMmAaIAWgGC0gi9x88e6l4vsm04ZXWHddqOgAQm4x3gGIGBJ62eEj3FCGBm6s4wx2tBtEAsFlXcaQ2zTSkY6HQiwiXDlE96jJt_kQUmbjSmS5_Ml51zNVfz0tRym0t7sEN8_RgGpKk8RhNCuDHUgRH_0ivz82d2BoguEXR04uAvhL32d2TV0_0U_a-EcJ-whzN1pdiBCF3sZjDDgJuzGe2BF5-FWyoPuI6L_AMRcfoHIhB41LJWWLQacMlNB5BlkgixCR4_1hEgXDXSFfKZM14V5cTQWpOCl091XPNYZsd9OIqp_jBrL6B2YNOG7USWu3Xjl0jP_/media?maxWidthPx=1200&key=AIzaSyC1pQxgyEA66BJ_F2ZLkHJvQeYDawXItEg" alt="Pasticceria Benito" loading="lazy" onerror="this.parentElement.style.display:none"></div><div class="gallery-item"><img src="https://places.googleapis.com/v1/places/ChIJMwhwrioDOxMRzm7_5qWA-xM/photos/Ab43m-vJ_FVyDriZmYVafZO6AZYMwzT84UGEKoZeQV3cK1YVT0CseTXm0cKapgttDZeQzznMsSGgeW7ey6hfAlwAsf2rIUEq4I67zZp3A0sn0ZjnQOYaumDbGxPDPW1lLOD1bUOfn4tpaBnNo-_8zV8Qqs3Y7fHpXghtuov-JFO-1davGK8Tf3A6MoB11ehxHdeW7hVJz3UCr2ODttkDD-AR4JYuRyiVFj0Qk9r0aAO3ybe2gCUrswDcAXXKdVMsB1upp_Cd5Udh4EYaM-Se-qSe8lBEWR38N08zIHY09fiaqRbDQ4yPQG61lZTx0k-7d0IitQi0R4hT3PIJ_wjX0X_2WSWJv_RWZK4WqWntwCtNdA-20c-tWr1zkenHHTUj3fhy1YnJT5tbLz6V-uG_pme30K6vpV2C4DhDXK-xE0cE51fjdGL-xtJA6qSq_sRWk3ls/media?maxWidthPx=1200&key=AIzaSyC1pQxgyEA66BJ_F2ZLkHJvQeYDawXItEg" alt="Pasticceria Benito" loading="lazy" onerror="this.parentElement.style.display:none"></div><div class="gallery-item"><img src="https://places.googleapis.com/v1/places/ChIJMwhwrioDOxMRzm7_5qWA-xM/photos/Ab43m-sVo2OzOQsnpwlqh6lB8AEiosJQlbtbxlPblal53p7_wBywSQg11d5CIvtRzoPJydhpymhWLxWdqniPM-IL4kPwqzREk7_4PcfoC7hTr4L-zyTCp9XLZGaYFHpoX9blgAXTtLiJ6yI5pyGF3EeQyqFoulGJHO1FcgHs8RWllzGwCJJwrfX4WJlHPVrtmLITduct19LHmOu-VGHfYVz_VjjHpaeNmsmx1A0gUHgfPjE97W0klbMbVJUwJYbf0EwDn3k9Dq-BVM5OlMT1BKQVWXLxB4SFuKeaPKYNJGHYPIEViJmMJjL_PaSZ64EKqh3rb-0reVvpiBIeteAdWICgm0K1dHQA3p0jclomIFdsDGBRRU6MkE6fZ_L1GVhRe3oP55Xd72GAzBHWcosi5wAsjCSrCWxg3-5zkRaowBgenEcgZ6I3kuamxWUoxo6-VuGr/media?maxWidthPx=1200&key=AIzaSyC1pQxgyEA66BJ_F2ZLkHJvQeYDawXItEg" alt="Pasticceria Benito" loading="lazy" onerror="this.parentElement.style.display:none"></div><div class="gallery-item"><img src="https://places.googleapis.com/v1/places/ChIJMwhwrioDOxMRzm7_5qWA-xM/photos/Ab43m-vy_lAywWwDWytkM7sj4oy6nR2ee3VOfuRrtXD9n7vR4eVDpM0t4bf6S-NTRZlpAadRIz5E9-gLgAYC3UVAUCTS64pJRBT4roF0ajKhD6gQt0ULBWcqBMs9Pmm4HGxOkiay10OtmHee2d5sVU_i_cgJdwYc4MKnb2EUg2pcAWv2IOwhp-JNrlDy-zDchrRGCFiDPC_et12_zcWvwcoT-HlvD4cvLM7M-4pVNm1EGCO915As4WjEv8pnX_Y6UqaSjHaZb4RTzFMbz7ndLEmMt5K_Z2_9vFmSFdzJsxAuKVBqI-D2Irebo_ITt9VYM3xMUOV4dNvH5JkiZn2CzxDTYmWkS2TdPWbnEqVzHGRe6ZbfNlg3siz0ZW7S6lD7DeFSi775cPF5WrOyLBXbxw8P6zP-flhjzPvL5koJPJymuASpZYpNOrjN0AJRoxsLHJRi/media?maxWidthPx=1200&key=AIzaSyC1pQxgyEA66BJ_F2ZLkHJvQeYDawXItEg" alt="Pasticceria Benito" loading="lazy" onerror="this.parentElement.style.display:none"></div></div>
+</section>
+
+<!-- ORARI E INFO -->
+<section id="orari">
+  <div class="info-section">
+    <div class="info-card">
+      <div class="section-label">Informazioni</div>
+      <h2 class="section-titolo" style="font-size:26px">Dove siamo</h2>
+      <div class="gold-line left"></div>
+      <div class="info-row">
+        <div class="info-ico">📍</div>
+        <div class="info-txt"><strong>Indirizzo</strong>Corso Umberto I, 58, 81033 Casal di Principe CE</div>
+      </div>
+      <div class="info-row"><div class="info-ico">📞</div><div class="info-txt"><strong>Telefono</strong>081 892 1130</div></div>
+      <div class="info-row">
+        <div class="info-ico">⭐</div>
+        <div class="info-txt"><strong>Valutazione Google</strong>4.7/5 su 337 recensioni</div>
+      </div>
+      <div class="info-row"><div class="info-ico">🌐</div><div class="info-txt"><strong>Sito web</strong><a href="http://www.pasticceriabenito.it/" style="color:var(--oro)">http://www.pasticceriabenito.it/</a></div></div>
+    </div>
+    <div class="info-card">
+      <div class="section-label">Orari</div>
+      <h2 class="section-titolo" style="font-size:26px">Quando apriremo</h2>
+      <div class="gold-line left"></div>
+      <div class="orario-row"><span class="orario-giorno">Monday</span><span class="orario-ore">8:00 AM – 1:00 PM, 4:00 – 7:45 PM</span></div><div class="orario-row"><span class="orario-giorno">Tuesday</span><span class="orario-ore">Closed</span></div><div class="orario-row"><span class="orario-giorno">Wednesday</span><span class="orario-ore">8:00 AM – 1:00 PM, 4:00 – 7:45 PM</span></div><div class="orario-row"><span class="orario-giorno">Thursday</span><span class="orario-ore">8:00 AM – 1:00 PM, 4:00 – 7:45 PM</span></div><div class="orario-row"><span class="orario-giorno">Friday</span><span class="orario-ore">8:00 AM – 1:00 PM, 4:00 – 7:45 PM</span></div><div class="orario-row"><span class="orario-giorno">Saturday</span><span class="orario-ore">8:00 AM – 1:00 PM, 4:00 – 7:45 PM</span></div><div class="orario-row"><span class="orario-giorno">Sunday</span><span class="orario-ore">7:30 AM – 2:00 PM</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="section-label">Prenotazione Online</div>
+  <h2 class="section-titolo">Riserva il tuo tavolo</h2>
+  <div class="gold-line"></div>
+  <p>Prenota in 30 secondi. Conferma immediata su WhatsApp.<br>Zero commissioni — sempre gratuito per i clienti.</p>
+  <div class="cta-duo">
+    <a href="pasticceria-benito-prenota.html" class="btn-oro">📅 Prenota Ora</a>
+    <a href="tel:081 892 1130" class="btn-outline">📞 Chiama</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div>
+    <div class="footer-brand">FULL<span>BOOKING</span></div>
+    <div style="font-size:12px;color:var(--grigio);margin-top:6px;letter-spacing:1px">
+      Sistema di prenotazione online · Pasticceria Benito · Casal di Principe
+    </div>
+  </div>
+  <div class="footer-copy">
+    © 2025 fullbooking.cloud · Powered by GF Technological System
+  </div>
+</footer>
+
+<script>
+  // Bottone prenota flottante — appare dopo 80% dell'altezza hero
+  const floatBtn = document.getElementById('floatBtn');
+  const heroH = document.querySelector('.hero').offsetHeight;
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > heroH * 0.8) {
+      floatBtn.classList.add('visible');
+    } else {
+      floatBtn.classList.remove('visible');
+    }
+  }, { passive: true });
+</script>
+</body>
+</html>

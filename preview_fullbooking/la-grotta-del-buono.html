@@ -3,316 +3,531 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>La Grotta Del Buono — Prenota su Full Booking</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<title>La Grotta Del Buono — Aversa | Full Booking</title>
+<meta name="description" content="Cucina autentica nel cuore di Aversa">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-:root {
-  --primary:   #242526;
-  --secondary: #242526;
-  --bg:        #f7f5f0;
-  --on-primary:   #ffffff;
-  --on-secondary: #ffffff;
-}
-*{ margin:0; padding:0; box-sizing:border-box; }
-body{ font-family:'Inter',sans-serif; background:var(--bg); color:#2c2c2c; }
+:root { 
+  --nero:     #0a0a0a;
+  --nero2:    #141414;
+  --nero3:    #1e1e1e;
+  --oro:      #c9a84c;
+  --oro2:     #e8c96b;
+  --crema:    #f0ead6;
+  --grigio:   #8a8a8a;
+  --bianco:   #ffffff;
+ }
 
-/* TOPBAR FULL BOOKING */
-.fb-bar{
-  background:#111; padding:7px 20px;
-  display:flex; align-items:center; justify-content:space-between;
-  font-size:11px; color:#aaa;
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--nero);
+  color: var(--crema);
+  -webkit-font-smoothing: antialiased;
 }
-.fb-brand{ color:#fff; font-weight:700; letter-spacing:1px; font-size:13px; }
-.fb-brand span{ color:var(--secondary); }
-.fb-preview-tag{
-  background:var(--secondary); color:var(--on-secondary);
-  padding:3px 10px; border-radius:20px; font-size:10px; font-weight:700;
-  letter-spacing:0.5px;
+a { color: inherit; text-decoration: none; }
+img { display: block; }
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--nero2); }
+::-webkit-scrollbar-thumb { background: var(--oro); border-radius: 3px; }
+
+/* Topbar Full Booking */
+.fb-topbar {
+  background: var(--nero);
+  border-bottom: 1px solid rgba(201,168,76,0.2);
+  padding: 10px 32px;
+  display: flex; align-items: center; justify-content: space-between;
+  position: sticky; top: 0; z-index: 200;
+  backdrop-filter: blur(12px);
+}
+.fb-logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 18px; letter-spacing: 3px; font-weight: 700;
+  color: var(--bianco);
+}
+.fb-logo span { color: var(--oro); }
+.fb-topbar-cta {
+  font-size: 11px; color: var(--grigio);
+  letter-spacing: 1px; text-transform: uppercase;
 }
 
-/* HEADER RISTORANTE — colori reali del cliente */
-.header{
-  background:var(--primary); padding:14px 24px;
-  display:flex; align-items:center; justify-content:space-between;
-  position:sticky; top:0; z-index:100;
-  box-shadow:0 2px 16px rgba(0,0,0,0.25);
+/* Bottone oro */
+.btn-oro {
+  display: inline-block;
+  background: linear-gradient(135deg, var(--oro), var(--oro2));
+  color: var(--nero);
+  padding: 14px 36px;
+  font-size: 12px; font-weight: 700;
+  letter-spacing: 2px; text-transform: uppercase;
+  border: none; cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  transition: opacity .2s, transform .2s;
 }
-.header-left{ display:flex; align-items:center; gap:14px; }
-.rist-logo{ height:44px; width:auto; max-width:140px; object-fit:contain; }
-.rist-nome{
-  font-family:'Playfair Display',serif; font-size:20px;
-  color:var(--on-primary); letter-spacing:0.5px;
+.btn-oro:hover { opacity: .88; transform: translateY(-1px); }
+
+/* Linea oro decorativa */
+.gold-line {
+  width: 48px; height: 2px;
+  background: linear-gradient(90deg, var(--oro), var(--oro2));
+  margin: 0 auto 20px;
 }
-.btn-prenota-top{
-  background:var(--secondary); color:var(--on-secondary);
-  border:none; padding:10px 22px; border-radius:6px;
-  font-size:13px; font-weight:700; cursor:pointer; letter-spacing:0.5px;
+.gold-line.left { margin: 0 0 20px; }
+
+
+/* NAVBAR */
+.navbar {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 300;
+  background: rgba(10,10,10,0.92);
+  border-bottom: 1px solid rgba(201,168,76,0.15);
+  padding: 0 40px;
+  display: flex; align-items: center; justify-content: space-between;
+  height: 68px;
+  backdrop-filter: blur(16px);
+  transition: background .3s;
+}
+.navbar-brand {
+  display: flex; align-items: center; gap: 14px;
+}
+.nav-logo { height: 40px; width: auto; max-width: 130px; object-fit: contain; }
+.navbar-nome {
+  font-family: 'Playfair Display', serif;
+  font-size: 17px; color: var(--crema); letter-spacing: .5px;
+}
+.navbar-links {
+  display: flex; align-items: center; gap: 32px;
+}
+.navbar-links a {
+  font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+  color: var(--grigio); transition: color .2s;
+}
+.navbar-links a:hover { color: var(--oro); }
+.navbar-prenota {
+  background: linear-gradient(135deg, var(--oro), var(--oro2));
+  color: var(--nero) !important;
+  padding: 10px 22px;
+  font-size: 11px !important; font-weight: 700 !important;
+  letter-spacing: 2px;
+}
+.navbar-prenota:hover { opacity: .88; }
+@media(max-width: 768px) {
+  .navbar { padding: 0 20px; }
+  .navbar-links { display: none; }
 }
 
 /* HERO */
-.hero{ position:relative; height:420px; overflow:hidden; }
-.hero img{ width:100%; height:100%; object-fit:cover; }
-.hero-ov{
-  position:absolute; inset:0;
-  background:linear-gradient(to top,rgba(0,0,0,0.80) 0%,rgba(0,0,0,0.05) 55%);
+.hero {
+  height: 100vh; min-height: 600px;
+  position: relative; overflow: hidden;
 }
-.hero-info{ position:absolute; bottom:30px; left:30px; right:30px; color:#fff; }
-.hero-info h1{
-  font-family:'Playfair Display',serif;
-  font-size:clamp(24px,4vw,40px); margin-bottom:10px;
-  text-shadow:0 2px 12px rgba(0,0,0,0.6);
+.hero-img {
+  width: 100%; height: 100%; object-fit: cover;
+  transform: scale(1.04);
+  transition: transform 8s ease;
 }
-.hero-tagline{
-  font-size:14px; color:rgba(255,255,255,0.85);
-  margin-bottom:12px; max-width:560px; line-height:1.6;
+.hero:hover .hero-img { transform: scale(1); }
+.hero-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(10,10,10,0.3) 0%,
+    rgba(10,10,10,0.1) 40%,
+    rgba(10,10,10,0.85) 100%
+  );
 }
-.hero-meta{ display:flex; align-items:center; gap:14px; flex-wrap:wrap; }
-.rating-pill{
-  display:flex; align-items:center; gap:5px;
-  background:rgba(255,255,255,0.15); backdrop-filter:blur(6px);
-  padding:6px 14px; border-radius:20px;
+.hero-content {
+  position: absolute; bottom: 80px; left: 0; right: 0;
+  padding: 0 60px;
+  max-width: 900px;
 }
-.s{ font-size:15px; }
-.s.full,.s.half{ color:#f5c518; }
-.s.empty{ color:rgba(255,255,255,0.35); }
-.r-num{ color:#fff; font-weight:700; font-size:15px; }
-.r-cnt{ color:rgba(255,255,255,0.75); font-size:12px; }
-.hero-citta{ color:rgba(255,255,255,0.9); font-size:14px; }
+.hero-badge {
+  display: inline-block;
+  border: 1px solid var(--oro);
+  color: var(--oro);
+  font-size: 10px; letter-spacing: 3px; text-transform: uppercase;
+  padding: 6px 16px; margin-bottom: 20px;
+}
+.hero-titolo {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(36px, 6vw, 72px);
+  font-weight: 700; line-height: 1.1;
+  color: var(--bianco);
+  text-shadow: 0 2px 40px rgba(0,0,0,0.5);
+  margin-bottom: 16px;
+}
+.hero-tagline {
+  font-size: 15px; color: rgba(240,234,214,0.8);
+  line-height: 1.7; max-width: 540px; margin-bottom: 24px;
+  font-weight: 300;
+}
+.hero-meta {
+  display: flex; align-items: center; gap: 20px; flex-wrap: wrap;
+}
+.rating-pill {
+  display: flex; align-items: center; gap: 8px;
+  background: rgba(201,168,76,0.12);
+  border: 1px solid rgba(201,168,76,0.3);
+  padding: 8px 18px;
+}
+.star { font-size: 14px; }
+.star.full, .star.half { color: var(--oro); }
+.star.empty { color: rgba(201,168,76,0.25); }
+.rating-num { color: var(--oro); font-weight: 700; font-size: 15px; }
+.rating-cnt { color: rgba(240,234,214,0.6); font-size: 12px; }
+.hero-citta { color: rgba(240,234,214,0.75); font-size: 13px; letter-spacing: 1px; }
+@media(max-width: 768px) {
+  .hero-content { padding: 0 24px; bottom: 60px; }
+}
 
-/* LAYOUT */
-.wrap{
-  max-width:960px; margin:0 auto; padding:30px 18px;
-  display:grid; grid-template-columns:1fr 370px; gap:26px;
+/* SCROLL INDICATOR */
+.scroll-ind {
+  position: absolute; bottom: 28px; left: 50%;
+  transform: translateX(-50%);
+  display: flex; flex-direction: column; align-items: center; gap: 6px;
+  color: rgba(201,168,76,0.5); font-size: 10px; letter-spacing: 2px;
+  text-transform: uppercase;
+  animation: bounce 2s infinite;
 }
-@media(max-width:720px){.wrap{grid-template-columns:1fr;}}
+.scroll-ind::after {
+  content: ''; width: 1px; height: 40px;
+  background: linear-gradient(to bottom, var(--oro), transparent);
+}
+@keyframes bounce {
+  0%,100% { opacity: .5; transform: translateX(-50%) translateY(0); }
+  50% { opacity: 1; transform: translateX(-50%) translateY(6px); }
+}
+
+/* BOTTONE PRENOTA FLOTTANTE */
+.btn-prenota-float {
+  position: fixed;
+  bottom: 36px; right: 36px;
+  z-index: 500;
+  width: 96px; height: 96px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--oro), var(--oro2));
+  color: var(--nero);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 4px;
+  font-family: 'Inter', sans-serif;
+  font-size: 11px; font-weight: 800;
+  letter-spacing: 2px; text-transform: uppercase;
+  text-decoration: none;
+  box-shadow: 0 8px 32px rgba(201,168,76,0.35), 0 2px 8px rgba(0,0,0,0.4);
+  transition: transform .25s, box-shadow .25s, opacity .25s;
+  opacity: 0;
+  transform: scale(0.7) translateY(20px);
+  pointer-events: none;
+}
+.btn-prenota-float.visible {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+  pointer-events: auto;
+}
+.btn-prenota-float:hover {
+  transform: scale(1.07) translateY(-3px);
+  box-shadow: 0 14px 40px rgba(201,168,76,0.5), 0 4px 12px rgba(0,0,0,0.4);
+}
+.btn-prenota-float .float-arrow {
+  font-size: 18px; line-height: 1;
+  transition: transform .2s;
+}
+.btn-prenota-float:hover .float-arrow {
+  transform: translateY(3px);
+}
+@media(max-width: 768px) {
+  .btn-prenota-float {
+    width: 80px; height: 80px;
+    bottom: 24px; right: 20px;
+    font-size: 10px;
+    opacity: 1; transform: scale(1) translateY(0);
+    pointer-events: auto;
+  }
+}
+
+/* SEZIONI */
+section { padding: 100px 60px; }
+@media(max-width: 768px) { section { padding: 60px 24px; } }
+
+.section-label {
+  font-size: 10px; letter-spacing: 4px; text-transform: uppercase;
+  color: var(--oro); margin-bottom: 14px;
+}
+.section-titolo {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(28px, 4vw, 42px); font-weight: 600;
+  color: var(--crema); line-height: 1.2; margin-bottom: 20px;
+}
+
+/* CHI SIAMO */
+.chi-siamo {
+  max-width: 1100px; margin: 0 auto;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
+}
+@media(max-width: 768px) { .chi-siamo { grid-template-columns: 1fr; gap: 40px; } }
+.chi-siamo-testo p {
+  font-size: 16px; line-height: 1.9; color: rgba(240,234,214,0.75);
+  font-weight: 300; margin-bottom: 16px;
+}
+.chi-siamo-foto {
+  position: relative; height: 480px;
+}
+.chi-siamo-foto img {
+  width: 100%; height: 100%; object-fit: cover;
+}
+.chi-siamo-foto::before {
+  content: '';
+  position: absolute; inset: -12px -12px 12px 12px;
+  border: 1px solid rgba(201,168,76,0.25);
+  z-index: -1;
+}
 
 /* GALLERY */
-.gallery{ display:grid; grid-template-columns:1fr 1fr; gap:6px; border-radius:10px; overflow:hidden; margin-bottom:22px; }
-.gimg img{ width:100%; height:145px; object-fit:cover; display:block; }
+.gallery-section { background: var(--nero2); }
+.gallery-grid {
+  max-width: 1200px; margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: 280px 280px;
+  gap: 4px;
+}
+.gallery-item { overflow: hidden; position: relative; }
+.gallery-item:first-child {
+  grid-column: span 2; grid-row: span 2;
+}
+.gallery-item img {
+  width: 100%; height: 100%; object-fit: cover;
+  transition: transform .6s ease;
+}
+.gallery-item:hover img { transform: scale(1.05); }
+@media(max-width: 768px) {
+  .gallery-grid { grid-template-columns: 1fr 1fr; grid-template-rows: auto; }
+  .gallery-item:first-child { grid-column: span 2; height: 220px; }
+  .gallery-item { height: 160px; }
+}
 
-/* INFO CARDS */
-.card{
-  background:#fff; border-radius:12px; padding:22px;
-  margin-bottom:18px; box-shadow:0 2px 14px rgba(0,0,0,0.06);
+/* INFO + ORARI */
+.info-section {
+  max-width: 1100px; margin: 0 auto;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 80px;
 }
-.card h3{
-  font-family:'Playfair Display',serif; font-size:16px;
-  color:var(--primary); margin-bottom:14px;
-  padding-bottom:10px; border-bottom:2px solid var(--bg);
+@media(max-width: 768px) { .info-section { grid-template-columns: 1fr; gap: 48px; } }
+.info-card {
+  border-top: 1px solid rgba(201,168,76,0.2);
+  padding-top: 32px;
 }
-.info-r{ display:flex; gap:10px; margin-bottom:9px; font-size:14px; color:#555; }
-.info-r .ico{ font-size:17px; flex-shrink:0; }
-.orario-row{
-  display:flex; justify-content:space-between;
-  font-size:13px; color:#555; padding:4px 0;
-  border-bottom:1px solid #f5f5f5;
+.info-row {
+  display: flex; align-items: flex-start; gap: 16px;
+  margin-bottom: 20px; padding-bottom: 20px;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
 }
+.info-row:last-child { border-bottom: none; }
+.info-ico {
+  width: 36px; height: 36px; flex-shrink: 0;
+  background: rgba(201,168,76,0.1);
+  border: 1px solid rgba(201,168,76,0.2);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 15px;
+}
+.info-txt { font-size: 14px; color: rgba(240,234,214,0.75); line-height: 1.6; }
+.info-txt strong { color: var(--crema); font-size: 12px; letter-spacing: 1px; text-transform: uppercase; display: block; margin-bottom: 4px; }
+.orario-row {
+  display: flex; justify-content: space-between;
+  padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.05);
+  font-size: 13px;
+}
+.orario-giorno { color: var(--crema); }
+.orario-ore { color: var(--grigio); text-align: right; }
+.no-info { font-size: 13px; color: var(--grigio); font-style: italic; }
 
-/* PERCHE FULL BOOKING */
-.why-item{ display:flex; align-items:flex-start; gap:10px; margin-bottom:10px; }
-.why-icon{
-  width:30px; height:30px; border-radius:50%;
-  background:var(--primary); color:var(--on-primary);
-  display:flex; align-items:center; justify-content:center;
-  font-size:13px; flex-shrink:0;
+/* CTA PRENOTA */
+.cta-section {
+  background: var(--nero2);
+  border-top: 1px solid rgba(201,168,76,0.15);
+  border-bottom: 1px solid rgba(201,168,76,0.15);
+  text-align: center;
+  padding: 120px 60px;
 }
-.why-text{ font-size:13px; color:#555; line-height:1.5; }
-.why-text strong{ color:#2c2c2c; font-size:13px; }
-
-/* BOOKING CARD */
-.booking-card{
-  background:#fff; border-radius:14px; padding:26px;
-  box-shadow:0 4px 28px rgba(0,0,0,0.11);
-  border-top:4px solid var(--primary);
-  position:sticky; top:68px; height:fit-content;
+.cta-section .section-titolo { margin-bottom: 14px; }
+.cta-section p {
+  font-size: 15px; color: rgba(240,234,214,0.6);
+  max-width: 500px; margin: 0 auto 40px;
+  line-height: 1.7; font-weight: 300;
 }
-.booking-card h2{
-  font-family:'Playfair Display',serif; font-size:20px;
-  color:var(--primary); margin-bottom:4px;
+.cta-duo {
+  display: flex; align-items: center; justify-content: center;
+  gap: 20px; flex-wrap: wrap;
 }
-.bk-sub{ font-size:13px; color:#999; margin-bottom:20px; }
-.fg{ margin-bottom:14px; }
-.fg label{
-  display:block; font-size:11px; font-weight:700;
-  color:#777; margin-bottom:5px;
-  text-transform:uppercase; letter-spacing:0.5px;
+.btn-outline {
+  display: inline-block;
+  border: 1px solid var(--oro);
+  color: var(--oro);
+  padding: 14px 36px;
+  font-size: 12px; font-weight: 600;
+  letter-spacing: 2px; text-transform: uppercase;
+  transition: all .2s;
 }
-.fg input,.fg select{
-  width:100%; padding:11px 13px;
-  border:1.5px solid #e8e0d5; border-radius:8px;
-  font-size:14px; color:#2c2c2c; background:#fafaf8;
-  font-family:'Inter',sans-serif; appearance:none;
-}
-.fg input:focus,.fg select:focus{
-  outline:none; border-color:var(--primary); background:#fff;
-}
-.fg-row{ display:grid; grid-template-columns:1fr 1fr; gap:11px; }
-.btn-book{
-  width:100%; padding:15px; margin-top:6px;
-  background:var(--primary); color:var(--on-primary);
-  border:none; border-radius:10px; font-size:15px; font-weight:700;
-  cursor:pointer; font-family:'Inter',sans-serif; letter-spacing:0.5px;
-  transition:opacity 0.2s;
-}
-.btn-book:hover{opacity:0.88;}
-.bk-note{ text-align:center; font-size:11px; color:#bbb; margin-top:12px; }
-.bk-note span{ color:var(--secondary); font-weight:700; }
+.btn-outline:hover { background: var(--oro); color: var(--nero); }
 
 /* FOOTER */
-footer{
-  background:#111; color:rgba(255,255,255,0.5);
-  text-align:center; padding:22px; font-size:12px; margin-top:36px;
+footer {
+  background: var(--nero);
+  border-top: 1px solid rgba(201,168,76,0.1);
+  padding: 48px 60px 32px;
+  display: flex; justify-content: space-between; align-items: flex-end;
+  flex-wrap: wrap; gap: 24px;
 }
-footer strong{ color:var(--secondary); }
+.footer-brand {
+  font-family: 'Playfair Display', serif;
+  font-size: 20px; letter-spacing: 3px; color: var(--crema);
+}
+.footer-brand span { color: var(--oro); }
+.footer-copy {
+  font-size: 11px; color: rgba(138,138,138,0.5);
+  letter-spacing: 1px;
+}
+@media(max-width: 768px) {
+  footer { padding: 40px 24px 28px; flex-direction: column; align-items: flex-start; }
+}
 </style>
 </head>
 <body>
 
-<!-- TOPBAR FULL BOOKING -->
-<div class="fb-bar">
-  <span class="fb-brand">FULL<span>BOOKING</span>.it</span>
-  
-</div>
+<!-- BOTTONE PRENOTA FLOTTANTE -->
+<a href="la-grotta-del-buono-prenota.html" class="btn-prenota-float" id="floatBtn">
+  <span>PRENOTA</span>
+  <span class="float-arrow">↓</span>
+</a>
 
-<!-- HEADER con colori reali del ristorante -->
-<header class="header">
-  <div class="header-left">
-    <img src="https://static.cdninstagram.com/rsrc.php/yr/r/rzWiSjZRxk5.webp" alt="Logo La Grotta Del Buono" class="rist-logo" onerror="this.style.display='none'">
-    <span class="rist-nome">La Grotta Del Buono</span>
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div class="navbar-brand">
+    
+    <span class="navbar-nome">La Grotta Del Buono</span>
   </div>
-  <button class="btn-prenota-top" onclick="document.querySelector('.booking-card').scrollIntoView({behavior:'smooth'})">
-    📅 Prenota Ora
-  </button>
-</header>
+  <div class="navbar-links">
+    <a href="#ristorante">Il Ristorante</a>
+    <a href="#galleria">Galleria</a>
+    <a href="#orari">Orari</a>
+    <a href="la-grotta-del-buono-prenota.html" class="navbar-prenota">Prenota</a>
+  </div>
+</nav>
 
 <!-- HERO -->
-<div class="hero">
-  <img src="https://places.googleapis.com/v1/places/ChIJhev_vkQBOxMRGwT7t0HZgFc/photos/Ab43m-vY5ALjMagtKQuLeJ_Y6ut-3c6SuWZ7s2gbphPQ9WQu-zcIfGHLLmx-CI4Gw1L402g-eiQx4i-B-1R7eAExZ0R44AzyaBdMEm4xFiL7zGOHmwBpjD7wXvCnCz5syBJ7L_R8lTI1tl9Gj9OonB-uee5IhMZ2cl1VcSHf9H8SWoV-M1aF6TVJhVntxtPw-ijxohtWqeWCp8teeuYuBAewFsmZ-Tem0ccp82dRITuF61_8rOaVAaUks4enPAbhkBzE4W2SZrG6_5j0NUovTKUrC0Zlp4nBACrVImQqU4Vcdu84_KOGF2aPVB58Xy4Ke78_snm69UD8OWRKhcORrUj6J8gtu4DSNAeUEhGi-8y7PfW2a28Q3oLJJc5X6h6DmbE8Zp5jgUCpn7xsDFFisbATLhZkAQ07qDPWr87pYmOfzyJVDQ/media?maxWidthPx=800&key=AIzaSyC1pQxgyEA66BJ_F2ZLkHJvQeYDawXItEg" alt="La Grotta Del Buono"
-       onerror="this.src='https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1200'">
-  <div class="hero-ov"></div>
-  <div class="hero-info">
-    <h1>La Grotta Del Buono</h1>
-    <p class="hero-tagline">Benvenuti da La Grotta Del Buono — prenota il tuo tavolo online</p>
+<section class="hero">
+  <img class="hero-img" src="https://places.googleapis.com/v1/places/ChIJhev_vkQBOxMRGwT7t0HZgFc/photos/Ab43m-uG67VChOpIv3U6jPlKSnkvS_3dn0mU3OkVhPGY1QJdeDeNz3X9fY0bOgqCoqtMEtITMkm-9F5QBNXbcfryGY9O4R7w8NWO9wBJoXO5Wo6V5SOL2gMxoZ_j-OWTl5MGO-PE9S0xcGJ2lIehYM8TeAxf_9S7piuwd-FgUnKqsu6HDaIBxQ6MBwuCrrecJlkZNSx1Cv6N029FlSmtrKyDpnDc_sguvEl99FX76b1sZvdFX0FMyO6w5S5gcc_kNCtHA-5xd8xOMOjom_e36Sm9cIA3MuLysRxkjxntTnRCPMqDpgfM-Quc7reiyA7E6ziBG0yjjaVqnc0W2O4KtERT7dqRHbT26-AFSDyqsVnPnaOq-BC8cJ-_3rT-4Ln3SYZ0J3rp6Ohp0V0PcsiD1GNeuJlPddX6ntkOvwF6XpskH7CbYQ/media?maxWidthPx=1200&key=AIzaSyC1pQxgyEA66BJ_F2ZLkHJvQeYDawXItEg" alt="La Grotta Del Buono"
+       onerror="this.src='https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1600'">
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-badge">Full Booking · Aversa</div>
+    <h1 class="hero-titolo">La Grotta Del Buono</h1>
+    <p class="hero-tagline">Cucina autentica nel cuore di Aversa</p>
     <div class="hero-meta">
       <div class="rating-pill">
-        <span class="s full">★</span><span class="s full">★</span><span class="s full">★</span><span class="s full">★</span><span class="s empty">☆</span>
-        <span class="r-num">4.1</span>
-        <span class="r-cnt">(2,251 recensioni Google)</span>
+        <span class="star full">★</span><span class="star full">★</span><span class="star full">★</span><span class="star full">★</span><span class="star empty">☆</span>
+        <span class="rating-num">4.1</span>
+        <span class="rating-cnt">(2,251 recensioni)</span>
       </div>
       <span class="hero-citta">📍 Aversa</span>
     </div>
   </div>
-</div>
+  <div class="scroll-ind">Scopri</div>
+</section>
 
-<!-- CONTENUTO -->
-<div class="wrap">
-
-  <!-- SINISTRA -->
-  <div>
-
-    <div class="gallery"><div class="gimg"><img src="https://places.googleapis.com/v1/places/ChIJhev_vkQBOxMRGwT7t0HZgFc/photos/Ab43m-usaQC5OkOsLcjg_zKdXIEab6CoZJI4GPgYrV5ydUbausPJsgEtgblY7nhbhViDDGwdo19dn64GiC55z6jphrbyNS4J-R-jG8UNQmc31W66a_wREq0kOuYmIBJoYiyTmwYOzss0R3lgSA8ng8Bc6QaM28yP4OUi49P5ugarvRhpuzL6AlWuDEArBPlStsitf1X0xrYbJwgAuT52uyw_ZPe-6SfNdSztNOHJj2Lsdet1Dt2SiV-bRQIenRdK0g5AynflOWq0bUk9JpdNcYO1qIf3yt8nb57KoE11CjUK2eyETKhtaJZHLWSJjcSlUCfyj_wuAOj-_Si6E9yH4DUA8YRofDQCA2ITgMbBMB0Opej1S0KOMuDlHryhDpSfdbjRlGJnH-Rik-0OyN2H2XnQbmd5JOeXluAKpkCY8233C4TMyQ/media?maxWidthPx=800&key=AIzaSyC1pQxgyEA66BJ_F2ZLkHJvQeYDawXItEg" alt="La Grotta Del Buono" loading="lazy" onerror="this.parentElement.style.display='none'"></div><div class="gimg"><img src="https://places.googleapis.com/v1/places/ChIJhev_vkQBOxMRGwT7t0HZgFc/photos/Ab43m-utLUJqzo0Ug67wT1AWV60FohrkwtqeoPshUyxOVNhLd5lggLTaGKfMzZ4NvIW0tY1Gii8VtHohtBAYemNGo-9kooRGiHfeT2i-Vcl5sBh1mmYlKIqregs03OYXUkgxf3kTkqx2Mnju7kviT9HH9JT8K8wPNF9CpBxWzOZ8wbMMuSNg24PL2Hr5gxytIN0DTMHj1EGYpxOnR-BLM3JzL0KTs4wyDeNWhPHQf-WjhriXfxiSoIT4dfBKfcafg1Rk38WWt9VGXqiSFW1OPL5K4en4y4a4Aw3lKM526iNqOpglqh-soLPboWNaBJrSqDzAGyF-b4FP5q3PqQOr8Dq93LxcRpIdNbKbxXPZC0O_y863LWVQgFIwSaD2xccEhBvdeW4rp9sda6GDYHrHDgRsQhma0A8aOG3XUGzyfk5RCPph3Q/media?maxWidthPx=800&key=AIzaSyC1pQxgyEA66BJ_F2ZLkHJvQeYDawXItEg" alt="La Grotta Del Buono" loading="lazy" onerror="this.parentElement.style.display='none'"></div><div class="gimg"><img src="https://places.googleapis.com/v1/places/ChIJhev_vkQBOxMRGwT7t0HZgFc/photos/Ab43m-tjSQK8R64guNd8CQXBAjj659pnazHDXDKHepLynLQcSXbd5pmK6hD5OVAJqrIdMjLP8iKFB6JJyvaYBoipVfKg5Q44gAVv6TlZLj7P3NhC7IhJhBAhoMzMXmru-jrny5MSOzxm5pN9ZmEqC1ewEtjbNm-GonFZRT9m8_sSad8LWWnZr_XdycnPz4R-oN3FOoqxQOSgleAzrXpzS5jb_QpIVtFGzMV214v9FsUJWKTLnD5T9AT4qbk7oKM7lzUOKGBNMoulMExOAZQJXV--0Ku72EcDtoBL2YkFGm8RaV8tUkiVAg3TfWUVMqwqecGtv_9aHutFf7VDhhWhqxglWDv8xm32g9npbhMb8R4zKxCj_mab-KqDP5gz1zr8wvZmGs-Ap_iAFyXX5UHajfuTT_er3oG2F1-3Dp5pCtfb89l-3nN-QtIeVPuGPgsPLg/media?maxWidthPx=800&key=AIzaSyC1pQxgyEA66BJ_F2ZLkHJvQeYDawXItEg" alt="La Grotta Del Buono" loading="lazy" onerror="this.parentElement.style.display='none'"></div></div>
-
-    <div class="card">
-      <h3>📍 Dove siamo</h3>
-      <div class="info-r"><span class="ico">🏠</span><span>Corso Bersaglieri, 23, 81031 Aversa CE</span></div>
-      <div class="info-r"><span class="ico">📞</span><span>081 504 5316</span></div>
-      <div class="info-r"><span class="ico">⭐</span><span><strong>4.1/5</strong> su 2,251 recensioni Google</span></div>
+<!-- CHI SIAMO -->
+<section id="ristorante">
+  <div class="chi-siamo">
+    <div class="chi-siamo-testo">
+      <div class="section-label">Il Ristorante</div>
+      <h2 class="section-titolo">La Grotta Del Buono</h2>
+      <div class="gold-line left"></div>
+      <p>Sprawling cave-turned-restaurant with a garden terrace serving Neapolitan-style pizza & craft beer.</p>
+      <p>Prenota il tuo tavolo online in pochi secondi — conferma immediata su WhatsApp, zero commissioni.</p>
+      <br>
+      <a href="la-grotta-del-buono-prenota.html" class="btn-oro">Prenota Ora</a>
     </div>
-
-    <div class="card">
-      <h3>🕐 Orari di apertura</h3>
-      <div class="orario-row"><span>Monday</span><span>7:30 PM – 12:00 AM</span></div><div class="orario-row"><span>Tuesday</span><span>7:30 PM – 12:00 AM</span></div><div class="orario-row"><span>Wednesday</span><span>7:30 PM – 12:00 AM</span></div><div class="orario-row"><span>Thursday</span><span>7:30 PM – 12:00 AM</span></div><div class="orario-row"><span>Friday</span><span>7:30 PM – 12:00 AM</span></div><div class="orario-row"><span>Saturday</span><span>7:30 PM – 12:00 AM</span></div><div class="orario-row"><span>Sunday</span><span>12:30 – 3:30 PM, 7:30 – 11:30 PM</span></div>
-    </div>
-
-    <div class="card">
-      <h3>🏆 Perché prenotare online con Full Booking?</h3>
-
-      <div class="why-item">
-        <div class="why-icon">24</div>
-        <div class="why-text"><strong>Prenota quando vuoi</strong><br>Il sistema accetta prenotazioni 24 ore su 24, anche a mezzanotte.</div>
-      </div>
-      <div class="why-item">
-        <div class="why-icon">✓</div>
-        <div class="why-text"><strong>Conferma immediata via WhatsApp</strong><br>Ricevi la conferma sul cellulare in pochi secondi.</div>
-      </div>
-      <div class="why-item">
-        <div class="why-icon">0€</div>
-        <div class="why-text"><strong>Nessuna commissione</strong><br>La prenotazione diretta è sempre gratuita per il cliente.</div>
-      </div>
-
-      <div class="why-item">
-        <div class="why-icon">📧</div>
-        <div class="why-text"><strong>Riepilogo via email</strong><br>Ricevi anche un'email con tutti i dettagli della prenotazione.</div>
-      </div>
-    </div>
-
-  </div>
-
-  <!-- DESTRA — FORM -->
-  <div>
-    <div class="booking-card">
-      <h2>Prenota il tuo tavolo</h2>
-      <p class="bk-sub">da La Grotta Del Buono · Aversa</p>
-
-      <div class="fg">
-        <label>Data</label>
-        <input type="date" id="data-input">
-      </div>
-      <div class="fg-row">
-        <div class="fg">
-          <label>Orario</label>
-          <select>
-            <option>12:30</option><option>13:00</option><option>13:30</option>
-            <option>20:00</option><option selected>20:30</option>
-            <option>21:00</option><option>21:30</option><option>22:00</option>
-          </select>
-        </div>
-        <div class="fg">
-          <label>Persone</label>
-          <select>
-            <option>1</option><option selected>2</option>
-            <option>3</option><option>4</option><option>5</option><option>6+</option>
-          </select>
-        </div>
-      </div>
-      <div class="fg">
-        <label>Nome e Cognome</label>
-        <input type="text" placeholder="Mario Rossi">
-      </div>
-      <div class="fg-row">
-        <div class="fg">
-          <label>Telefono</label>
-          <input type="tel" placeholder="+39 333 000 0000">
-        </div>
-        <div class="fg">
-          <label>Email</label>
-          <input type="email" placeholder="mario@email.it">
-        </div>
-      </div>
-      <div class="fg">
-        <label>Note speciali (opzionale)</label>
-        <input type="text" placeholder="Allergie, occasioni speciali...">
-      </div>
-
-      <button class="btn-book">🗓️ Verifica Disponibilità</button>
-
-      <p class="bk-note">
-        Powered by <span>Full Booking</span> · Prenotazione gratuita · Zero commissioni
-      </p>
+    <div class="chi-siamo-foto">
+      <img src="https://places.googleapis.com/v1/places/ChIJhev_vkQBOxMRGwT7t0HZgFc/photos/Ab43m-vrp7IT5TrvoH1h62q1-yYutr7orKyAJ1MntDfbo4jQbNRRBqrPw2j0CPFnomYKT3Iub5mTn0AVCqwnZFWPNdwoLcDlCV8bnGVgFlG_y52i0c_j04W3RT98aCvF0mMLxZeVkMcO3T48yOElaKLbUB009n4nQ-3tRJK1Az2Qrz_qTwjemvdMybw8a3w6FVpcRxCRExA7SzkhSV4SxLyhnGZUqOQpjGdlZrAUwKzWi3PMgxSugSpq7SS21-rJidBeBMdLOnx6-a1CBdTpc7h6i7xy5g9m3MQgH4oxcdidoGe_fhl0qkSGmPOBNBm0JmO6gq9_XujXyxjyoapdG7x9nP_6i7UcYqQMK30L2BnShqyo5wkFU3Pzg8f5lg-NnFfID0w75x0KeDTCh2ss4p0JqCKMI2RBCKWB-vGChBBhQtfh2w/media?maxWidthPx=1200&key=AIzaSyC1pQxgyEA66BJ_F2ZLkHJvQeYDawXItEg" alt="La Grotta Del Buono"
+           onerror="this.src='https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800'">
     </div>
   </div>
+</section>
 
-</div>
+<!-- GALLERY -->
+<section id="galleria" class="gallery-section">
+  <div style="max-width:1200px;margin:0 auto 40px">
+    <div class="section-label">Galleria</div>
+    <h2 class="section-titolo">Le nostre immagini</h2>
+    <div class="gold-line left"></div>
+  </div>
+  <div class="gallery-grid"><div class="gallery-item"><img src="https://places.googleapis.com/v1/places/ChIJhev_vkQBOxMRGwT7t0HZgFc/photos/Ab43m-uG67VChOpIv3U6jPlKSnkvS_3dn0mU3OkVhPGY1QJdeDeNz3X9fY0bOgqCoqtMEtITMkm-9F5QBNXbcfryGY9O4R7w8NWO9wBJoXO5Wo6V5SOL2gMxoZ_j-OWTl5MGO-PE9S0xcGJ2lIehYM8TeAxf_9S7piuwd-FgUnKqsu6HDaIBxQ6MBwuCrrecJlkZNSx1Cv6N029FlSmtrKyDpnDc_sguvEl99FX76b1sZvdFX0FMyO6w5S5gcc_kNCtHA-5xd8xOMOjom_e36Sm9cIA3MuLysRxkjxntTnRCPMqDpgfM-Quc7reiyA7E6ziBG0yjjaVqnc0W2O4KtERT7dqRHbT26-AFSDyqsVnPnaOq-BC8cJ-_3rT-4Ln3SYZ0J3rp6Ohp0V0PcsiD1GNeuJlPddX6ntkOvwF6XpskH7CbYQ/media?maxWidthPx=1200&key=AIzaSyC1pQxgyEA66BJ_F2ZLkHJvQeYDawXItEg" alt="La Grotta Del Buono" loading="lazy" onerror="this.parentElement.style.display:none"></div><div class="gallery-item"><img src="https://places.googleapis.com/v1/places/ChIJhev_vkQBOxMRGwT7t0HZgFc/photos/Ab43m-vrp7IT5TrvoH1h62q1-yYutr7orKyAJ1MntDfbo4jQbNRRBqrPw2j0CPFnomYKT3Iub5mTn0AVCqwnZFWPNdwoLcDlCV8bnGVgFlG_y52i0c_j04W3RT98aCvF0mMLxZeVkMcO3T48yOElaKLbUB009n4nQ-3tRJK1Az2Qrz_qTwjemvdMybw8a3w6FVpcRxCRExA7SzkhSV4SxLyhnGZUqOQpjGdlZrAUwKzWi3PMgxSugSpq7SS21-rJidBeBMdLOnx6-a1CBdTpc7h6i7xy5g9m3MQgH4oxcdidoGe_fhl0qkSGmPOBNBm0JmO6gq9_XujXyxjyoapdG7x9nP_6i7UcYqQMK30L2BnShqyo5wkFU3Pzg8f5lg-NnFfID0w75x0KeDTCh2ss4p0JqCKMI2RBCKWB-vGChBBhQtfh2w/media?maxWidthPx=1200&key=AIzaSyC1pQxgyEA66BJ_F2ZLkHJvQeYDawXItEg" alt="La Grotta Del Buono" loading="lazy" onerror="this.parentElement.style.display:none"></div><div class="gallery-item"><img src="https://places.googleapis.com/v1/places/ChIJhev_vkQBOxMRGwT7t0HZgFc/photos/Ab43m-tL-r5tp-uYqkXJMj8wh_EqHsFzRa-vOxO3P1khdTJpH9J-OJJ8EjfTFqQ2Uo4jd_0xa0XWJTCnFkAyNwwq-Y3PCLaecyagrYuQ38zOBp4OWWkXJ0WuJAmUf58aSk6sa_m3dnMnjXA_XKtgiLuYiqOg_hq4q8Aw3kce07HwWk6atUqbsden3JqCcBL_8-GhAQDkqXd0cEBm1rzaR9tuWJDBRPrMmZBKCDXBF49hTRgNtiZKnWJv8ea59AfNSxQA22Ib1m2bpvZ535gxgxkn0ISK0RkNuenhRmPpqqADooa6SJz-Hirxgo0W3xqbz32JLflfeyl_U8qUpstDJjf6KLaaCJoyKRqKsoBUkjLSq9tNnt7b53jj9Y6-bcDQi8vVMqnv0GixTVZH_5xBFujPLrem8Xdsx1MoXOC_8C7VpsXuqQ/media?maxWidthPx=1200&key=AIzaSyC1pQxgyEA66BJ_F2ZLkHJvQeYDawXItEg" alt="La Grotta Del Buono" loading="lazy" onerror="this.parentElement.style.display:none"></div><div class="gallery-item"><img src="https://places.googleapis.com/v1/places/ChIJhev_vkQBOxMRGwT7t0HZgFc/photos/Ab43m-t9Qk_fHfg6gPwupoE-DOOqV9XXdKv15lr5m0qnyEgXkj2prAPONxTWOXd2xsY4SeOWECfXtQJzmcPlcm0Hi6WJyWLUjzwJfUJIICQNH4VnKCw5TNALqdZcciyvK1654KgrqkMwKycdVjNoulC82e2xE8wm1HOXmjEgSG_1CKAMzk_J8-_1bsQj3G_Oofcf004ZCF4PClzMIX3egd7QQCwTP2nIL75Cw1kkCNyKVAja3wCttinOuAsZ4eisldTOdiXctaSOL1o-nD-LZt6QgK3kH-84UqLlHqLYkhAs60_Zi4MbY70fXdIoJmjqlGCYfzVWwcONI93k_RjXjz7vrQFE9RXzHmNyARo74rqPjyMSBYwmpy7b7CnlTTHPimPcUeKecjZnp761UkbWsWtW3wb5wpmPCGC7-9PF0yKadA6AicOLjUdgph6s2uezAg/media?maxWidthPx=1200&key=AIzaSyC1pQxgyEA66BJ_F2ZLkHJvQeYDawXItEg" alt="La Grotta Del Buono" loading="lazy" onerror="this.parentElement.style.display:none"></div><div class="gallery-item"><img src="https://places.googleapis.com/v1/places/ChIJhev_vkQBOxMRGwT7t0HZgFc/photos/Ab43m-vL-sdap1jjYkrZ_DZ7R0izbq_ug86nsixdqNYy8zUg21Kg8NkwXcpO4F0-Pgo91BziXzzVQfA_oodRh8XVvtms7r4Kg8li6_UUbbpsasrmZGNCV8AsJty9TZKjYrYi4HZeEcGE31J_qyqLrAhFxmY1wxG4uSeOzswVIxsPcj9n-d8kI9Tl3V5PRiT3BgPlHrwCWPphplRE6w8jQ-K91Gmei65UXjz2cVaclqhx_tknFUPCJ6AeuGq7q8lP1DmeC5GfyOyrXmdJd7yyyWA77ozaC0kvbLSR-UtrG72qFG_Tlx0I8foYAkiUJUUALFlmpygi51h58ExTEROzcdzclXJjXXvE3hpHrTTuXTKYJgJDDeam7U7wjT_v3755O73UWxOOd-bgSrddWiXcqz2GaCwIaVjDIrgMsuVnbvp1J7d3r6Y/media?maxWidthPx=1200&key=AIzaSyC1pQxgyEA66BJ_F2ZLkHJvQeYDawXItEg" alt="La Grotta Del Buono" loading="lazy" onerror="this.parentElement.style.display:none"></div></div>
+</section>
 
+<!-- ORARI E INFO -->
+<section id="orari">
+  <div class="info-section">
+    <div class="info-card">
+      <div class="section-label">Informazioni</div>
+      <h2 class="section-titolo" style="font-size:26px">Dove siamo</h2>
+      <div class="gold-line left"></div>
+      <div class="info-row">
+        <div class="info-ico">📍</div>
+        <div class="info-txt"><strong>Indirizzo</strong>Corso Bersaglieri, 23, 81031 Aversa CE</div>
+      </div>
+      <div class="info-row"><div class="info-ico">📞</div><div class="info-txt"><strong>Telefono</strong>081 504 5316</div></div>
+      <div class="info-row">
+        <div class="info-ico">⭐</div>
+        <div class="info-txt"><strong>Valutazione Google</strong>4.1/5 su 2,251 recensioni</div>
+      </div>
+      <div class="info-row"><div class="info-ico">🌐</div><div class="info-txt"><strong>Sito web</strong><a href="https://www.instagram.com/lagrottadel.buono/" style="color:var(--oro)">https://www.instagram.com/lagrottadel.buono/</a></div></div>
+    </div>
+    <div class="info-card">
+      <div class="section-label">Orari</div>
+      <h2 class="section-titolo" style="font-size:26px">Quando apriremo</h2>
+      <div class="gold-line left"></div>
+      <div class="orario-row"><span class="orario-giorno">Monday</span><span class="orario-ore">7:30 PM – 12:00 AM</span></div><div class="orario-row"><span class="orario-giorno">Tuesday</span><span class="orario-ore">7:30 PM – 12:00 AM</span></div><div class="orario-row"><span class="orario-giorno">Wednesday</span><span class="orario-ore">7:30 PM – 12:00 AM</span></div><div class="orario-row"><span class="orario-giorno">Thursday</span><span class="orario-ore">7:30 PM – 12:00 AM</span></div><div class="orario-row"><span class="orario-giorno">Friday</span><span class="orario-ore">7:30 PM – 12:00 AM</span></div><div class="orario-row"><span class="orario-giorno">Saturday</span><span class="orario-ore">7:30 PM – 12:00 AM</span></div><div class="orario-row"><span class="orario-giorno">Sunday</span><span class="orario-ore">12:30 – 3:30 PM, 7:30 – 11:30 PM</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="section-label">Prenotazione Online</div>
+  <h2 class="section-titolo">Riserva il tuo tavolo</h2>
+  <div class="gold-line"></div>
+  <p>Prenota in 30 secondi. Conferma immediata su WhatsApp.<br>Zero commissioni — sempre gratuito per i clienti.</p>
+  <div class="cta-duo">
+    <a href="la-grotta-del-buono-prenota.html" class="btn-oro">📅 Prenota Ora</a>
+    <a href="tel:081 504 5316" class="btn-outline">📞 Chiama</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
 <footer>
-  <strong><strong>Full Booking</strong> · Sistema di prenotazione online per ristoranti<strong style="color:#fff">La Grotta Del Buono</strong><br>
-  
+  <div>
+    <div class="footer-brand">FULL<span>BOOKING</span></div>
+    <div style="font-size:12px;color:var(--grigio);margin-top:6px;letter-spacing:1px">
+      Sistema di prenotazione online · La Grotta Del Buono · Aversa
+    </div>
+  </div>
+  <div class="footer-copy">
+    © 2025 fullbooking.cloud · Powered by GF Technological System
+  </div>
 </footer>
 
 <script>
-  const d = new Date(); d.setDate(d.getDate()+1);
-  document.getElementById('data-input').value = d.toISOString().split('T')[0];
-  document.getElementById('data-input').min = d.toISOString().split('T')[0];
+  // Bottone prenota flottante — appare dopo 80% dell'altezza hero
+  const floatBtn = document.getElementById('floatBtn');
+  const heroH = document.querySelector('.hero').offsetHeight;
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > heroH * 0.8) {
+      floatBtn.classList.add('visible');
+    } else {
+      floatBtn.classList.remove('visible');
+    }
+  }, { passive: true });
 </script>
 </body>
 </html>

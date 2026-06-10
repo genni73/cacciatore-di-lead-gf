@@ -57,7 +57,8 @@ def main():
         print("  python main.py search farmacia    → Cerca farmacie in Campania")
         print("  python main.py search bar Napoli  → Cerca bar a Napoli")
         print("  python main.py enrich             → Cerca email dai siti web")
-        print("  python main.py whatsapp           → Invia WhatsApp ai nuovi lead")
+        print("  python main.py whatsapp           → Invia WhatsApp ai nuovi lead (Cashmatic)")
+        print("  python main.py fullbooking-wa     → Invia WhatsApp Full Booking (con link preview)")
         print("  python main.py email              → Invia email ai nuovi lead")
         print("  python main.py stats              → Mostra statistiche")
         print()
@@ -124,6 +125,13 @@ def main():
         citta = sys.argv[3] if len(sys.argv) > 3 else None
         limite = int(sys.argv[4]) if len(sys.argv) > 4 else 20
         campagna_whatsapp(categoria=categoria, citta=citta, limite=limite)
+        stampa_stats()
+
+    # ── CAMPAGNA FULL BOOKING WhatsApp ───────────────────────────
+    elif cmd == "fullbooking-wa":
+        from outreach import campagna_fullbooking_wa
+        limite = int(sys.argv[2]) if len(sys.argv) > 2 else 50
+        campagna_fullbooking_wa(limite=limite)
         stampa_stats()
 
     # ── CAMPAGNA EMAIL ─────────────────────────────────────

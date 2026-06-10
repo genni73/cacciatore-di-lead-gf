@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pizzeria Verace — Benevento | Full Booking</title>
+<meta name="description" content="Cucina autentica nel cuore di Benevento">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root { 
+  --nero:     #0a0a0a;
+  --nero2:    #141414;
+  --nero3:    #1e1e1e;
+  --oro:      #c9a84c;
+  --oro2:     #e8c96b;
+  --crema:    #f0ead6;
+  --grigio:   #8a8a8a;
+  --bianco:   #ffffff;
+ }
+
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--nero);
+  color: var(--crema);
+  -webkit-font-smoothing: antialiased;
+}
+a { color: inherit; text-decoration: none; }
+img { display: block; }
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--nero2); }
+::-webkit-scrollbar-thumb { background: var(--oro); border-radius: 3px; }
+
+/* Topbar Full Booking */
+.fb-topbar {
+  background: var(--nero);
+  border-bottom: 1px solid rgba(201,168,76,0.2);
+  padding: 10px 32px;
+  display: flex; align-items: center; justify-content: space-between;
+  position: sticky; top: 0; z-index: 200;
+  backdrop-filter: blur(12px);
+}
+.fb-logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 18px; letter-spacing: 3px; font-weight: 700;
+  color: var(--bianco);
+}
+.fb-logo span { color: var(--oro); }
+.fb-topbar-cta {
+  font-size: 11px; color: var(--grigio);
+  letter-spacing: 1px; text-transform: uppercase;
+}
+
+/* Bottone oro */
+.btn-oro {
+  display: inline-block;
+  background: linear-gradient(135deg, var(--oro), var(--oro2));
+  color: var(--nero);
+  padding: 14px 36px;
+  font-size: 12px; font-weight: 700;
+  letter-spacing: 2px; text-transform: uppercase;
+  border: none; cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  transition: opacity .2s, transform .2s;
+}
+.btn-oro:hover { opacity: .88; transform: translateY(-1px); }
+
+/* Linea oro decorativa */
+.gold-line {
+  width: 48px; height: 2px;
+  background: linear-gradient(90deg, var(--oro), var(--oro2));
+  margin: 0 auto 20px;
+}
+.gold-line.left { margin: 0 0 20px; }
+
+
+/* NAVBAR */
+.navbar {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 300;
+  background: rgba(10,10,10,0.92);
+  border-bottom: 1px solid rgba(201,168,76,0.15);
+  padding: 0 40px;
+  display: flex; align-items: center; justify-content: space-between;
+  height: 68px;
+  backdrop-filter: blur(16px);
+  transition: background .3s;
+}
+.navbar-brand {
+  display: flex; align-items: center; gap: 14px;
+}
+.nav-logo { height: 40px; width: auto; max-width: 130px; object-fit: contain; }
+.navbar-nome {
+  font-family: 'Playfair Display', serif;
+  font-size: 17px; color: var(--crema); letter-spacing: .5px;
+}
+.navbar-links {
+  display: flex; align-items: center; gap: 32px;
+}
+.navbar-links a {
+  font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+  color: var(--grigio); transition: color .2s;
+}
+.navbar-links a:hover { color: var(--oro); }
+.navbar-prenota {
+  background: linear-gradient(135deg, var(--oro), var(--oro2));
+  color: var(--nero) !important;
+  padding: 10px 22px;
+  font-size: 11px !important; font-weight: 700 !important;
+  letter-spacing: 2px;
+}
+.navbar-prenota:hover { opacity: .88; }
+@media(max-width: 768px) {
+  .navbar { padding: 0 20px; }
+  .navbar-links { display: none; }
+}
+
+/* HERO */
+.hero {
+  height: 100vh; min-height: 600px;
+  position: relative; overflow: hidden;
+}
+.hero-img {
+  width: 100%; height: 100%; object-fit: cover;
+  transform: scale(1.04);
+  transition: transform 8s ease;
+}
+.hero:hover .hero-img { transform: scale(1); }
+.hero-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(10,10,10,0.3) 0%,
+    rgba(10,10,10,0.1) 40%,
+    rgba(10,10,10,0.85) 100%
+  );
+}
+.hero-content {
+  position: absolute; bottom: 80px; left: 0; right: 0;
+  padding: 0 60px;
+  max-width: 900px;
+}
+.hero-badge {
+  display: inline-block;
+  border: 1px solid var(--oro);
+  color: var(--oro);
+  font-size: 10px; letter-spacing: 3px; text-transform: uppercase;
+  padding: 6px 16px; margin-bottom: 20px;
+}
+.hero-titolo {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(36px, 6vw, 72px);
+  font-weight: 700; line-height: 1.1;
+  color: var(--bianco);
+  text-shadow: 0 2px 40px rgba(0,0,0,0.5);
+  margin-bottom: 16px;
+}
+.hero-tagline {
+  font-size: 15px; color: rgba(240,234,214,0.8);
+  line-height: 1.7; max-width: 540px; margin-bottom: 24px;
+  font-weight: 300;
+}
+.hero-meta {
+  display: flex; align-items: center; gap: 20px; flex-wrap: wrap;
+}
+.rating-pill {
+  display: flex; align-items: center; gap: 8px;
+  background: rgba(201,168,76,0.12);
+  border: 1px solid rgba(201,168,76,0.3);
+  padding: 8px 18px;
+}
+.star { font-size: 14px; }
+.star.full, .star.half { color: var(--oro); }
+.star.empty { color: rgba(201,168,76,0.25); }
+.rating-num { color: var(--oro); font-weight: 700; font-size: 15px; }
+.rating-cnt { color: rgba(240,234,214,0.6); font-size: 12px; }
+.hero-citta { color: rgba(240,234,214,0.75); font-size: 13px; letter-spacing: 1px; }
+@media(max-width: 768px) {
+  .hero-content { padding: 0 24px; bottom: 60px; }
+}
+
+/* SCROLL INDICATOR */
+.scroll-ind {
+  position: absolute; bottom: 28px; left: 50%;
+  transform: translateX(-50%);
+  display: flex; flex-direction: column; align-items: center; gap: 6px;
+  color: rgba(201,168,76,0.5); font-size: 10px; letter-spacing: 2px;
+  text-transform: uppercase;
+  animation: bounce 2s infinite;
+}
+.scroll-ind::after {
+  content: ''; width: 1px; height: 40px;
+  background: linear-gradient(to bottom, var(--oro), transparent);
+}
+@keyframes bounce {
+  0%,100% { opacity: .5; transform: translateX(-50%) translateY(0); }
+  50% { opacity: 1; transform: translateX(-50%) translateY(6px); }
+}
+
+/* BOTTONE PRENOTA FLOTTANTE */
+.btn-prenota-float {
+  position: fixed;
+  bottom: 36px; right: 36px;
+  z-index: 500;
+  width: 96px; height: 96px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--oro), var(--oro2));
+  color: var(--nero);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 4px;
+  font-family: 'Inter', sans-serif;
+  font-size: 11px; font-weight: 800;
+  letter-spacing: 2px; text-transform: uppercase;
+  text-decoration: none;
+  box-shadow: 0 8px 32px rgba(201,168,76,0.35), 0 2px 8px rgba(0,0,0,0.4);
+  transition: transform .25s, box-shadow .25s, opacity .25s;
+  opacity: 0;
+  transform: scale(0.7) translateY(20px);
+  pointer-events: none;
+}
+.btn-prenota-float.visible {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+  pointer-events: auto;
+}
+.btn-prenota-float:hover {
+  transform: scale(1.07) translateY(-3px);
+  box-shadow: 0 14px 40px rgba(201,168,76,0.5), 0 4px 12px rgba(0,0,0,0.4);
+}
+.btn-prenota-float .float-arrow {
+  font-size: 18px; line-height: 1;
+  transition: transform .2s;
+}
+.btn-prenota-float:hover .float-arrow {
+  transform: translateY(3px);
+}
+@media(max-width: 768px) {
+  .btn-prenota-float {
+    width: 80px; height: 80px;
+    bottom: 24px; right: 20px;
+    font-size: 10px;
+    opacity: 1; transform: scale(1) translateY(0);
+    pointer-events: auto;
+  }
+}
+
+/* SEZIONI */
+section { padding: 100px 60px; }
+@media(max-width: 768px) { section { padding: 60px 24px; } }
+
+.section-label {
+  font-size: 10px; letter-spacing: 4px; text-transform: uppercase;
+  color: var(--oro); margin-bottom: 14px;
+}
+.section-titolo {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(28px, 4vw, 42px); font-weight: 600;
+  color: var(--crema); line-height: 1.2; margin-bottom: 20px;
+}
+
+/* CHI SIAMO */
+.chi-siamo {
+  max-width: 1100px; margin: 0 auto;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
+}
+@media(max-width: 768px) { .chi-siamo { grid-template-columns: 1fr; gap: 40px; } }
+.chi-siamo-testo p {
+  font-size: 16px; line-height: 1.9; color: rgba(240,234,214,0.75);
+  font-weight: 300; margin-bottom: 16px;
+}
+.chi-siamo-foto {
+  position: relative; height: 480px;
+}
+.chi-siamo-foto img {
+  width: 100%; height: 100%; object-fit: cover;
+}
+.chi-siamo-foto::before {
+  content: '';
+  position: absolute; inset: -12px -12px 12px 12px;
+  border: 1px solid rgba(201,168,76,0.25);
+  z-index: -1;
+}
+
+/* GALLERY */
+.gallery-section { background: var(--nero2); }
+.gallery-grid {
+  max-width: 1200px; margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: 280px 280px;
+  gap: 4px;
+}
+.gallery-item { overflow: hidden; position: relative; }
+.gallery-item:first-child {
+  grid-column: span 2; grid-row: span 2;
+}
+.gallery-item img {
+  width: 100%; height: 100%; object-fit: cover;
+  transition: transform .6s ease;
+}
+.gallery-item:hover img { transform: scale(1.05); }
+@media(max-width: 768px) {
+  .gallery-grid { grid-template-columns: 1fr 1fr; grid-template-rows: auto; }
+  .gallery-item:first-child { grid-column: span 2; height: 220px; }
+  .gallery-item { height: 160px; }
+}
+
+/* INFO + ORARI */
+.info-section {
+  max-width: 1100px; margin: 0 auto;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 80px;
+}
+@media(max-width: 768px) { .info-section { grid-template-columns: 1fr; gap: 48px; } }
+.info-card {
+  border-top: 1px solid rgba(201,168,76,0.2);
+  padding-top: 32px;
+}
+.info-row {
+  display: flex; align-items: flex-start; gap: 16px;
+  margin-bottom: 20px; padding-bottom: 20px;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+.info-row:last-child { border-bottom: none; }
+.info-ico {
+  width: 36px; height: 36px; flex-shrink: 0;
+  background: rgba(201,168,76,0.1);
+  border: 1px solid rgba(201,168,76,0.2);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 15px;
+}
+.info-txt { font-size: 14px; color: rgba(240,234,214,0.75); line-height: 1.6; }
+.info-txt strong { color: var(--crema); font-size: 12px; letter-spacing: 1px; text-transform: uppercase; display: block; margin-bottom: 4px; }
+.orario-row {
+  display: flex; justify-content: space-between;
+  padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.05);
+  font-size: 13px;
+}
+.orario-giorno { color: var(--crema); }
+.orario-ore { color: var(--grigio); text-align: right; }
+.no-info { font-size: 13px; color: var(--grigio); font-style: italic; }
+
+/* CTA PRENOTA */
+.cta-section {
+  background: var(--nero2);
+  border-top: 1px solid rgba(201,168,76,0.15);
+  border-bottom: 1px solid rgba(201,168,76,0.15);
+  text-align: center;
+  padding: 120px 60px;
+}
+.cta-section .section-titolo { margin-bottom: 14px; }
+.cta-section p {
+  font-size: 15px; color: rgba(240,234,214,0.6);
+  max-width: 500px; margin: 0 auto 40px;
+  line-height: 1.7; font-weight: 300;
+}
+.cta-duo {
+  display: flex; align-items: center; justify-content: center;
+  gap: 20px; flex-wrap: wrap;
+}
+.btn-outline {
+  display: inline-block;
+  border: 1px solid var(--oro);
+  color: var(--oro);
+  padding: 14px 36px;
+  font-size: 12px; font-weight: 600;
+  letter-spacing: 2px; text-transform: uppercase;
+  transition: all .2s;
+}
+.btn-outline:hover { background: var(--oro); color: var(--nero); }
+
+/* FOOTER */
+footer {
+  background: var(--nero);
+  border-top: 1px solid rgba(201,168,76,0.1);
+  padding: 48px 60px 32px;
+  display: flex; justify-content: space-between; align-items: flex-end;
+  flex-wrap: wrap; gap: 24px;
+}
+.footer-brand {
+  font-family: 'Playfair Display', serif;
+  font-size: 20px; letter-spacing: 3px; color: var(--crema);
+}
+.footer-brand span { color: var(--oro); }
+.footer-copy {
+  font-size: 11px; color: rgba(138,138,138,0.5);
+  letter-spacing: 1px;
+}
+@media(max-width: 768px) {
+  footer { padding: 40px 24px 28px; flex-direction: column; align-items: flex-start; }
+}
+</style>
+</head>
+<body>
+
+<!-- BOTTONE PRENOTA FLOTTANTE -->
+<a href="pizzeria-verace-prenota.html" class="btn-prenota-float" id="floatBtn">
+  <span>PRENOTA</span>
+  <span class="float-arrow">↓</span>
+</a>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div class="navbar-brand">
+    
+    <span class="navbar-nome">Pizzeria Verace</span>
+  </div>
+  <div class="navbar-links">
+    <a href="#ristorante">Il Ristorante</a>
+    <a href="#galleria">Galleria</a>
+    <a href="#orari">Orari</a>
+    <a href="pizzeria-verace-prenota.html" class="navbar-prenota">Prenota</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <img class="hero-img" src="https://places.googleapis.com/v1/places/ChIJKZYeU2o6OhMRzBwsL0Yhwjo/photos/Ab43m-uYd7ZedU5_jbT6kqy9jlKw_2wjymzlUqpfAq8MtK4U8kbQZ84o0m_dbUqVnK8FHY5ZJKHJWhAICaYYdihhO7NopbkE0Kc45s0K-gFropdWBNi-6MBPL5qqoVPMtcpPbE8RsQJLzl_toFOTPfHbrmyWaTHu2265Y6GHAdpqo1nJHE5loYjd1EljIa2S_QO2URA6Wl72L2pSI_XEaY4G5zfVgi-hU5bZcfYZ7_9WlgqhYG_TSrsyCD3CfapQXbBTOMGlpZpTnYr_6BFxKIsbhyY-7PfQao9HTMgPTE7c-srC7M1xT2iQj_q712IceoSpFx4uMhcIO0fX5te33iQ1y5UA27HSfdUMUwCg9Q1C81j_PBj67Pg22w5OIpTQNhVtdg3ra50oq2v_dO4_TT-fsPJ0s4E2jg3x1Wug99h4On99xw/media?maxWidthPx=1200&key=AIzaSyC1pQxgyEA66BJ_F2ZLkHJvQeYDawXItEg" alt="Pizzeria Verace"
+       onerror="this.src='https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1600'">
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-badge">Full Booking · Benevento</div>
+    <h1 class="hero-titolo">Pizzeria Verace</h1>
+    <p class="hero-tagline">Cucina autentica nel cuore di Benevento</p>
+    <div class="hero-meta">
+      <div class="rating-pill">
+        <span class="star full">★</span><span class="star full">★</span><span class="star full">★</span><span class="star full">★</span><span class="star empty">☆</span>
+        <span class="rating-num">4.0</span>
+        <span class="rating-cnt">(1,164 recensioni)</span>
+      </div>
+      <span class="hero-citta">📍 Benevento</span>
+    </div>
+  </div>
+  <div class="scroll-ind">Scopri</div>
+</section>
+
+<!-- CHI SIAMO -->
+<section id="ristorante">
+  <div class="chi-siamo">
+    <div class="chi-siamo-testo">
+      <div class="section-label">Il Ristorante</div>
+      <h2 class="section-titolo">Pizzeria Verace</h2>
+      <div class="gold-line left"></div>
+      <p>Cucina autentica nel cuore di Benevento</p>
+      <p>Prenota il tuo tavolo online in pochi secondi — conferma immediata su WhatsApp, zero commissioni.</p>
+      <br>
+      <a href="pizzeria-verace-prenota.html" class="btn-oro">Prenota Ora</a>
+    </div>
+    <div class="chi-siamo-foto">
+      <img src="https://places.googleapis.com/v1/places/ChIJKZYeU2o6OhMRzBwsL0Yhwjo/photos/Ab43m-t4ANH8eMDlmM-cuhWEaYkeYAbbRzQ6TLkuMJ0K26BRTOWy2DdlmWENM-sLoHn6qFtILSIuQ1jkKLSvdlAYeAK7P_eFPt84DxJ_Zpo9xRlzHw8IT5zDEXdEnVFHyC_M4zfbZ1JHRPW6FASvp5_xw_SWEp1dlJIBJLcgIkFLqfSfBVY5K1FX-tqZygFVl-DxD8ASOr4Xw7kP6bYpp9M8qZXd42boMMSfCxiyezMmwqnAzr04dNKCOHJ2YMIUnfq7mIG-gqmUtCIOSodVO8YZsKjCfyV64zCNK1mqH0Ov-P8MqpUKyIushwFb19xox0RlVaJ79UHkOmYJT1ItKjo8nEEs460wPOvzfMHxFAwX3PqO7I7VfGi9OwNuxK3hxqdCz4oFZUrKCklB6E-o2Rww5ZO0TAhjOEDbE_3EzN_A8fHxixs/media?maxWidthPx=1200&key=AIzaSyC1pQxgyEA66BJ_F2ZLkHJvQeYDawXItEg" alt="Pizzeria Verace"
+           onerror="this.src='https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800'">
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section id="galleria" class="gallery-section">
+  <div style="max-width:1200px;margin:0 auto 40px">
+    <div class="section-label">Galleria</div>
+    <h2 class="section-titolo">Le nostre immagini</h2>
+    <div class="gold-line left"></div>
+  </div>
+  <div class="gallery-grid"><div class="gallery-item"><img src="https://places.googleapis.com/v1/places/ChIJKZYeU2o6OhMRzBwsL0Yhwjo/photos/Ab43m-uYd7ZedU5_jbT6kqy9jlKw_2wjymzlUqpfAq8MtK4U8kbQZ84o0m_dbUqVnK8FHY5ZJKHJWhAICaYYdihhO7NopbkE0Kc45s0K-gFropdWBNi-6MBPL5qqoVPMtcpPbE8RsQJLzl_toFOTPfHbrmyWaTHu2265Y6GHAdpqo1nJHE5loYjd1EljIa2S_QO2URA6Wl72L2pSI_XEaY4G5zfVgi-hU5bZcfYZ7_9WlgqhYG_TSrsyCD3CfapQXbBTOMGlpZpTnYr_6BFxKIsbhyY-7PfQao9HTMgPTE7c-srC7M1xT2iQj_q712IceoSpFx4uMhcIO0fX5te33iQ1y5UA27HSfdUMUwCg9Q1C81j_PBj67Pg22w5OIpTQNhVtdg3ra50oq2v_dO4_TT-fsPJ0s4E2jg3x1Wug99h4On99xw/media?maxWidthPx=1200&key=AIzaSyC1pQxgyEA66BJ_F2ZLkHJvQeYDawXItEg" alt="Pizzeria Verace" loading="lazy" onerror="this.parentElement.style.display:none"></div><div class="gallery-item"><img src="https://places.googleapis.com/v1/places/ChIJKZYeU2o6OhMRzBwsL0Yhwjo/photos/Ab43m-t4ANH8eMDlmM-cuhWEaYkeYAbbRzQ6TLkuMJ0K26BRTOWy2DdlmWENM-sLoHn6qFtILSIuQ1jkKLSvdlAYeAK7P_eFPt84DxJ_Zpo9xRlzHw8IT5zDEXdEnVFHyC_M4zfbZ1JHRPW6FASvp5_xw_SWEp1dlJIBJLcgIkFLqfSfBVY5K1FX-tqZygFVl-DxD8ASOr4Xw7kP6bYpp9M8qZXd42boMMSfCxiyezMmwqnAzr04dNKCOHJ2YMIUnfq7mIG-gqmUtCIOSodVO8YZsKjCfyV64zCNK1mqH0Ov-P8MqpUKyIushwFb19xox0RlVaJ79UHkOmYJT1ItKjo8nEEs460wPOvzfMHxFAwX3PqO7I7VfGi9OwNuxK3hxqdCz4oFZUrKCklB6E-o2Rww5ZO0TAhjOEDbE_3EzN_A8fHxixs/media?maxWidthPx=1200&key=AIzaSyC1pQxgyEA66BJ_F2ZLkHJvQeYDawXItEg" alt="Pizzeria Verace" loading="lazy" onerror="this.parentElement.style.display:none"></div><div class="gallery-item"><img src="https://places.googleapis.com/v1/places/ChIJKZYeU2o6OhMRzBwsL0Yhwjo/photos/Ab43m-scsyDlGfSbKfeGRTwSKo83koxREAcSfelNQm5oxQ3EJIZeZ7khu02SNplnM91bFDloxyT2MXtZqUbIHUwgmt8lg8uCxRq7vcXhTYcvWyieEgie4PuvdtXg_RaKAf5DtKPozbZ7qCRHvmq-JvyQa7V7_HAT-yfjTFo4FQdQ4t-Dk78zHT_nc1sX8t76NF_YftOLmy3cv0aMVL73IOJjUjb0JWQG3xcYE8SLS-OWRzLETGUHh-B54YZLZI9hsvB4YHt7afIW0n3NWTjuzjm45w_ZFIjdAL2lsMMta4prMMc0v2ldK7aANiHGgyebV4XZ6IdHpatrr7-4GKnnmFAyq5Vhq8QvPY0Mdjersf4oZUuddDkh-RrS9UzvGJzHfmdKf3GR-Yky_KbhiRVazxmNeA--JpLx7QDn0fnfhHvATe9n8byKW2qlUwUdJnCTai4v/media?maxWidthPx=1200&key=AIzaSyC1pQxgyEA66BJ_F2ZLkHJvQeYDawXItEg" alt="Pizzeria Verace" loading="lazy" onerror="this.parentElement.style.display:none"></div><div class="gallery-item"><img src="https://places.googleapis.com/v1/places/ChIJKZYeU2o6OhMRzBwsL0Yhwjo/photos/Ab43m-tM0euMVlnTSYgfyNv0Ssd37Y60sVdouqJeYZ8Fg_kkpZpuZOafPgPshVZuxBQ1fVkh3s88XWcXl0i5CKBvmW8X-m96gWqv7nGa5IVJ50H2L0ILdk6kTJ_22cXo6tHQ3WDvMVZFGrQaV-nzlOi04K0wfK7SZxF-wlQLp6Y9bPTCOV7ASdlYOtccr2YA1uR79zig1vVgrXZEcxAoBCAzwdpfISpxVftY9gedikCTU0uIhUk_H6_0BWM54CX6lCC5T1Upt3Hd3DUG_H48mZyivNVKnGx00wqC-gMUAqqiPrlb1_KIkmpvPoYErZzofF8iSEK5qqTA0jwmETDF4Cr0QXV85iOBbUfcopBkHryc9B7Z7Xts01IkqpnwBBFsxCyfVU_CtbqEOp8lCP7KB86bm-IJvSpnlM5Ow1DTwAyHTpGs1nH-/media?maxWidthPx=1200&key=AIzaSyC1pQxgyEA66BJ_F2ZLkHJvQeYDawXItEg" alt="Pizzeria Verace" loading="lazy" onerror="this.parentElement.style.display:none"></div><div class="gallery-item"><img src="https://places.googleapis.com/v1/places/ChIJKZYeU2o6OhMRzBwsL0Yhwjo/photos/Ab43m-vn7__z4KYD3DgY_vdldW-Bb03crVM3RSzXLx5Pn4MeIOXDXGGn33-4tZii16JYNAQH1k2DEvv-yj9WBGgP10xSAxXSMZLSPrtLklK7cu3g7Y_AgDPZ6xsAZ_7BGiGTfkhv_JxIyk54NLCKJcKh4b7HFaKrGSJihivxhdWPNWDcufN5LDZSVNucLhW467GqQuX4Xir_0NcesPgRRTXrAIPu86M0G6BKP-o0AN0NJj3V9se-ld6W9-VH7cs_XVOmwumQBBIJk2-5hOOT5eDcI6D7_u57rABaUbNu6HngTZkXdVJU8nwQrqX1PDvOE4j3b1psp05kgm1mLJCkvXE-0Jlkyh7g6enLgW5bn6Z-BU-VPoFJURwyeZXufjXTAWlNxlXoGbCZhkc4YFqtUBPY_SebvVLxuiiMclYh4VlqFqIMIQ/media?maxWidthPx=1200&key=AIzaSyC1pQxgyEA66BJ_F2ZLkHJvQeYDawXItEg" alt="Pizzeria Verace" loading="lazy" onerror="this.parentElement.style.display:none"></div></div>
+</section>
+
+<!-- ORARI E INFO -->
+<section id="orari">
+  <div class="info-section">
+    <div class="info-card">
+      <div class="section-label">Informazioni</div>
+      <h2 class="section-titolo" style="font-size:26px">Dove siamo</h2>
+      <div class="gold-line left"></div>
+      <div class="info-row">
+        <div class="info-ico">📍</div>
+        <div class="info-txt"><strong>Indirizzo</strong>Via dei Longobardi, 12, 82100 Benevento BN</div>
+      </div>
+      <div class="info-row"><div class="info-ico">📞</div><div class="info-txt"><strong>Telefono</strong>0824 47684</div></div>
+      <div class="info-row">
+        <div class="info-ico">⭐</div>
+        <div class="info-txt"><strong>Valutazione Google</strong>4.0/5 su 1,164 recensioni</div>
+      </div>
+      
+    </div>
+    <div class="info-card">
+      <div class="section-label">Orari</div>
+      <h2 class="section-titolo" style="font-size:26px">Quando apriremo</h2>
+      <div class="gold-line left"></div>
+      <div class="orario-row"><span class="orario-giorno">Monday</span><span class="orario-ore">7:00 – 11:00 PM</span></div><div class="orario-row"><span class="orario-giorno">Tuesday</span><span class="orario-ore">7:00 – 11:00 PM</span></div><div class="orario-row"><span class="orario-giorno">Wednesday</span><span class="orario-ore">7:00 – 11:00 PM</span></div><div class="orario-row"><span class="orario-giorno">Thursday</span><span class="orario-ore">12:00 – 3:00 PM, 7:00 – 11:00 PM</span></div><div class="orario-row"><span class="orario-giorno">Friday</span><span class="orario-ore">12:00 – 3:00 PM, 7:00 – 11:00 PM</span></div><div class="orario-row"><span class="orario-giorno">Saturday</span><span class="orario-ore">12:00 – 3:00 PM, 7:00 – 11:00 PM</span></div><div class="orario-row"><span class="orario-giorno">Sunday</span><span class="orario-ore">7:00 – 11:00 PM</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="section-label">Prenotazione Online</div>
+  <h2 class="section-titolo">Riserva il tuo tavolo</h2>
+  <div class="gold-line"></div>
+  <p>Prenota in 30 secondi. Conferma immediata su WhatsApp.<br>Zero commissioni — sempre gratuito per i clienti.</p>
+  <div class="cta-duo">
+    <a href="pizzeria-verace-prenota.html" class="btn-oro">📅 Prenota Ora</a>
+    <a href="tel:0824 47684" class="btn-outline">📞 Chiama</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div>
+    <div class="footer-brand">FULL<span>BOOKING</span></div>
+    <div style="font-size:12px;color:var(--grigio);margin-top:6px;letter-spacing:1px">
+      Sistema di prenotazione online · Pizzeria Verace · Benevento
+    </div>
+  </div>
+  <div class="footer-copy">
+    © 2025 fullbooking.cloud · Powered by GF Technological System
+  </div>
+</footer>
+
+<script>
+  // Bottone prenota flottante — appare dopo 80% dell'altezza hero
+  const floatBtn = document.getElementById('floatBtn');
+  const heroH = document.querySelector('.hero').offsetHeight;
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > heroH * 0.8) {
+      floatBtn.classList.add('visible');
+    } else {
+      floatBtn.classList.remove('visible');
+    }
+  }, { passive: true });
+</script>
+</body>
+</html>

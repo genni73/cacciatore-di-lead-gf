@@ -3,317 +3,531 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Pizzeria La Carmela — Prenota su Full Booking</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<title>Pizzeria La Carmela — Nocera Inferiore | Full Booking</title>
+<meta name="description" content="Pizzeria la Carmela | Borgo Vescovado Nocera Inferiore">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-:root {
-  --primary:   #1a3a2a;
-  --secondary: #c9a84c;
-  --bg:        #f7f5f0;
-  --on-primary:   #ffffff;
-  --on-secondary: #1a1a1a;
-}
-*{ margin:0; padding:0; box-sizing:border-box; }
-body{ font-family:'Inter',sans-serif; background:var(--bg); color:#2c2c2c; }
+:root { 
+  --nero:     #0a0a0a;
+  --nero2:    #141414;
+  --nero3:    #1e1e1e;
+  --oro:      #c9a84c;
+  --oro2:     #e8c96b;
+  --crema:    #f0ead6;
+  --grigio:   #8a8a8a;
+  --bianco:   #ffffff;
+ }
 
-/* TOPBAR FULL BOOKING */
-.fb-bar{
-  background:#111; padding:7px 20px;
-  display:flex; align-items:center; justify-content:space-between;
-  font-size:11px; color:#aaa;
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--nero);
+  color: var(--crema);
+  -webkit-font-smoothing: antialiased;
 }
-.fb-brand{ color:#fff; font-weight:700; letter-spacing:1px; font-size:13px; }
-.fb-brand span{ color:var(--secondary); }
-.fb-preview-tag{
-  background:var(--secondary); color:var(--on-secondary);
-  padding:3px 10px; border-radius:20px; font-size:10px; font-weight:700;
-  letter-spacing:0.5px;
+a { color: inherit; text-decoration: none; }
+img { display: block; }
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--nero2); }
+::-webkit-scrollbar-thumb { background: var(--oro); border-radius: 3px; }
+
+/* Topbar Full Booking */
+.fb-topbar {
+  background: var(--nero);
+  border-bottom: 1px solid rgba(201,168,76,0.2);
+  padding: 10px 32px;
+  display: flex; align-items: center; justify-content: space-between;
+  position: sticky; top: 0; z-index: 200;
+  backdrop-filter: blur(12px);
+}
+.fb-logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 18px; letter-spacing: 3px; font-weight: 700;
+  color: var(--bianco);
+}
+.fb-logo span { color: var(--oro); }
+.fb-topbar-cta {
+  font-size: 11px; color: var(--grigio);
+  letter-spacing: 1px; text-transform: uppercase;
 }
 
-/* HEADER RISTORANTE — colori reali del cliente */
-.header{
-  background:var(--primary); padding:14px 24px;
-  display:flex; align-items:center; justify-content:space-between;
-  position:sticky; top:0; z-index:100;
-  box-shadow:0 2px 16px rgba(0,0,0,0.25);
+/* Bottone oro */
+.btn-oro {
+  display: inline-block;
+  background: linear-gradient(135deg, var(--oro), var(--oro2));
+  color: var(--nero);
+  padding: 14px 36px;
+  font-size: 12px; font-weight: 700;
+  letter-spacing: 2px; text-transform: uppercase;
+  border: none; cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  transition: opacity .2s, transform .2s;
 }
-.header-left{ display:flex; align-items:center; gap:14px; }
-.rist-logo{ height:44px; width:auto; max-width:140px; object-fit:contain; }
-.rist-nome{
-  font-family:'Playfair Display',serif; font-size:20px;
-  color:var(--on-primary); letter-spacing:0.5px;
+.btn-oro:hover { opacity: .88; transform: translateY(-1px); }
+
+/* Linea oro decorativa */
+.gold-line {
+  width: 48px; height: 2px;
+  background: linear-gradient(90deg, var(--oro), var(--oro2));
+  margin: 0 auto 20px;
 }
-.btn-prenota-top{
-  background:var(--secondary); color:var(--on-secondary);
-  border:none; padding:10px 22px; border-radius:6px;
-  font-size:13px; font-weight:700; cursor:pointer; letter-spacing:0.5px;
+.gold-line.left { margin: 0 0 20px; }
+
+
+/* NAVBAR */
+.navbar {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 300;
+  background: rgba(10,10,10,0.92);
+  border-bottom: 1px solid rgba(201,168,76,0.15);
+  padding: 0 40px;
+  display: flex; align-items: center; justify-content: space-between;
+  height: 68px;
+  backdrop-filter: blur(16px);
+  transition: background .3s;
+}
+.navbar-brand {
+  display: flex; align-items: center; gap: 14px;
+}
+.nav-logo { height: 40px; width: auto; max-width: 130px; object-fit: contain; }
+.navbar-nome {
+  font-family: 'Playfair Display', serif;
+  font-size: 17px; color: var(--crema); letter-spacing: .5px;
+}
+.navbar-links {
+  display: flex; align-items: center; gap: 32px;
+}
+.navbar-links a {
+  font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+  color: var(--grigio); transition: color .2s;
+}
+.navbar-links a:hover { color: var(--oro); }
+.navbar-prenota {
+  background: linear-gradient(135deg, var(--oro), var(--oro2));
+  color: var(--nero) !important;
+  padding: 10px 22px;
+  font-size: 11px !important; font-weight: 700 !important;
+  letter-spacing: 2px;
+}
+.navbar-prenota:hover { opacity: .88; }
+@media(max-width: 768px) {
+  .navbar { padding: 0 20px; }
+  .navbar-links { display: none; }
 }
 
 /* HERO */
-.hero{ position:relative; height:420px; overflow:hidden; }
-.hero img{ width:100%; height:100%; object-fit:cover; }
-.hero-ov{
-  position:absolute; inset:0;
-  background:linear-gradient(to top,rgba(0,0,0,0.80) 0%,rgba(0,0,0,0.05) 55%);
+.hero {
+  height: 100vh; min-height: 600px;
+  position: relative; overflow: hidden;
 }
-.hero-info{ position:absolute; bottom:30px; left:30px; right:30px; color:#fff; }
-.hero-info h1{
-  font-family:'Playfair Display',serif;
-  font-size:clamp(24px,4vw,40px); margin-bottom:10px;
-  text-shadow:0 2px 12px rgba(0,0,0,0.6);
+.hero-img {
+  width: 100%; height: 100%; object-fit: cover;
+  transform: scale(1.04);
+  transition: transform 8s ease;
 }
-.hero-tagline{
-  font-size:14px; color:rgba(255,255,255,0.85);
-  margin-bottom:12px; max-width:560px; line-height:1.6;
+.hero:hover .hero-img { transform: scale(1); }
+.hero-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(10,10,10,0.3) 0%,
+    rgba(10,10,10,0.1) 40%,
+    rgba(10,10,10,0.85) 100%
+  );
 }
-.hero-meta{ display:flex; align-items:center; gap:14px; flex-wrap:wrap; }
-.rating-pill{
-  display:flex; align-items:center; gap:5px;
-  background:rgba(255,255,255,0.15); backdrop-filter:blur(6px);
-  padding:6px 14px; border-radius:20px;
+.hero-content {
+  position: absolute; bottom: 80px; left: 0; right: 0;
+  padding: 0 60px;
+  max-width: 900px;
 }
-.s{ font-size:15px; }
-.s.full,.s.half{ color:#f5c518; }
-.s.empty{ color:rgba(255,255,255,0.35); }
-.r-num{ color:#fff; font-weight:700; font-size:15px; }
-.r-cnt{ color:rgba(255,255,255,0.75); font-size:12px; }
-.hero-citta{ color:rgba(255,255,255,0.9); font-size:14px; }
+.hero-badge {
+  display: inline-block;
+  border: 1px solid var(--oro);
+  color: var(--oro);
+  font-size: 10px; letter-spacing: 3px; text-transform: uppercase;
+  padding: 6px 16px; margin-bottom: 20px;
+}
+.hero-titolo {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(36px, 6vw, 72px);
+  font-weight: 700; line-height: 1.1;
+  color: var(--bianco);
+  text-shadow: 0 2px 40px rgba(0,0,0,0.5);
+  margin-bottom: 16px;
+}
+.hero-tagline {
+  font-size: 15px; color: rgba(240,234,214,0.8);
+  line-height: 1.7; max-width: 540px; margin-bottom: 24px;
+  font-weight: 300;
+}
+.hero-meta {
+  display: flex; align-items: center; gap: 20px; flex-wrap: wrap;
+}
+.rating-pill {
+  display: flex; align-items: center; gap: 8px;
+  background: rgba(201,168,76,0.12);
+  border: 1px solid rgba(201,168,76,0.3);
+  padding: 8px 18px;
+}
+.star { font-size: 14px; }
+.star.full, .star.half { color: var(--oro); }
+.star.empty { color: rgba(201,168,76,0.25); }
+.rating-num { color: var(--oro); font-weight: 700; font-size: 15px; }
+.rating-cnt { color: rgba(240,234,214,0.6); font-size: 12px; }
+.hero-citta { color: rgba(240,234,214,0.75); font-size: 13px; letter-spacing: 1px; }
+@media(max-width: 768px) {
+  .hero-content { padding: 0 24px; bottom: 60px; }
+}
 
-/* LAYOUT */
-.wrap{
-  max-width:960px; margin:0 auto; padding:30px 18px;
-  display:grid; grid-template-columns:1fr 370px; gap:26px;
+/* SCROLL INDICATOR */
+.scroll-ind {
+  position: absolute; bottom: 28px; left: 50%;
+  transform: translateX(-50%);
+  display: flex; flex-direction: column; align-items: center; gap: 6px;
+  color: rgba(201,168,76,0.5); font-size: 10px; letter-spacing: 2px;
+  text-transform: uppercase;
+  animation: bounce 2s infinite;
 }
-@media(max-width:720px){.wrap{grid-template-columns:1fr;}}
+.scroll-ind::after {
+  content: ''; width: 1px; height: 40px;
+  background: linear-gradient(to bottom, var(--oro), transparent);
+}
+@keyframes bounce {
+  0%,100% { opacity: .5; transform: translateX(-50%) translateY(0); }
+  50% { opacity: 1; transform: translateX(-50%) translateY(6px); }
+}
+
+/* BOTTONE PRENOTA FLOTTANTE */
+.btn-prenota-float {
+  position: fixed;
+  bottom: 36px; right: 36px;
+  z-index: 500;
+  width: 96px; height: 96px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--oro), var(--oro2));
+  color: var(--nero);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 4px;
+  font-family: 'Inter', sans-serif;
+  font-size: 11px; font-weight: 800;
+  letter-spacing: 2px; text-transform: uppercase;
+  text-decoration: none;
+  box-shadow: 0 8px 32px rgba(201,168,76,0.35), 0 2px 8px rgba(0,0,0,0.4);
+  transition: transform .25s, box-shadow .25s, opacity .25s;
+  opacity: 0;
+  transform: scale(0.7) translateY(20px);
+  pointer-events: none;
+}
+.btn-prenota-float.visible {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+  pointer-events: auto;
+}
+.btn-prenota-float:hover {
+  transform: scale(1.07) translateY(-3px);
+  box-shadow: 0 14px 40px rgba(201,168,76,0.5), 0 4px 12px rgba(0,0,0,0.4);
+}
+.btn-prenota-float .float-arrow {
+  font-size: 18px; line-height: 1;
+  transition: transform .2s;
+}
+.btn-prenota-float:hover .float-arrow {
+  transform: translateY(3px);
+}
+@media(max-width: 768px) {
+  .btn-prenota-float {
+    width: 80px; height: 80px;
+    bottom: 24px; right: 20px;
+    font-size: 10px;
+    opacity: 1; transform: scale(1) translateY(0);
+    pointer-events: auto;
+  }
+}
+
+/* SEZIONI */
+section { padding: 100px 60px; }
+@media(max-width: 768px) { section { padding: 60px 24px; } }
+
+.section-label {
+  font-size: 10px; letter-spacing: 4px; text-transform: uppercase;
+  color: var(--oro); margin-bottom: 14px;
+}
+.section-titolo {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(28px, 4vw, 42px); font-weight: 600;
+  color: var(--crema); line-height: 1.2; margin-bottom: 20px;
+}
+
+/* CHI SIAMO */
+.chi-siamo {
+  max-width: 1100px; margin: 0 auto;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
+}
+@media(max-width: 768px) { .chi-siamo { grid-template-columns: 1fr; gap: 40px; } }
+.chi-siamo-testo p {
+  font-size: 16px; line-height: 1.9; color: rgba(240,234,214,0.75);
+  font-weight: 300; margin-bottom: 16px;
+}
+.chi-siamo-foto {
+  position: relative; height: 480px;
+}
+.chi-siamo-foto img {
+  width: 100%; height: 100%; object-fit: cover;
+}
+.chi-siamo-foto::before {
+  content: '';
+  position: absolute; inset: -12px -12px 12px 12px;
+  border: 1px solid rgba(201,168,76,0.25);
+  z-index: -1;
+}
 
 /* GALLERY */
-.gallery{ display:grid; grid-template-columns:1fr 1fr; gap:6px; border-radius:10px; overflow:hidden; margin-bottom:22px; }
-.gimg img{ width:100%; height:145px; object-fit:cover; display:block; }
+.gallery-section { background: var(--nero2); }
+.gallery-grid {
+  max-width: 1200px; margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: 280px 280px;
+  gap: 4px;
+}
+.gallery-item { overflow: hidden; position: relative; }
+.gallery-item:first-child {
+  grid-column: span 2; grid-row: span 2;
+}
+.gallery-item img {
+  width: 100%; height: 100%; object-fit: cover;
+  transition: transform .6s ease;
+}
+.gallery-item:hover img { transform: scale(1.05); }
+@media(max-width: 768px) {
+  .gallery-grid { grid-template-columns: 1fr 1fr; grid-template-rows: auto; }
+  .gallery-item:first-child { grid-column: span 2; height: 220px; }
+  .gallery-item { height: 160px; }
+}
 
-/* INFO CARDS */
-.card{
-  background:#fff; border-radius:12px; padding:22px;
-  margin-bottom:18px; box-shadow:0 2px 14px rgba(0,0,0,0.06);
+/* INFO + ORARI */
+.info-section {
+  max-width: 1100px; margin: 0 auto;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 80px;
 }
-.card h3{
-  font-family:'Playfair Display',serif; font-size:16px;
-  color:var(--primary); margin-bottom:14px;
-  padding-bottom:10px; border-bottom:2px solid var(--bg);
+@media(max-width: 768px) { .info-section { grid-template-columns: 1fr; gap: 48px; } }
+.info-card {
+  border-top: 1px solid rgba(201,168,76,0.2);
+  padding-top: 32px;
 }
-.info-r{ display:flex; gap:10px; margin-bottom:9px; font-size:14px; color:#555; }
-.info-r .ico{ font-size:17px; flex-shrink:0; }
-.orario-row{
-  display:flex; justify-content:space-between;
-  font-size:13px; color:#555; padding:4px 0;
-  border-bottom:1px solid #f5f5f5;
+.info-row {
+  display: flex; align-items: flex-start; gap: 16px;
+  margin-bottom: 20px; padding-bottom: 20px;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
 }
+.info-row:last-child { border-bottom: none; }
+.info-ico {
+  width: 36px; height: 36px; flex-shrink: 0;
+  background: rgba(201,168,76,0.1);
+  border: 1px solid rgba(201,168,76,0.2);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 15px;
+}
+.info-txt { font-size: 14px; color: rgba(240,234,214,0.75); line-height: 1.6; }
+.info-txt strong { color: var(--crema); font-size: 12px; letter-spacing: 1px; text-transform: uppercase; display: block; margin-bottom: 4px; }
+.orario-row {
+  display: flex; justify-content: space-between;
+  padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.05);
+  font-size: 13px;
+}
+.orario-giorno { color: var(--crema); }
+.orario-ore { color: var(--grigio); text-align: right; }
+.no-info { font-size: 13px; color: var(--grigio); font-style: italic; }
 
-/* PERCHE FULL BOOKING */
-.why-item{ display:flex; align-items:flex-start; gap:10px; margin-bottom:10px; }
-.why-icon{
-  width:30px; height:30px; border-radius:50%;
-  background:var(--primary); color:var(--on-primary);
-  display:flex; align-items:center; justify-content:center;
-  font-size:13px; flex-shrink:0;
+/* CTA PRENOTA */
+.cta-section {
+  background: var(--nero2);
+  border-top: 1px solid rgba(201,168,76,0.15);
+  border-bottom: 1px solid rgba(201,168,76,0.15);
+  text-align: center;
+  padding: 120px 60px;
 }
-.why-text{ font-size:13px; color:#555; line-height:1.5; }
-.why-text strong{ color:#2c2c2c; font-size:13px; }
-
-/* BOOKING CARD */
-.booking-card{
-  background:#fff; border-radius:14px; padding:26px;
-  box-shadow:0 4px 28px rgba(0,0,0,0.11);
-  border-top:4px solid var(--primary);
-  position:sticky; top:68px; height:fit-content;
+.cta-section .section-titolo { margin-bottom: 14px; }
+.cta-section p {
+  font-size: 15px; color: rgba(240,234,214,0.6);
+  max-width: 500px; margin: 0 auto 40px;
+  line-height: 1.7; font-weight: 300;
 }
-.booking-card h2{
-  font-family:'Playfair Display',serif; font-size:20px;
-  color:var(--primary); margin-bottom:4px;
+.cta-duo {
+  display: flex; align-items: center; justify-content: center;
+  gap: 20px; flex-wrap: wrap;
 }
-.bk-sub{ font-size:13px; color:#999; margin-bottom:20px; }
-.fg{ margin-bottom:14px; }
-.fg label{
-  display:block; font-size:11px; font-weight:700;
-  color:#777; margin-bottom:5px;
-  text-transform:uppercase; letter-spacing:0.5px;
+.btn-outline {
+  display: inline-block;
+  border: 1px solid var(--oro);
+  color: var(--oro);
+  padding: 14px 36px;
+  font-size: 12px; font-weight: 600;
+  letter-spacing: 2px; text-transform: uppercase;
+  transition: all .2s;
 }
-.fg input,.fg select{
-  width:100%; padding:11px 13px;
-  border:1.5px solid #e8e0d5; border-radius:8px;
-  font-size:14px; color:#2c2c2c; background:#fafaf8;
-  font-family:'Inter',sans-serif; appearance:none;
-}
-.fg input:focus,.fg select:focus{
-  outline:none; border-color:var(--primary); background:#fff;
-}
-.fg-row{ display:grid; grid-template-columns:1fr 1fr; gap:11px; }
-.btn-book{
-  width:100%; padding:15px; margin-top:6px;
-  background:var(--primary); color:var(--on-primary);
-  border:none; border-radius:10px; font-size:15px; font-weight:700;
-  cursor:pointer; font-family:'Inter',sans-serif; letter-spacing:0.5px;
-  transition:opacity 0.2s;
-}
-.btn-book:hover{opacity:0.88;}
-.bk-note{ text-align:center; font-size:11px; color:#bbb; margin-top:12px; }
-.bk-note span{ color:var(--secondary); font-weight:700; }
+.btn-outline:hover { background: var(--oro); color: var(--nero); }
 
 /* FOOTER */
-footer{
-  background:#111; color:rgba(255,255,255,0.5);
-  text-align:center; padding:22px; font-size:12px; margin-top:36px;
+footer {
+  background: var(--nero);
+  border-top: 1px solid rgba(201,168,76,0.1);
+  padding: 48px 60px 32px;
+  display: flex; justify-content: space-between; align-items: flex-end;
+  flex-wrap: wrap; gap: 24px;
 }
-footer strong{ color:var(--secondary); }
+.footer-brand {
+  font-family: 'Playfair Display', serif;
+  font-size: 20px; letter-spacing: 3px; color: var(--crema);
+}
+.footer-brand span { color: var(--oro); }
+.footer-copy {
+  font-size: 11px; color: rgba(138,138,138,0.5);
+  letter-spacing: 1px;
+}
+@media(max-width: 768px) {
+  footer { padding: 40px 24px 28px; flex-direction: column; align-items: flex-start; }
+}
 </style>
 </head>
 <body>
 
-<!-- TOPBAR FULL BOOKING -->
-<div class="fb-bar">
-  <span class="fb-brand">FULL<span>BOOKING</span>.it</span>
-  <span class="fb-preview-tag">ANTEPRIMA RISERVATA</span>
-</div>
+<!-- BOTTONE PRENOTA FLOTTANTE -->
+<a href="pizzeria-la-carmela-prenota.html" class="btn-prenota-float" id="floatBtn">
+  <span>PRENOTA</span>
+  <span class="float-arrow">↓</span>
+</a>
 
-<!-- HEADER con colori reali del ristorante -->
-<header class="header">
-  <div class="header-left">
-    <img src="https://www.pizzerialacarmela.it/images/new/logoBianco.png" alt="Logo Pizzeria La Carmela" class="rist-logo" onerror="this.style.display='none'">
-    <span class="rist-nome">Pizzeria La Carmela</span>
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div class="navbar-brand">
+    <img src="https://www.pizzerialacarmela.it/images/new/logoBianco.png" alt="Logo Pizzeria La Carmela" class="nav-logo" onerror="this.style.display='none'">
+    <span class="navbar-nome">Pizzeria La Carmela</span>
   </div>
-  <button class="btn-prenota-top" onclick="document.querySelector('.booking-card').scrollIntoView({behavior:'smooth'})">
-    📅 Prenota Ora
-  </button>
-</header>
+  <div class="navbar-links">
+    <a href="#ristorante">Il Ristorante</a>
+    <a href="#galleria">Galleria</a>
+    <a href="#orari">Orari</a>
+    <a href="pizzeria-la-carmela-prenota.html" class="navbar-prenota">Prenota</a>
+  </div>
+</nav>
 
 <!-- HERO -->
-<div class="hero">
-  <img src="https://places.googleapis.com/v1/places/ChIJb0lVClK_OxMRDBnCpTKlmfE/photos/Ab43m-tzaoxzJWfejZGDCvc9ondUFFvXRdj7dfNIdvKDRq4DTrvH_d8q3qnSWZ-aWQM-N7a3o1C9OPCskbfi0bm575NnESXnomtyhWHvxiLOc3RXZsSfNaEvH1Dl5ccVMoaMDdyJaIIa-CAmeSG_13nYTEQ0VTHz8s1K06SV6Ke3KD7XUFhwG9wdmehl9Q1ryQHWtcE4BT2mIpSIy_jWAAJ1CFHYDJPWD0bRZeoXLYorFzuUGCIGFvYBlTuV4L5a8NFKyRrL44bxRQCZa33Oz8R2QtbmQLcuOvGRnxiu7JZkjdtmj-sLGjPuLYVoCbRaV2t180Sw0PlNu8HETv7jelrVI9GV0eaipwaO5r8S4qs9K7cvchdy8kVf_DaJc51FHF2w4JqIE3_WKmcO6U7X7px3DVTAx6KlEwVLZ3uP610CQ_m8NU4l/media?maxWidthPx=800&key=AIzaSyC1pQxgyEA66BJ_F2ZLkHJvQeYDawXItEg" alt="Pizzeria La Carmela"
-       onerror="this.src='https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1200'">
-  <div class="hero-ov"></div>
-  <div class="hero-info">
-    <h1>Pizzeria La Carmela</h1>
+<section class="hero">
+  <img class="hero-img" src="https://places.googleapis.com/v1/places/ChIJb0lVClK_OxMRDBnCpTKlmfE/photos/Ab43m-scJTFqnUSftU-Q_0KcylmMDEMdxJz0VjqB0fe2ZP33tx1vltrp5C5kI6vYUlDN9SywwK5QUwedRlWh_INDsrUD7PhEv-D40-zgI6hSbtfIc9R6xLybKuNpDvMjJRNKAWCfFnl9B0N5TFs20cLlIy1Qwk64WeKpndnpcr5oQ0Ya7-ohw3zI6PE0U4LNvb1Cm8JA1jMpsRi0DAZBM5pVzQ0NAcRxAFcYvOnzYQ1-o-rqxPOWWjLKZUGc-ANSBzyb6NHOJ1df19_H9JsQixxChGjFWRG2B1tbwiJoGQ-SFcPPz0A-ZJuCy3XxlfHROuzv9VRbPHxBAjRXp-5vMRgcektdgBSKwl4KlZUwwuk7WMzLH_7yuiIyQuHW95DOuahEdJ_UBxJZRNEz4b-HNoZxE7xjvBoJt89FjU90kSPu9fmroUwH/media?maxWidthPx=1200&key=AIzaSyC1pQxgyEA66BJ_F2ZLkHJvQeYDawXItEg" alt="Pizzeria La Carmela"
+       onerror="this.src='https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1600'">
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-badge">Full Booking · Nocera Inferiore</div>
+    <h1 class="hero-titolo">Pizzeria La Carmela</h1>
     <p class="hero-tagline">Pizzeria la Carmela | Borgo Vescovado Nocera Inferiore</p>
     <div class="hero-meta">
       <div class="rating-pill">
-        <span class="s full">★</span><span class="s full">★</span><span class="s full">★</span><span class="s full">★</span><span class="s empty">☆</span>
-        <span class="r-num">4.3</span>
-        <span class="r-cnt">(733 recensioni Google)</span>
+        <span class="star full">★</span><span class="star full">★</span><span class="star full">★</span><span class="star full">★</span><span class="star empty">☆</span>
+        <span class="rating-num">4.3</span>
+        <span class="rating-cnt">(733 recensioni)</span>
       </div>
       <span class="hero-citta">📍 Nocera Inferiore</span>
     </div>
   </div>
-</div>
+  <div class="scroll-ind">Scopri</div>
+</section>
 
-<!-- CONTENUTO -->
-<div class="wrap">
-
-  <!-- SINISTRA -->
-  <div>
-
-    <div class="gallery"><div class="gimg"><img src="https://places.googleapis.com/v1/places/ChIJb0lVClK_OxMRDBnCpTKlmfE/photos/Ab43m-utdw7aTPfK3UUHrjcG8gmyCYK8ArqUwFk5YNwSOEgb63pzzv3FwP_U8bOVmi7oq-A7SPvt8g1vm5xdpGbvbWlg7ot4m7fPUBZXV5KQW3JU3tKlayZzVkwouuO-X_7JWPiMGk3Ba5SU4Ber-HT-PK-pYobZDLapFpGdcUMrrE-AdADs_vx4KCbPghPqzNOmS2bOp0W9Dr5pf0qLzAtVgdmOZt2oIaJeYMuw4zYjrImg31kKvQMFye3FRjFTWX9dZLHlzSpbT050BDz8gMmtRbndgn7IkjfLlNVZrRaQIzRw4w/media?maxWidthPx=800&key=AIzaSyC1pQxgyEA66BJ_F2ZLkHJvQeYDawXItEg" alt="Pizzeria La Carmela" loading="lazy" onerror="this.parentElement.style.display='none'"></div><div class="gimg"><img src="https://places.googleapis.com/v1/places/ChIJb0lVClK_OxMRDBnCpTKlmfE/photos/Ab43m-u2MsgtlPG85ayFqrIWJknQEGLeOMzJRWXffovwWj5sCrhveso1BFm9yLSs0op-tI9OQU2CNIEir79Xnz5b_A75PMUya4IUce-q1j8vTcKc1O9x3x2qRDqwFsYHjoz96pfWDNVBVsUFDQMLDo2XdQ66GK6t-7W3pRUirt6FOkK25EjodVakgLfbV6LTbVSi-v0nw1-RMbYktDZmtdDIFAy3zEhJZISMUGWKKBWWMwrp85NklBfSRjgnYhylXzowps3E8lpCkZeyC6xmCsFNijxyAVJkBv6rTjvcVnVXQumqr_Pk_WhN29b8E6MbIpbyVdvLBji3WP7gC-z2xq8DhFM6_xwzBS1d3JfH425G6E8U64qnvJdAG5zYiDldja3IX0awxB2gVhPdUR9chHQAT_3B7ZY-z5hDML0mZ1NRGQachgw/media?maxWidthPx=800&key=AIzaSyC1pQxgyEA66BJ_F2ZLkHJvQeYDawXItEg" alt="Pizzeria La Carmela" loading="lazy" onerror="this.parentElement.style.display='none'"></div><div class="gimg"><img src="https://places.googleapis.com/v1/places/ChIJb0lVClK_OxMRDBnCpTKlmfE/photos/Ab43m-tgfS0bjAdNBQtC5MBBHlSGRruvxkiQ3ZpBGI4_d70VVZ68D6RFt9eO0Li88K2kDvqMgl9yvoWGwlBBoQJP1961IvA4pnxGMHs3zsZOWW_qfPjkObtahlTnSpVo_p0rxbaWuF1S97actDyYNjt0n62YE3nWobpLwpqIghYkkMi3ud2KTjoiEVIa1OhwSDs0yf7dD-naR3d09FGbT6qa6_ON900S2LyDlzRoqL5a2gFgeoU9565x9hsQVK6xjFWCy__aFfQM1gnSHAeOpRDirAG6xd1jVE8HNtCmKRqvdysZr36_Rxu4RdqOSGPw9rrTv7e9DimN3H2cxzA27fdLesDawjCwm5YVMn3dDt4s9BtVPCy1lvjSAtGtzk-UL54TUWOuSAuv6Pbt1F4MjOr-3NozHEL3xkYSOSm63TtQR7VfZA/media?maxWidthPx=800&key=AIzaSyC1pQxgyEA66BJ_F2ZLkHJvQeYDawXItEg" alt="Pizzeria La Carmela" loading="lazy" onerror="this.parentElement.style.display='none'"></div></div>
-
-    <div class="card">
-      <h3>📍 Dove siamo</h3>
-      <div class="info-r"><span class="ico">🏠</span><span>Via borgo vescovado, 53, 84014 Nocera Inferiore SA</span></div>
-      <div class="info-r"><span class="ico">📞</span><span>081 517 2620</span></div>
-      <div class="info-r"><span class="ico">⭐</span><span><strong>4.3/5</strong> su 733 recensioni Google</span></div>
+<!-- CHI SIAMO -->
+<section id="ristorante">
+  <div class="chi-siamo">
+    <div class="chi-siamo-testo">
+      <div class="section-label">Il Ristorante</div>
+      <h2 class="section-titolo">Pizzeria La Carmela</h2>
+      <div class="gold-line left"></div>
+      <p>Pizzeria la Carmela | Borgo Vescovado Nocera Inferiore</p>
+      <p>Prenota il tuo tavolo online in pochi secondi — conferma immediata su WhatsApp, zero commissioni.</p>
+      <br>
+      <a href="pizzeria-la-carmela-prenota.html" class="btn-oro">Prenota Ora</a>
     </div>
-
-    <div class="card">
-      <h3>🕐 Orari di apertura</h3>
-      <div class="orario-row"><span>Monday</span><span>Closed</span></div><div class="orario-row"><span>Tuesday</span><span>6:00 PM – 12:00 AM</span></div><div class="orario-row"><span>Wednesday</span><span>6:00 PM – 12:00 AM</span></div><div class="orario-row"><span>Thursday</span><span>6:00 PM – 12:00 AM</span></div><div class="orario-row"><span>Friday</span><span>6:00 PM – 12:00 AM</span></div><div class="orario-row"><span>Saturday</span><span>6:00 PM – 1:00 AM</span></div><div class="orario-row"><span>Sunday</span><span>6:00 PM – 12:00 AM</span></div>
-    </div>
-
-    <div class="card">
-      <h3>🏆 Perché prenotare online con Full Booking?</h3>
-
-      <div class="why-item">
-        <div class="why-icon">24</div>
-        <div class="why-text"><strong>Prenota quando vuoi</strong><br>Il sistema accetta prenotazioni 24 ore su 24, anche a mezzanotte.</div>
-      </div>
-      <div class="why-item">
-        <div class="why-icon">✓</div>
-        <div class="why-text"><strong>Conferma immediata via WhatsApp</strong><br>Ricevi la conferma sul cellulare in pochi secondi.</div>
-      </div>
-      <div class="why-item">
-        <div class="why-icon">0€</div>
-        <div class="why-text"><strong>Nessuna commissione</strong><br>La prenotazione diretta è sempre gratuita per il cliente.</div>
-      </div>
-
-      <div class="why-item">
-        <div class="why-icon">📧</div>
-        <div class="why-text"><strong>Riepilogo via email</strong><br>Ricevi anche un'email con tutti i dettagli della prenotazione.</div>
-      </div>
-    </div>
-
-  </div>
-
-  <!-- DESTRA — FORM -->
-  <div>
-    <div class="booking-card">
-      <h2>Prenota il tuo tavolo</h2>
-      <p class="bk-sub">da Pizzeria La Carmela · Nocera Inferiore</p>
-
-      <div class="fg">
-        <label>Data</label>
-        <input type="date" id="data-input">
-      </div>
-      <div class="fg-row">
-        <div class="fg">
-          <label>Orario</label>
-          <select>
-            <option>12:30</option><option>13:00</option><option>13:30</option>
-            <option>20:00</option><option selected>20:30</option>
-            <option>21:00</option><option>21:30</option><option>22:00</option>
-          </select>
-        </div>
-        <div class="fg">
-          <label>Persone</label>
-          <select>
-            <option>1</option><option selected>2</option>
-            <option>3</option><option>4</option><option>5</option><option>6+</option>
-          </select>
-        </div>
-      </div>
-      <div class="fg">
-        <label>Nome e Cognome</label>
-        <input type="text" placeholder="Mario Rossi">
-      </div>
-      <div class="fg-row">
-        <div class="fg">
-          <label>Telefono</label>
-          <input type="tel" placeholder="+39 333 000 0000">
-        </div>
-        <div class="fg">
-          <label>Email</label>
-          <input type="email" placeholder="mario@email.it">
-        </div>
-      </div>
-      <div class="fg">
-        <label>Note speciali (opzionale)</label>
-        <input type="text" placeholder="Allergie, occasioni speciali...">
-      </div>
-
-      <button class="btn-book">🗓️ Verifica Disponibilità</button>
-
-      <p class="bk-note">
-        Powered by <span>Full Booking</span> · Prenotazione gratuita · Zero commissioni
-      </p>
+    <div class="chi-siamo-foto">
+      <img src="https://places.googleapis.com/v1/places/ChIJb0lVClK_OxMRDBnCpTKlmfE/photos/Ab43m-ukxXmclOBwKtBbE5M5N_U8IbiLCiLzrSc34GaqnUaKjQYxBpHxOf_8wi_5AY_E5eAzHIzFc-NN2Ca4f_TetrRWgfPYwGMhltfYTKckSoge-0bBVJsRXTIGTQAYjd-dcETk98_qDbc-FDb0LrL3jtX4r7EVbTA4aAv7y7NjZcc9X3v8VsL87u1PQQST9WnnfncD2ROgiUvtMN-AgAAV4p4FwxkcMAKf3z-5bacDrohYA__FJCNE17qoSm6g0OzC7hOskVFzzIIuBrD0XId2kMKNSPSy0UUZ6ImmuY-gUPNUaQ/media?maxWidthPx=1200&key=AIzaSyC1pQxgyEA66BJ_F2ZLkHJvQeYDawXItEg" alt="Pizzeria La Carmela"
+           onerror="this.src='https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800'">
     </div>
   </div>
+</section>
 
-</div>
+<!-- GALLERY -->
+<section id="galleria" class="gallery-section">
+  <div style="max-width:1200px;margin:0 auto 40px">
+    <div class="section-label">Galleria</div>
+    <h2 class="section-titolo">Le nostre immagini</h2>
+    <div class="gold-line left"></div>
+  </div>
+  <div class="gallery-grid"><div class="gallery-item"><img src="https://places.googleapis.com/v1/places/ChIJb0lVClK_OxMRDBnCpTKlmfE/photos/Ab43m-scJTFqnUSftU-Q_0KcylmMDEMdxJz0VjqB0fe2ZP33tx1vltrp5C5kI6vYUlDN9SywwK5QUwedRlWh_INDsrUD7PhEv-D40-zgI6hSbtfIc9R6xLybKuNpDvMjJRNKAWCfFnl9B0N5TFs20cLlIy1Qwk64WeKpndnpcr5oQ0Ya7-ohw3zI6PE0U4LNvb1Cm8JA1jMpsRi0DAZBM5pVzQ0NAcRxAFcYvOnzYQ1-o-rqxPOWWjLKZUGc-ANSBzyb6NHOJ1df19_H9JsQixxChGjFWRG2B1tbwiJoGQ-SFcPPz0A-ZJuCy3XxlfHROuzv9VRbPHxBAjRXp-5vMRgcektdgBSKwl4KlZUwwuk7WMzLH_7yuiIyQuHW95DOuahEdJ_UBxJZRNEz4b-HNoZxE7xjvBoJt89FjU90kSPu9fmroUwH/media?maxWidthPx=1200&key=AIzaSyC1pQxgyEA66BJ_F2ZLkHJvQeYDawXItEg" alt="Pizzeria La Carmela" loading="lazy" onerror="this.parentElement.style.display:none"></div><div class="gallery-item"><img src="https://places.googleapis.com/v1/places/ChIJb0lVClK_OxMRDBnCpTKlmfE/photos/Ab43m-ukxXmclOBwKtBbE5M5N_U8IbiLCiLzrSc34GaqnUaKjQYxBpHxOf_8wi_5AY_E5eAzHIzFc-NN2Ca4f_TetrRWgfPYwGMhltfYTKckSoge-0bBVJsRXTIGTQAYjd-dcETk98_qDbc-FDb0LrL3jtX4r7EVbTA4aAv7y7NjZcc9X3v8VsL87u1PQQST9WnnfncD2ROgiUvtMN-AgAAV4p4FwxkcMAKf3z-5bacDrohYA__FJCNE17qoSm6g0OzC7hOskVFzzIIuBrD0XId2kMKNSPSy0UUZ6ImmuY-gUPNUaQ/media?maxWidthPx=1200&key=AIzaSyC1pQxgyEA66BJ_F2ZLkHJvQeYDawXItEg" alt="Pizzeria La Carmela" loading="lazy" onerror="this.parentElement.style.display:none"></div><div class="gallery-item"><img src="https://places.googleapis.com/v1/places/ChIJb0lVClK_OxMRDBnCpTKlmfE/photos/Ab43m-u74MIP3-pmv9SPUR0kNMyITD7hy85QDfzLn0vwwftohHwB8wtPk5DQ1vdh8_xeWdA7oAsgmVI6S4j5QyIXRmvUivhv8_n4oG6TeiaiL4fmK_WUB_esDPphu8m0QqLME-MdsRHiDheCiEVBrfFrT2vzoNfOv6tSOz_lmyPoLxqsbKvz3U4FuO1BJMNVjmspKgRVkIt0JLLG5ul5qYT1g2Uu6sR5HBDqdIsu6T7k1r0YO4VFe75Qm6BcVyqb1t-4pv4DclMlVqAT53IAJVj8xyj0Bs1TjCZjxDsXjCLrPAP-GgqV-2dNv87pb79I0exjWM35qkpDE12NdCNGIJ3wArh1gDhxrWY7V9ryFd4uyCd4v8_Z8dsT5InEOKOeXj7V9qUrylkCI0pMnlgWUSaK-O4x9O9HNiePI7WZt-EfNlkTbtE/media?maxWidthPx=1200&key=AIzaSyC1pQxgyEA66BJ_F2ZLkHJvQeYDawXItEg" alt="Pizzeria La Carmela" loading="lazy" onerror="this.parentElement.style.display:none"></div><div class="gallery-item"><img src="https://places.googleapis.com/v1/places/ChIJb0lVClK_OxMRDBnCpTKlmfE/photos/Ab43m-tm110yWex4tWBBhOxg39NcIl89aBfL02nLhQU1I5h9m3HIuYAmzQm7icG9-xow_fTfHYkdlkdWIL2sMFwoy_UGjFSpszR6EmGmzaiuLg6E_9IURvYDFn6q6cPe3OPGg2_5jjOVhCw59Vumxty6OwfwIFQ7ikeEf-Y5TwA0Tx4XeWNZYQo8LQODroIW71bxyi8gN0ZCZlwvezCMQSqDUc198cpb_qcagHDXEqFvGvyyVfcASF8iT2AWa9DSz3J9I5-hF8QIl4-S5JgkBJW9J2MFBM69TsRgIvIsZkR9fjFFRR9p-Srh5csvbMPY-KxMo9aLkvz0e6EvVUZ1OcyRvBd-qW-0aiTpIpBfKywgozNwTAwvoKtkQxH0XkLGfGW9VBTTV7lVutNzP0f8M1KuFwv0s8u0YySVFvjvEuQrVAFl3g/media?maxWidthPx=1200&key=AIzaSyC1pQxgyEA66BJ_F2ZLkHJvQeYDawXItEg" alt="Pizzeria La Carmela" loading="lazy" onerror="this.parentElement.style.display:none"></div><div class="gallery-item"><img src="https://places.googleapis.com/v1/places/ChIJb0lVClK_OxMRDBnCpTKlmfE/photos/Ab43m-tGhv8VGWZBl80o61FmmBesrOmlwqUlwMWN2WloEqLlvG8TqR_lFz1_8Xp33ko9c4fOTzEsziiZbRjseatUD-hXq5OjsuxXSpFg3fGkblqsTqjVzL3iNBdCU3H9xa7PMOQc9JvqXLQkSPuCmrUOBNbB1np7Ny0L11n-vhaX443evknS6lGL-eViRElRmFtlydPyDeu2-3bqObzjWRl7hMyGW8RAHiirMh6wXUe_-Z3C4mYq00VigHVjXw3uVMM_N3LYbcHBRxlEHr-ScdiJHHVrY4c8QD9gXU5xHQD-3m2uaA/media?maxWidthPx=1200&key=AIzaSyC1pQxgyEA66BJ_F2ZLkHJvQeYDawXItEg" alt="Pizzeria La Carmela" loading="lazy" onerror="this.parentElement.style.display:none"></div></div>
+</section>
 
+<!-- ORARI E INFO -->
+<section id="orari">
+  <div class="info-section">
+    <div class="info-card">
+      <div class="section-label">Informazioni</div>
+      <h2 class="section-titolo" style="font-size:26px">Dove siamo</h2>
+      <div class="gold-line left"></div>
+      <div class="info-row">
+        <div class="info-ico">📍</div>
+        <div class="info-txt"><strong>Indirizzo</strong>Via borgo vescovado, 53, 84014 Nocera Inferiore SA</div>
+      </div>
+      <div class="info-row"><div class="info-ico">📞</div><div class="info-txt"><strong>Telefono</strong>081 517 2620</div></div>
+      <div class="info-row">
+        <div class="info-ico">⭐</div>
+        <div class="info-txt"><strong>Valutazione Google</strong>4.3/5 su 733 recensioni</div>
+      </div>
+      <div class="info-row"><div class="info-ico">🌐</div><div class="info-txt"><strong>Sito web</strong><a href="https://www.pizzerialacarmela.it/" style="color:var(--oro)">https://www.pizzerialacarmela.it/</a></div></div>
+    </div>
+    <div class="info-card">
+      <div class="section-label">Orari</div>
+      <h2 class="section-titolo" style="font-size:26px">Quando apriremo</h2>
+      <div class="gold-line left"></div>
+      <div class="orario-row"><span class="orario-giorno">Monday</span><span class="orario-ore">Closed</span></div><div class="orario-row"><span class="orario-giorno">Tuesday</span><span class="orario-ore">6:00 PM – 12:00 AM</span></div><div class="orario-row"><span class="orario-giorno">Wednesday</span><span class="orario-ore">6:00 PM – 12:00 AM</span></div><div class="orario-row"><span class="orario-giorno">Thursday</span><span class="orario-ore">6:00 PM – 12:00 AM</span></div><div class="orario-row"><span class="orario-giorno">Friday</span><span class="orario-ore">6:00 PM – 12:00 AM</span></div><div class="orario-row"><span class="orario-giorno">Saturday</span><span class="orario-ore">6:00 PM – 1:00 AM</span></div><div class="orario-row"><span class="orario-giorno">Sunday</span><span class="orario-ore">6:00 PM – 12:00 AM</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="section-label">Prenotazione Online</div>
+  <h2 class="section-titolo">Riserva il tuo tavolo</h2>
+  <div class="gold-line"></div>
+  <p>Prenota in 30 secondi. Conferma immediata su WhatsApp.<br>Zero commissioni — sempre gratuito per i clienti.</p>
+  <div class="cta-duo">
+    <a href="pizzeria-la-carmela-prenota.html" class="btn-oro">📅 Prenota Ora</a>
+    <a href="tel:081 517 2620" class="btn-outline">📞 Chiama</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
 <footer>
-  <strong>Full Booking</strong> — La piattaforma di prenotazione per ristoranti ·
-  Questa è un'anteprima esclusiva creata per <strong style="color:#fff">Pizzeria La Carmela</strong><br>
-  Attiva la tua pagina oggi stesso · fullbooking.it
+  <div>
+    <div class="footer-brand">FULL<span>BOOKING</span></div>
+    <div style="font-size:12px;color:var(--grigio);margin-top:6px;letter-spacing:1px">
+      Sistema di prenotazione online · Pizzeria La Carmela · Nocera Inferiore
+    </div>
+  </div>
+  <div class="footer-copy">
+    © 2025 fullbooking.cloud · Powered by GF Technological System
+  </div>
 </footer>
 
 <script>
-  const d = new Date(); d.setDate(d.getDate()+1);
-  document.getElementById('data-input').value = d.toISOString().split('T')[0];
-  document.getElementById('data-input').min = d.toISOString().split('T')[0];
+  // Bottone prenota flottante — appare dopo 80% dell'altezza hero
+  const floatBtn = document.getElementById('floatBtn');
+  const heroH = document.querySelector('.hero').offsetHeight;
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > heroH * 0.8) {
+      floatBtn.classList.add('visible');
+    } else {
+      floatBtn.classList.remove('visible');
+    }
+  }, { passive: true });
 </script>
 </body>
 </html>

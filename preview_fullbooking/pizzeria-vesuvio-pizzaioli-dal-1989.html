@@ -3,316 +3,531 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Pizzeria Vesuvio - Pizzaioli dal 1989 — Prenota su Full Booking</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<title>Pizzeria Vesuvio - Pizzaioli dal 1989 — Portici | Full Booking</title>
+<meta name="description" content="Cucina autentica nel cuore di Portici">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-:root {
-  --primary:   #1a3a2a;
-  --secondary: #c9a84c;
-  --bg:        #f7f5f0;
-  --on-primary:   #ffffff;
-  --on-secondary: #1a1a1a;
-}
-*{ margin:0; padding:0; box-sizing:border-box; }
-body{ font-family:'Inter',sans-serif; background:var(--bg); color:#2c2c2c; }
+:root { 
+  --nero:     #0a0a0a;
+  --nero2:    #141414;
+  --nero3:    #1e1e1e;
+  --oro:      #c9a84c;
+  --oro2:     #e8c96b;
+  --crema:    #f0ead6;
+  --grigio:   #8a8a8a;
+  --bianco:   #ffffff;
+ }
 
-/* TOPBAR FULL BOOKING */
-.fb-bar{
-  background:#111; padding:7px 20px;
-  display:flex; align-items:center; justify-content:space-between;
-  font-size:11px; color:#aaa;
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--nero);
+  color: var(--crema);
+  -webkit-font-smoothing: antialiased;
 }
-.fb-brand{ color:#fff; font-weight:700; letter-spacing:1px; font-size:13px; }
-.fb-brand span{ color:var(--secondary); }
-.fb-preview-tag{
-  background:var(--secondary); color:var(--on-secondary);
-  padding:3px 10px; border-radius:20px; font-size:10px; font-weight:700;
-  letter-spacing:0.5px;
+a { color: inherit; text-decoration: none; }
+img { display: block; }
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--nero2); }
+::-webkit-scrollbar-thumb { background: var(--oro); border-radius: 3px; }
+
+/* Topbar Full Booking */
+.fb-topbar {
+  background: var(--nero);
+  border-bottom: 1px solid rgba(201,168,76,0.2);
+  padding: 10px 32px;
+  display: flex; align-items: center; justify-content: space-between;
+  position: sticky; top: 0; z-index: 200;
+  backdrop-filter: blur(12px);
+}
+.fb-logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 18px; letter-spacing: 3px; font-weight: 700;
+  color: var(--bianco);
+}
+.fb-logo span { color: var(--oro); }
+.fb-topbar-cta {
+  font-size: 11px; color: var(--grigio);
+  letter-spacing: 1px; text-transform: uppercase;
 }
 
-/* HEADER RISTORANTE — colori reali del cliente */
-.header{
-  background:var(--primary); padding:14px 24px;
-  display:flex; align-items:center; justify-content:space-between;
-  position:sticky; top:0; z-index:100;
-  box-shadow:0 2px 16px rgba(0,0,0,0.25);
+/* Bottone oro */
+.btn-oro {
+  display: inline-block;
+  background: linear-gradient(135deg, var(--oro), var(--oro2));
+  color: var(--nero);
+  padding: 14px 36px;
+  font-size: 12px; font-weight: 700;
+  letter-spacing: 2px; text-transform: uppercase;
+  border: none; cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  transition: opacity .2s, transform .2s;
 }
-.header-left{ display:flex; align-items:center; gap:14px; }
-.rist-logo{ height:44px; width:auto; max-width:140px; object-fit:contain; }
-.rist-nome{
-  font-family:'Playfair Display',serif; font-size:20px;
-  color:var(--on-primary); letter-spacing:0.5px;
+.btn-oro:hover { opacity: .88; transform: translateY(-1px); }
+
+/* Linea oro decorativa */
+.gold-line {
+  width: 48px; height: 2px;
+  background: linear-gradient(90deg, var(--oro), var(--oro2));
+  margin: 0 auto 20px;
 }
-.btn-prenota-top{
-  background:var(--secondary); color:var(--on-secondary);
-  border:none; padding:10px 22px; border-radius:6px;
-  font-size:13px; font-weight:700; cursor:pointer; letter-spacing:0.5px;
+.gold-line.left { margin: 0 0 20px; }
+
+
+/* NAVBAR */
+.navbar {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 300;
+  background: rgba(10,10,10,0.92);
+  border-bottom: 1px solid rgba(201,168,76,0.15);
+  padding: 0 40px;
+  display: flex; align-items: center; justify-content: space-between;
+  height: 68px;
+  backdrop-filter: blur(16px);
+  transition: background .3s;
+}
+.navbar-brand {
+  display: flex; align-items: center; gap: 14px;
+}
+.nav-logo { height: 40px; width: auto; max-width: 130px; object-fit: contain; }
+.navbar-nome {
+  font-family: 'Playfair Display', serif;
+  font-size: 17px; color: var(--crema); letter-spacing: .5px;
+}
+.navbar-links {
+  display: flex; align-items: center; gap: 32px;
+}
+.navbar-links a {
+  font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+  color: var(--grigio); transition: color .2s;
+}
+.navbar-links a:hover { color: var(--oro); }
+.navbar-prenota {
+  background: linear-gradient(135deg, var(--oro), var(--oro2));
+  color: var(--nero) !important;
+  padding: 10px 22px;
+  font-size: 11px !important; font-weight: 700 !important;
+  letter-spacing: 2px;
+}
+.navbar-prenota:hover { opacity: .88; }
+@media(max-width: 768px) {
+  .navbar { padding: 0 20px; }
+  .navbar-links { display: none; }
 }
 
 /* HERO */
-.hero{ position:relative; height:420px; overflow:hidden; }
-.hero img{ width:100%; height:100%; object-fit:cover; }
-.hero-ov{
-  position:absolute; inset:0;
-  background:linear-gradient(to top,rgba(0,0,0,0.80) 0%,rgba(0,0,0,0.05) 55%);
+.hero {
+  height: 100vh; min-height: 600px;
+  position: relative; overflow: hidden;
 }
-.hero-info{ position:absolute; bottom:30px; left:30px; right:30px; color:#fff; }
-.hero-info h1{
-  font-family:'Playfair Display',serif;
-  font-size:clamp(24px,4vw,40px); margin-bottom:10px;
-  text-shadow:0 2px 12px rgba(0,0,0,0.6);
+.hero-img {
+  width: 100%; height: 100%; object-fit: cover;
+  transform: scale(1.04);
+  transition: transform 8s ease;
 }
-.hero-tagline{
-  font-size:14px; color:rgba(255,255,255,0.85);
-  margin-bottom:12px; max-width:560px; line-height:1.6;
+.hero:hover .hero-img { transform: scale(1); }
+.hero-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(10,10,10,0.3) 0%,
+    rgba(10,10,10,0.1) 40%,
+    rgba(10,10,10,0.85) 100%
+  );
 }
-.hero-meta{ display:flex; align-items:center; gap:14px; flex-wrap:wrap; }
-.rating-pill{
-  display:flex; align-items:center; gap:5px;
-  background:rgba(255,255,255,0.15); backdrop-filter:blur(6px);
-  padding:6px 14px; border-radius:20px;
+.hero-content {
+  position: absolute; bottom: 80px; left: 0; right: 0;
+  padding: 0 60px;
+  max-width: 900px;
 }
-.s{ font-size:15px; }
-.s.full,.s.half{ color:#f5c518; }
-.s.empty{ color:rgba(255,255,255,0.35); }
-.r-num{ color:#fff; font-weight:700; font-size:15px; }
-.r-cnt{ color:rgba(255,255,255,0.75); font-size:12px; }
-.hero-citta{ color:rgba(255,255,255,0.9); font-size:14px; }
+.hero-badge {
+  display: inline-block;
+  border: 1px solid var(--oro);
+  color: var(--oro);
+  font-size: 10px; letter-spacing: 3px; text-transform: uppercase;
+  padding: 6px 16px; margin-bottom: 20px;
+}
+.hero-titolo {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(36px, 6vw, 72px);
+  font-weight: 700; line-height: 1.1;
+  color: var(--bianco);
+  text-shadow: 0 2px 40px rgba(0,0,0,0.5);
+  margin-bottom: 16px;
+}
+.hero-tagline {
+  font-size: 15px; color: rgba(240,234,214,0.8);
+  line-height: 1.7; max-width: 540px; margin-bottom: 24px;
+  font-weight: 300;
+}
+.hero-meta {
+  display: flex; align-items: center; gap: 20px; flex-wrap: wrap;
+}
+.rating-pill {
+  display: flex; align-items: center; gap: 8px;
+  background: rgba(201,168,76,0.12);
+  border: 1px solid rgba(201,168,76,0.3);
+  padding: 8px 18px;
+}
+.star { font-size: 14px; }
+.star.full, .star.half { color: var(--oro); }
+.star.empty { color: rgba(201,168,76,0.25); }
+.rating-num { color: var(--oro); font-weight: 700; font-size: 15px; }
+.rating-cnt { color: rgba(240,234,214,0.6); font-size: 12px; }
+.hero-citta { color: rgba(240,234,214,0.75); font-size: 13px; letter-spacing: 1px; }
+@media(max-width: 768px) {
+  .hero-content { padding: 0 24px; bottom: 60px; }
+}
 
-/* LAYOUT */
-.wrap{
-  max-width:960px; margin:0 auto; padding:30px 18px;
-  display:grid; grid-template-columns:1fr 370px; gap:26px;
+/* SCROLL INDICATOR */
+.scroll-ind {
+  position: absolute; bottom: 28px; left: 50%;
+  transform: translateX(-50%);
+  display: flex; flex-direction: column; align-items: center; gap: 6px;
+  color: rgba(201,168,76,0.5); font-size: 10px; letter-spacing: 2px;
+  text-transform: uppercase;
+  animation: bounce 2s infinite;
 }
-@media(max-width:720px){.wrap{grid-template-columns:1fr;}}
+.scroll-ind::after {
+  content: ''; width: 1px; height: 40px;
+  background: linear-gradient(to bottom, var(--oro), transparent);
+}
+@keyframes bounce {
+  0%,100% { opacity: .5; transform: translateX(-50%) translateY(0); }
+  50% { opacity: 1; transform: translateX(-50%) translateY(6px); }
+}
+
+/* BOTTONE PRENOTA FLOTTANTE */
+.btn-prenota-float {
+  position: fixed;
+  bottom: 36px; right: 36px;
+  z-index: 500;
+  width: 96px; height: 96px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--oro), var(--oro2));
+  color: var(--nero);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 4px;
+  font-family: 'Inter', sans-serif;
+  font-size: 11px; font-weight: 800;
+  letter-spacing: 2px; text-transform: uppercase;
+  text-decoration: none;
+  box-shadow: 0 8px 32px rgba(201,168,76,0.35), 0 2px 8px rgba(0,0,0,0.4);
+  transition: transform .25s, box-shadow .25s, opacity .25s;
+  opacity: 0;
+  transform: scale(0.7) translateY(20px);
+  pointer-events: none;
+}
+.btn-prenota-float.visible {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+  pointer-events: auto;
+}
+.btn-prenota-float:hover {
+  transform: scale(1.07) translateY(-3px);
+  box-shadow: 0 14px 40px rgba(201,168,76,0.5), 0 4px 12px rgba(0,0,0,0.4);
+}
+.btn-prenota-float .float-arrow {
+  font-size: 18px; line-height: 1;
+  transition: transform .2s;
+}
+.btn-prenota-float:hover .float-arrow {
+  transform: translateY(3px);
+}
+@media(max-width: 768px) {
+  .btn-prenota-float {
+    width: 80px; height: 80px;
+    bottom: 24px; right: 20px;
+    font-size: 10px;
+    opacity: 1; transform: scale(1) translateY(0);
+    pointer-events: auto;
+  }
+}
+
+/* SEZIONI */
+section { padding: 100px 60px; }
+@media(max-width: 768px) { section { padding: 60px 24px; } }
+
+.section-label {
+  font-size: 10px; letter-spacing: 4px; text-transform: uppercase;
+  color: var(--oro); margin-bottom: 14px;
+}
+.section-titolo {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(28px, 4vw, 42px); font-weight: 600;
+  color: var(--crema); line-height: 1.2; margin-bottom: 20px;
+}
+
+/* CHI SIAMO */
+.chi-siamo {
+  max-width: 1100px; margin: 0 auto;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
+}
+@media(max-width: 768px) { .chi-siamo { grid-template-columns: 1fr; gap: 40px; } }
+.chi-siamo-testo p {
+  font-size: 16px; line-height: 1.9; color: rgba(240,234,214,0.75);
+  font-weight: 300; margin-bottom: 16px;
+}
+.chi-siamo-foto {
+  position: relative; height: 480px;
+}
+.chi-siamo-foto img {
+  width: 100%; height: 100%; object-fit: cover;
+}
+.chi-siamo-foto::before {
+  content: '';
+  position: absolute; inset: -12px -12px 12px 12px;
+  border: 1px solid rgba(201,168,76,0.25);
+  z-index: -1;
+}
 
 /* GALLERY */
-.gallery{ display:grid; grid-template-columns:1fr 1fr; gap:6px; border-radius:10px; overflow:hidden; margin-bottom:22px; }
-.gimg img{ width:100%; height:145px; object-fit:cover; display:block; }
+.gallery-section { background: var(--nero2); }
+.gallery-grid {
+  max-width: 1200px; margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: 280px 280px;
+  gap: 4px;
+}
+.gallery-item { overflow: hidden; position: relative; }
+.gallery-item:first-child {
+  grid-column: span 2; grid-row: span 2;
+}
+.gallery-item img {
+  width: 100%; height: 100%; object-fit: cover;
+  transition: transform .6s ease;
+}
+.gallery-item:hover img { transform: scale(1.05); }
+@media(max-width: 768px) {
+  .gallery-grid { grid-template-columns: 1fr 1fr; grid-template-rows: auto; }
+  .gallery-item:first-child { grid-column: span 2; height: 220px; }
+  .gallery-item { height: 160px; }
+}
 
-/* INFO CARDS */
-.card{
-  background:#fff; border-radius:12px; padding:22px;
-  margin-bottom:18px; box-shadow:0 2px 14px rgba(0,0,0,0.06);
+/* INFO + ORARI */
+.info-section {
+  max-width: 1100px; margin: 0 auto;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 80px;
 }
-.card h3{
-  font-family:'Playfair Display',serif; font-size:16px;
-  color:var(--primary); margin-bottom:14px;
-  padding-bottom:10px; border-bottom:2px solid var(--bg);
+@media(max-width: 768px) { .info-section { grid-template-columns: 1fr; gap: 48px; } }
+.info-card {
+  border-top: 1px solid rgba(201,168,76,0.2);
+  padding-top: 32px;
 }
-.info-r{ display:flex; gap:10px; margin-bottom:9px; font-size:14px; color:#555; }
-.info-r .ico{ font-size:17px; flex-shrink:0; }
-.orario-row{
-  display:flex; justify-content:space-between;
-  font-size:13px; color:#555; padding:4px 0;
-  border-bottom:1px solid #f5f5f5;
+.info-row {
+  display: flex; align-items: flex-start; gap: 16px;
+  margin-bottom: 20px; padding-bottom: 20px;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
 }
+.info-row:last-child { border-bottom: none; }
+.info-ico {
+  width: 36px; height: 36px; flex-shrink: 0;
+  background: rgba(201,168,76,0.1);
+  border: 1px solid rgba(201,168,76,0.2);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 15px;
+}
+.info-txt { font-size: 14px; color: rgba(240,234,214,0.75); line-height: 1.6; }
+.info-txt strong { color: var(--crema); font-size: 12px; letter-spacing: 1px; text-transform: uppercase; display: block; margin-bottom: 4px; }
+.orario-row {
+  display: flex; justify-content: space-between;
+  padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.05);
+  font-size: 13px;
+}
+.orario-giorno { color: var(--crema); }
+.orario-ore { color: var(--grigio); text-align: right; }
+.no-info { font-size: 13px; color: var(--grigio); font-style: italic; }
 
-/* PERCHE FULL BOOKING */
-.why-item{ display:flex; align-items:flex-start; gap:10px; margin-bottom:10px; }
-.why-icon{
-  width:30px; height:30px; border-radius:50%;
-  background:var(--primary); color:var(--on-primary);
-  display:flex; align-items:center; justify-content:center;
-  font-size:13px; flex-shrink:0;
+/* CTA PRENOTA */
+.cta-section {
+  background: var(--nero2);
+  border-top: 1px solid rgba(201,168,76,0.15);
+  border-bottom: 1px solid rgba(201,168,76,0.15);
+  text-align: center;
+  padding: 120px 60px;
 }
-.why-text{ font-size:13px; color:#555; line-height:1.5; }
-.why-text strong{ color:#2c2c2c; font-size:13px; }
-
-/* BOOKING CARD */
-.booking-card{
-  background:#fff; border-radius:14px; padding:26px;
-  box-shadow:0 4px 28px rgba(0,0,0,0.11);
-  border-top:4px solid var(--primary);
-  position:sticky; top:68px; height:fit-content;
+.cta-section .section-titolo { margin-bottom: 14px; }
+.cta-section p {
+  font-size: 15px; color: rgba(240,234,214,0.6);
+  max-width: 500px; margin: 0 auto 40px;
+  line-height: 1.7; font-weight: 300;
 }
-.booking-card h2{
-  font-family:'Playfair Display',serif; font-size:20px;
-  color:var(--primary); margin-bottom:4px;
+.cta-duo {
+  display: flex; align-items: center; justify-content: center;
+  gap: 20px; flex-wrap: wrap;
 }
-.bk-sub{ font-size:13px; color:#999; margin-bottom:20px; }
-.fg{ margin-bottom:14px; }
-.fg label{
-  display:block; font-size:11px; font-weight:700;
-  color:#777; margin-bottom:5px;
-  text-transform:uppercase; letter-spacing:0.5px;
+.btn-outline {
+  display: inline-block;
+  border: 1px solid var(--oro);
+  color: var(--oro);
+  padding: 14px 36px;
+  font-size: 12px; font-weight: 600;
+  letter-spacing: 2px; text-transform: uppercase;
+  transition: all .2s;
 }
-.fg input,.fg select{
-  width:100%; padding:11px 13px;
-  border:1.5px solid #e8e0d5; border-radius:8px;
-  font-size:14px; color:#2c2c2c; background:#fafaf8;
-  font-family:'Inter',sans-serif; appearance:none;
-}
-.fg input:focus,.fg select:focus{
-  outline:none; border-color:var(--primary); background:#fff;
-}
-.fg-row{ display:grid; grid-template-columns:1fr 1fr; gap:11px; }
-.btn-book{
-  width:100%; padding:15px; margin-top:6px;
-  background:var(--primary); color:var(--on-primary);
-  border:none; border-radius:10px; font-size:15px; font-weight:700;
-  cursor:pointer; font-family:'Inter',sans-serif; letter-spacing:0.5px;
-  transition:opacity 0.2s;
-}
-.btn-book:hover{opacity:0.88;}
-.bk-note{ text-align:center; font-size:11px; color:#bbb; margin-top:12px; }
-.bk-note span{ color:var(--secondary); font-weight:700; }
+.btn-outline:hover { background: var(--oro); color: var(--nero); }
 
 /* FOOTER */
-footer{
-  background:#111; color:rgba(255,255,255,0.5);
-  text-align:center; padding:22px; font-size:12px; margin-top:36px;
+footer {
+  background: var(--nero);
+  border-top: 1px solid rgba(201,168,76,0.1);
+  padding: 48px 60px 32px;
+  display: flex; justify-content: space-between; align-items: flex-end;
+  flex-wrap: wrap; gap: 24px;
 }
-footer strong{ color:var(--secondary); }
+.footer-brand {
+  font-family: 'Playfair Display', serif;
+  font-size: 20px; letter-spacing: 3px; color: var(--crema);
+}
+.footer-brand span { color: var(--oro); }
+.footer-copy {
+  font-size: 11px; color: rgba(138,138,138,0.5);
+  letter-spacing: 1px;
+}
+@media(max-width: 768px) {
+  footer { padding: 40px 24px 28px; flex-direction: column; align-items: flex-start; }
+}
 </style>
 </head>
 <body>
 
-<!-- TOPBAR FULL BOOKING -->
-<div class="fb-bar">
-  <span class="fb-brand">FULL<span>BOOKING</span>.it</span>
-  
-</div>
+<!-- BOTTONE PRENOTA FLOTTANTE -->
+<a href="pizzeria-vesuvio-pizzaioli-dal-1989-prenota.html" class="btn-prenota-float" id="floatBtn">
+  <span>PRENOTA</span>
+  <span class="float-arrow">↓</span>
+</a>
 
-<!-- HEADER con colori reali del ristorante -->
-<header class="header">
-  <div class="header-left">
-    <img src="https://pizzeriavesuvio.it/wp-content/uploads/2024/09/Pizzeria-vesuvio-fav-150x150.webp" alt="Logo Pizzeria Vesuvio - Pizzaioli dal 1989" class="rist-logo" onerror="this.style.display='none'">
-    <span class="rist-nome">Pizzeria Vesuvio - Pizzaioli dal 1989</span>
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div class="navbar-brand">
+    
+    <span class="navbar-nome">Pizzeria Vesuvio - Pizzaioli dal 1989</span>
   </div>
-  <button class="btn-prenota-top" onclick="document.querySelector('.booking-card').scrollIntoView({behavior:'smooth'})">
-    📅 Prenota Ora
-  </button>
-</header>
+  <div class="navbar-links">
+    <a href="#ristorante">Il Ristorante</a>
+    <a href="#galleria">Galleria</a>
+    <a href="#orari">Orari</a>
+    <a href="pizzeria-vesuvio-pizzaioli-dal-1989-prenota.html" class="navbar-prenota">Prenota</a>
+  </div>
+</nav>
 
 <!-- HERO -->
-<div class="hero">
-  <img src="https://places.googleapis.com/v1/places/ChIJf9ub3amnOxMRWd-AKcPcNmc/photos/Ab43m-vjR5rd6Qppnt4TIVlbwzlI5hE7_UD7_O9hkBRDxl1f9LhighU3_fiTEz0gV9AXAjOPhTFuQl_d9HmTuSoS_phWEcVNP2p4mJ5wleGTs6thMT3GgxH0EdaLKj_nGDA1kqMFHAN3a86mKIKoNPKlgVjpCTRl1_gQx-uY8yxxZ5YZyLydOS4erJeu0ZAO4EUoGfnadH8qC2KRxJ-y062SEH46baKlZU7SCb41iyID_qrzKOUZ1PsnxS52HBmPfuFDLzAc8dkap3rlgLXvj0FwfQMsoEKNy-I72dbq1nDqDJfmVodM1behbVLGW6jkolL_cdVWblXUz7Z1LHsbZMw-EohjMy1WTtqwzgJi9ckcmb1bfSFLId15fu5wQyErixq6dV7ECo5OLrFNCObeVYTWjRS2qv72arVupT41z0A4LC7xOSNt6GIn8qlgTo-5eCN3/media?maxWidthPx=800&key=AIzaSyC1pQxgyEA66BJ_F2ZLkHJvQeYDawXItEg" alt="Pizzeria Vesuvio - Pizzaioli dal 1989"
-       onerror="this.src='https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1200'">
-  <div class="hero-ov"></div>
-  <div class="hero-info">
-    <h1>Pizzeria Vesuvio - Pizzaioli dal 1989</h1>
-    <p class="hero-tagline">Benvenuti da Pizzeria Vesuvio - Pizzaioli dal 1989 — prenota il tuo tavolo online</p>
+<section class="hero">
+  <img class="hero-img" src="https://places.googleapis.com/v1/places/ChIJf9ub3amnOxMRWd-AKcPcNmc/photos/Ab43m-sZHzblFuvcjEc36lxhKJsWii5JjxrGTl0UNuAy-hZkN1cHLZQKWR0DdSGaLO6uUExa3YlSkLbx6A3SA1KGv3eH-bPNzdJQYZMkfRZeJ0dHc8eZGFJI7OkoLmVR1XqUT8aKFjT4VeFuWqVQJXz_Q9AqdDSf2ygZtiYhPv2SH8kc-Vlgmu-u09D00CI9beqqsMAAe2TPpPIrGT4lJ-aVjM3RqWsY3X--PiIfCumRSoq4i0j8AwFjRL6AFkFGvPZ92cct3NMTTSeJvkFN67_JUO-DvPzJW568-b1Qp4jHhrVpEfF7LUGPFqazk1E70NkCNYIthKH5dRgX38knl_t8CZdvD-fWt29lCkKf4v2qj1-0rsQb1d1lyUa3o9YotdK0C15lNpDfyu_9U0aKDaKMu8r0_fSAdtNa2KwfU71OUuAIW9QpjBwZh9GY2hYH-non/media?maxWidthPx=1200&key=AIzaSyC1pQxgyEA66BJ_F2ZLkHJvQeYDawXItEg" alt="Pizzeria Vesuvio - Pizzaioli dal 1989"
+       onerror="this.src='https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1600'">
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-badge">Full Booking · Portici</div>
+    <h1 class="hero-titolo">Pizzeria Vesuvio - Pizzaioli dal 1989</h1>
+    <p class="hero-tagline">Cucina autentica nel cuore di Portici</p>
     <div class="hero-meta">
       <div class="rating-pill">
-        <span class="s full">★</span><span class="s full">★</span><span class="s full">★</span><span class="s full">★</span><span class="s empty">☆</span>
-        <span class="r-num">4.2</span>
-        <span class="r-cnt">(1,984 recensioni Google)</span>
+        <span class="star full">★</span><span class="star full">★</span><span class="star full">★</span><span class="star full">★</span><span class="star empty">☆</span>
+        <span class="rating-num">4.2</span>
+        <span class="rating-cnt">(1,984 recensioni)</span>
       </div>
       <span class="hero-citta">📍 Portici</span>
     </div>
   </div>
-</div>
+  <div class="scroll-ind">Scopri</div>
+</section>
 
-<!-- CONTENUTO -->
-<div class="wrap">
-
-  <!-- SINISTRA -->
-  <div>
-
-    <div class="gallery"><div class="gimg"><img src="https://places.googleapis.com/v1/places/ChIJf9ub3amnOxMRWd-AKcPcNmc/photos/Ab43m-viPUKtZV9Kj4zJndfwsTl60JwK_a33zJdHfQ5Cm8EEKuVZFMK0sb1Y-Iy5LHNkO468ZIyTnvaN65RA6ItPDpVjlEGtfodkLn-31ZJMs2K-Pox4_GO08EyS1Sxt9N6MWn9al3-Pl5mjKrpWXlcexuwGKISudN8hF_nMGzD-wMHw_bR34aEh0eWM2qL_anduGr0dOjgaUxc4RctvJwSDjHv6sK-0-fLqseQXBWQ4jINwBD4cXHfQ-R0DvVT8R2TIxBV9H2OAtzrUesqXgyHIFxgYtNo1T7D_9eghto-krrVE_oryol2cpAOpxrVlMjVAIbSZCSd_GpQYGrA2WhbPtZNl2sQdR0RbqGoDYU-yIFMZU8YrFbViSPH6KpX28OlchrNhyr9rdVvxC6lFtNIdjJwy6soYj1rKCs-BPh2xKy4aVaG6Wv1VmV1O0pIxhijV/media?maxWidthPx=800&key=AIzaSyC1pQxgyEA66BJ_F2ZLkHJvQeYDawXItEg" alt="Pizzeria Vesuvio - Pizzaioli dal 1989" loading="lazy" onerror="this.parentElement.style.display='none'"></div><div class="gimg"><img src="https://places.googleapis.com/v1/places/ChIJf9ub3amnOxMRWd-AKcPcNmc/photos/Ab43m-vSVUjncU5bZ71nqAbyXoPdK85uddWQMoNjCSV3eufobppzfcb_nqBJ5d_Vfo1-i0v5mWUrHVr9l-6JgmuAp11WLW4FBLfZZa2b7oXiA6YypD2u4tgwBDAalAj-xcpmli1AB7KphNKGffNdkkJ6zB7iSzfEDrbb632rbuOIb7iHBTlAYwm8t4CUb2keJfdtoysCZ_aEDp62AcfDtU4AUDP3DKS5s7Sw6EKdR4CbQIS_JqelCo6cxKpQ4Dk-583tw_d_ltZtlouNvzFpezfbI5aKH5C-JQSgaXvMXM5v1c1vpHcymP-u2JD8WPEz_S68DwWCgxdJcIXVPPHm9alsk48ye4NjkpfPzvAbvBw_GU2JxWCC94xfJIy2bAxKcNvMvydevB_g2Do9hro7jYjRZkVEikQcAG80CHcpKkG6sS0cKeUTVhmXsQMQCzVBlA/media?maxWidthPx=800&key=AIzaSyC1pQxgyEA66BJ_F2ZLkHJvQeYDawXItEg" alt="Pizzeria Vesuvio - Pizzaioli dal 1989" loading="lazy" onerror="this.parentElement.style.display='none'"></div><div class="gimg"><img src="https://places.googleapis.com/v1/places/ChIJf9ub3amnOxMRWd-AKcPcNmc/photos/Ab43m-vJLj-0SrNOorFnUKizEVV6OGPusPkXwfHoWKGPqGhbV08JdRaQ0AqT52k7J0u5AvRxIHv3fOtguglJveefRAnHFpBCZ5siHodKj1M3ASeCUaurQX6up1yf6NlQnwABCYIGLUNHZ3aHlkwcaQmc4SA15p2rYv15G7207jTaht2pjBX8Q_SOZPrZVYVh4u4S42kxLWAlcMGieSlLzDkgmdbumVfolAHGBA1EPlr4OFO4C8lISgXlXXRf6aJTvkmdVnRk2kHftZU7ckJ24-pB3UtueZkjMpCZPAuN203PDJjpSFK9Q-SnU6Ch1Zw7Fs6AiVQmXdWd0AsNMfNao7jpdTPBSipra9aZo-ED9r_livy3VZBQaZWzyElxlG_tMYXEqJOH4ro-qeqjA_ieVUk0nYaQNT76vQp63jbRfqPCEMy5aq-T/media?maxWidthPx=800&key=AIzaSyC1pQxgyEA66BJ_F2ZLkHJvQeYDawXItEg" alt="Pizzeria Vesuvio - Pizzaioli dal 1989" loading="lazy" onerror="this.parentElement.style.display='none'"></div></div>
-
-    <div class="card">
-      <h3>📍 Dove siamo</h3>
-      <div class="info-r"><span class="ico">🏠</span><span>V. Benedetto Croce, 44, 80055 Portici NA</span></div>
-      <div class="info-r"><span class="ico">📞</span><span>081 475728</span></div>
-      <div class="info-r"><span class="ico">⭐</span><span><strong>4.2/5</strong> su 1,984 recensioni Google</span></div>
+<!-- CHI SIAMO -->
+<section id="ristorante">
+  <div class="chi-siamo">
+    <div class="chi-siamo-testo">
+      <div class="section-label">Il Ristorante</div>
+      <h2 class="section-titolo">Pizzeria Vesuvio - Pizzaioli dal 1989</h2>
+      <div class="gold-line left"></div>
+      <p>Cucina autentica nel cuore di Portici</p>
+      <p>Prenota il tuo tavolo online in pochi secondi — conferma immediata su WhatsApp, zero commissioni.</p>
+      <br>
+      <a href="pizzeria-vesuvio-pizzaioli-dal-1989-prenota.html" class="btn-oro">Prenota Ora</a>
     </div>
-
-    <div class="card">
-      <h3>🕐 Orari di apertura</h3>
-      <div class="orario-row"><span>Monday</span><span>12:00 – 3:30 PM, 7:00 PM – 12:00 AM</span></div><div class="orario-row"><span>Tuesday</span><span>12:00 – 3:30 PM, 7:00 PM – 12:00 AM</span></div><div class="orario-row"><span>Wednesday</span><span>12:00 – 3:30 PM, 7:00 PM – 12:00 AM</span></div><div class="orario-row"><span>Thursday</span><span>12:00 – 3:30 PM, 7:00 PM – 12:00 AM</span></div><div class="orario-row"><span>Friday</span><span>12:00 – 3:30 PM, 7:00 PM – 12:00 AM</span></div><div class="orario-row"><span>Saturday</span><span>12:00 – 3:30 PM, 7:00 PM – 12:00 AM</span></div><div class="orario-row"><span>Sunday</span><span>Closed</span></div>
-    </div>
-
-    <div class="card">
-      <h3>🏆 Perché prenotare online con Full Booking?</h3>
-
-      <div class="why-item">
-        <div class="why-icon">24</div>
-        <div class="why-text"><strong>Prenota quando vuoi</strong><br>Il sistema accetta prenotazioni 24 ore su 24, anche a mezzanotte.</div>
-      </div>
-      <div class="why-item">
-        <div class="why-icon">✓</div>
-        <div class="why-text"><strong>Conferma immediata via WhatsApp</strong><br>Ricevi la conferma sul cellulare in pochi secondi.</div>
-      </div>
-      <div class="why-item">
-        <div class="why-icon">0€</div>
-        <div class="why-text"><strong>Nessuna commissione</strong><br>La prenotazione diretta è sempre gratuita per il cliente.</div>
-      </div>
-
-      <div class="why-item">
-        <div class="why-icon">📧</div>
-        <div class="why-text"><strong>Riepilogo via email</strong><br>Ricevi anche un'email con tutti i dettagli della prenotazione.</div>
-      </div>
-    </div>
-
-  </div>
-
-  <!-- DESTRA — FORM -->
-  <div>
-    <div class="booking-card">
-      <h2>Prenota il tuo tavolo</h2>
-      <p class="bk-sub">da Pizzeria Vesuvio - Pizzaioli dal 1989 · Portici</p>
-
-      <div class="fg">
-        <label>Data</label>
-        <input type="date" id="data-input">
-      </div>
-      <div class="fg-row">
-        <div class="fg">
-          <label>Orario</label>
-          <select>
-            <option>12:30</option><option>13:00</option><option>13:30</option>
-            <option>20:00</option><option selected>20:30</option>
-            <option>21:00</option><option>21:30</option><option>22:00</option>
-          </select>
-        </div>
-        <div class="fg">
-          <label>Persone</label>
-          <select>
-            <option>1</option><option selected>2</option>
-            <option>3</option><option>4</option><option>5</option><option>6+</option>
-          </select>
-        </div>
-      </div>
-      <div class="fg">
-        <label>Nome e Cognome</label>
-        <input type="text" placeholder="Mario Rossi">
-      </div>
-      <div class="fg-row">
-        <div class="fg">
-          <label>Telefono</label>
-          <input type="tel" placeholder="+39 333 000 0000">
-        </div>
-        <div class="fg">
-          <label>Email</label>
-          <input type="email" placeholder="mario@email.it">
-        </div>
-      </div>
-      <div class="fg">
-        <label>Note speciali (opzionale)</label>
-        <input type="text" placeholder="Allergie, occasioni speciali...">
-      </div>
-
-      <button class="btn-book">🗓️ Verifica Disponibilità</button>
-
-      <p class="bk-note">
-        Powered by <span>Full Booking</span> · Prenotazione gratuita · Zero commissioni
-      </p>
+    <div class="chi-siamo-foto">
+      <img src="https://places.googleapis.com/v1/places/ChIJf9ub3amnOxMRWd-AKcPcNmc/photos/Ab43m-tim_N9DnCt5TzSBsmFGeOGnb9kW1GZHc-qyDsTuYOebklOO1Cv8Uyk4OdWTvdcED2Jc9a0YFvIfxBy241Mgq0ck5Pvbr0ea6LWMlMIY-qv0htAmf2iDY3iHfxXXxW8bAfbF2g44TRuv4QuSkNRxVMR0M0QPN0s0OAPXa4L2WM5Wgx5jEkuSQ74PVLueBIYos-dL1_aaHHh-Ids2oB8zV-EY3IB0eqXu7ftEdokcVY5rHly6O7YE8oSBFidviZ-U5_FfvUmvB8mjisiQxc9mVTsQPNNBEuI3i5dvahnTHDiPUBc1WWnrDHPhWdx2872ozX_l560FBXEkNoDzExeEuk_cqj83P5SImyq6ZZtbJL4UrcpEAKtwTVQxEAmpKsiJ2yAf4lguifedozIFvlpjYRck7Y8ePf2tGRrwo7Yt10jMV9XpiAnLSJVpwZ92T1L/media?maxWidthPx=1200&key=AIzaSyC1pQxgyEA66BJ_F2ZLkHJvQeYDawXItEg" alt="Pizzeria Vesuvio - Pizzaioli dal 1989"
+           onerror="this.src='https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800'">
     </div>
   </div>
+</section>
 
-</div>
+<!-- GALLERY -->
+<section id="galleria" class="gallery-section">
+  <div style="max-width:1200px;margin:0 auto 40px">
+    <div class="section-label">Galleria</div>
+    <h2 class="section-titolo">Le nostre immagini</h2>
+    <div class="gold-line left"></div>
+  </div>
+  <div class="gallery-grid"><div class="gallery-item"><img src="https://places.googleapis.com/v1/places/ChIJf9ub3amnOxMRWd-AKcPcNmc/photos/Ab43m-sZHzblFuvcjEc36lxhKJsWii5JjxrGTl0UNuAy-hZkN1cHLZQKWR0DdSGaLO6uUExa3YlSkLbx6A3SA1KGv3eH-bPNzdJQYZMkfRZeJ0dHc8eZGFJI7OkoLmVR1XqUT8aKFjT4VeFuWqVQJXz_Q9AqdDSf2ygZtiYhPv2SH8kc-Vlgmu-u09D00CI9beqqsMAAe2TPpPIrGT4lJ-aVjM3RqWsY3X--PiIfCumRSoq4i0j8AwFjRL6AFkFGvPZ92cct3NMTTSeJvkFN67_JUO-DvPzJW568-b1Qp4jHhrVpEfF7LUGPFqazk1E70NkCNYIthKH5dRgX38knl_t8CZdvD-fWt29lCkKf4v2qj1-0rsQb1d1lyUa3o9YotdK0C15lNpDfyu_9U0aKDaKMu8r0_fSAdtNa2KwfU71OUuAIW9QpjBwZh9GY2hYH-non/media?maxWidthPx=1200&key=AIzaSyC1pQxgyEA66BJ_F2ZLkHJvQeYDawXItEg" alt="Pizzeria Vesuvio - Pizzaioli dal 1989" loading="lazy" onerror="this.parentElement.style.display:none"></div><div class="gallery-item"><img src="https://places.googleapis.com/v1/places/ChIJf9ub3amnOxMRWd-AKcPcNmc/photos/Ab43m-tim_N9DnCt5TzSBsmFGeOGnb9kW1GZHc-qyDsTuYOebklOO1Cv8Uyk4OdWTvdcED2Jc9a0YFvIfxBy241Mgq0ck5Pvbr0ea6LWMlMIY-qv0htAmf2iDY3iHfxXXxW8bAfbF2g44TRuv4QuSkNRxVMR0M0QPN0s0OAPXa4L2WM5Wgx5jEkuSQ74PVLueBIYos-dL1_aaHHh-Ids2oB8zV-EY3IB0eqXu7ftEdokcVY5rHly6O7YE8oSBFidviZ-U5_FfvUmvB8mjisiQxc9mVTsQPNNBEuI3i5dvahnTHDiPUBc1WWnrDHPhWdx2872ozX_l560FBXEkNoDzExeEuk_cqj83P5SImyq6ZZtbJL4UrcpEAKtwTVQxEAmpKsiJ2yAf4lguifedozIFvlpjYRck7Y8ePf2tGRrwo7Yt10jMV9XpiAnLSJVpwZ92T1L/media?maxWidthPx=1200&key=AIzaSyC1pQxgyEA66BJ_F2ZLkHJvQeYDawXItEg" alt="Pizzeria Vesuvio - Pizzaioli dal 1989" loading="lazy" onerror="this.parentElement.style.display:none"></div><div class="gallery-item"><img src="https://places.googleapis.com/v1/places/ChIJf9ub3amnOxMRWd-AKcPcNmc/photos/Ab43m-uUlfWU65vlhJ8IvRDKfG0Bnxn49eA2eJjxVfpd1npg_Q6IuUafu5OyJWuPGfb3ffFCShbvxjGpjeZpZKGzp89kJTMgZCSRF_KJLTmANuLrM8NVj3HDXgaTcBEExRY_hxtp9CKaDJ4kXoy4RIggOb9CIq-jnsveX51xQV87vAVeti6KWtFeMGVBHu5--F7Rq--rtc76EtGfMZP6LrEcfcwIK7RVWh0kQo1K5xb1SNDartTTyYAXr06qUAQXA1Ff_Qw64mcpZsyE82czOz1R29-GwHu0bQoKlA7N1jqX4OU8qPyxwjJVd6pnbs6WQhZwhSvagbniaxQLP10_CXYVTHDLtjwSxqa-zb8-pbxTu3V2CxRwio_az_JwuJw-Hw2TVtaGvQztfhgAwBaCIK7VSvu4YtrL9OTV8cDjtQL64Ac7XLvFO3bHgLT6zl6NsA/media?maxWidthPx=1200&key=AIzaSyC1pQxgyEA66BJ_F2ZLkHJvQeYDawXItEg" alt="Pizzeria Vesuvio - Pizzaioli dal 1989" loading="lazy" onerror="this.parentElement.style.display:none"></div><div class="gallery-item"><img src="https://places.googleapis.com/v1/places/ChIJf9ub3amnOxMRWd-AKcPcNmc/photos/Ab43m-tAhFLzkw_7m2b5Kp-CDoExuuW7AwNyUbxCdcIOqKmjjOfqkGaUwjwFjaTrnFetu-oibxar4mVef71d5cj7BgZkeR7HOWiNy8LclozRmsmHsi75dq6FR15KiyjqE2vBPyU6vu1K6_nrK19Vc26RFij2aqowXxKtPOtcV5NbnvD32Qaoi3SYfHaNd5Yo-0SWltCj0GvIcitkfr0x0mUbuLgiOrypPkNFK2dSETbcrtzTimyCu2Vtm2H7_Ip1DFm9mc-K-OpWiMMUAMXwd3Mjb1QIInsfTLk0rzBpQxAD0Y1EWFPvCbal9y9yllpYtr-RNz13pkUNW3j1jUAXSlZbS3cEgLmNqA9WXmDa9yge34jhzVj-U5TcuMn2IAnAXunP-rtFlsYul5ODQnDD0q5fqVDofHF0neM7z5PjZ2-oVogqxPi9/media?maxWidthPx=1200&key=AIzaSyC1pQxgyEA66BJ_F2ZLkHJvQeYDawXItEg" alt="Pizzeria Vesuvio - Pizzaioli dal 1989" loading="lazy" onerror="this.parentElement.style.display:none"></div><div class="gallery-item"><img src="https://places.googleapis.com/v1/places/ChIJf9ub3amnOxMRWd-AKcPcNmc/photos/Ab43m-tnDURgoZawTTwzak1s2TTIgg81-5FhewQYZwKA71OWOFKvODA9UCBlZ-Mr5YhkcPYUDWlERMYdLFvaSJsx8t8-tsU4gnLT02Gp9LGjJJBbMLWeecVEdWAR7GTGYLtfSkZC9vyvV7GfZTrtU5HzGQZk7vYEq3xbpsYpQvV3SkmyrNceFTMvv-19b7cepIUf2pY6GrB7thJkmV3OG-GT8JS54cAn4xjgM3XmCGUmDhLHLZ4zyRRHs8XSt59Q0AD0K2gJ8OW-4JxU-TbBazFZfQn6V_wPOzwgLorM0dxIrkuAjRJR9xM6n4lL8XFY9vyTvuuQVLoX_mOh74IfiScHGMhvvDOIWwJ2t8tqtEtUftpd-WnaiJFU72YrBaOV8mETqywdqyHwRaVeJolqTfnpRrUNbYsXnz8NduKTj3afBwY/media?maxWidthPx=1200&key=AIzaSyC1pQxgyEA66BJ_F2ZLkHJvQeYDawXItEg" alt="Pizzeria Vesuvio - Pizzaioli dal 1989" loading="lazy" onerror="this.parentElement.style.display:none"></div></div>
+</section>
 
+<!-- ORARI E INFO -->
+<section id="orari">
+  <div class="info-section">
+    <div class="info-card">
+      <div class="section-label">Informazioni</div>
+      <h2 class="section-titolo" style="font-size:26px">Dove siamo</h2>
+      <div class="gold-line left"></div>
+      <div class="info-row">
+        <div class="info-ico">📍</div>
+        <div class="info-txt"><strong>Indirizzo</strong>V. Benedetto Croce, 44, 80055 Portici NA</div>
+      </div>
+      <div class="info-row"><div class="info-ico">📞</div><div class="info-txt"><strong>Telefono</strong>081 475728</div></div>
+      <div class="info-row">
+        <div class="info-ico">⭐</div>
+        <div class="info-txt"><strong>Valutazione Google</strong>4.2/5 su 1,984 recensioni</div>
+      </div>
+      <div class="info-row"><div class="info-ico">🌐</div><div class="info-txt"><strong>Sito web</strong><a href="https://www.pizzeriavesuvio.it/" style="color:var(--oro)">https://www.pizzeriavesuvio.it/</a></div></div>
+    </div>
+    <div class="info-card">
+      <div class="section-label">Orari</div>
+      <h2 class="section-titolo" style="font-size:26px">Quando apriremo</h2>
+      <div class="gold-line left"></div>
+      <div class="orario-row"><span class="orario-giorno">Monday</span><span class="orario-ore">12:00 – 3:30 PM, 7:00 PM – 12:00 AM</span></div><div class="orario-row"><span class="orario-giorno">Tuesday</span><span class="orario-ore">12:00 – 3:30 PM, 7:00 PM – 12:00 AM</span></div><div class="orario-row"><span class="orario-giorno">Wednesday</span><span class="orario-ore">12:00 – 3:30 PM, 7:00 PM – 12:00 AM</span></div><div class="orario-row"><span class="orario-giorno">Thursday</span><span class="orario-ore">12:00 – 3:30 PM, 7:00 PM – 12:00 AM</span></div><div class="orario-row"><span class="orario-giorno">Friday</span><span class="orario-ore">12:00 – 3:30 PM, 7:00 PM – 12:00 AM</span></div><div class="orario-row"><span class="orario-giorno">Saturday</span><span class="orario-ore">12:00 – 3:30 PM, 7:00 PM – 12:00 AM</span></div><div class="orario-row"><span class="orario-giorno">Sunday</span><span class="orario-ore">Closed</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="section-label">Prenotazione Online</div>
+  <h2 class="section-titolo">Riserva il tuo tavolo</h2>
+  <div class="gold-line"></div>
+  <p>Prenota in 30 secondi. Conferma immediata su WhatsApp.<br>Zero commissioni — sempre gratuito per i clienti.</p>
+  <div class="cta-duo">
+    <a href="pizzeria-vesuvio-pizzaioli-dal-1989-prenota.html" class="btn-oro">📅 Prenota Ora</a>
+    <a href="tel:081 475728" class="btn-outline">📞 Chiama</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
 <footer>
-  <strong><strong>Full Booking</strong> · Sistema di prenotazione online per ristoranti<strong style="color:#fff">Pizzeria Vesuvio - Pizzaioli dal 1989</strong><br>
-  
+  <div>
+    <div class="footer-brand">FULL<span>BOOKING</span></div>
+    <div style="font-size:12px;color:var(--grigio);margin-top:6px;letter-spacing:1px">
+      Sistema di prenotazione online · Pizzeria Vesuvio - Pizzaioli dal 1989 · Portici
+    </div>
+  </div>
+  <div class="footer-copy">
+    © 2025 fullbooking.cloud · Powered by GF Technological System
+  </div>
 </footer>
 
 <script>
-  const d = new Date(); d.setDate(d.getDate()+1);
-  document.getElementById('data-input').value = d.toISOString().split('T')[0];
-  document.getElementById('data-input').min = d.toISOString().split('T')[0];
+  // Bottone prenota flottante — appare dopo 80% dell'altezza hero
+  const floatBtn = document.getElementById('floatBtn');
+  const heroH = document.querySelector('.hero').offsetHeight;
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > heroH * 0.8) {
+      floatBtn.classList.add('visible');
+    } else {
+      floatBtn.classList.remove('visible');
+    }
+  }, { passive: true });
 </script>
 </body>
 </html>

@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pizzeria Tribunali — Nola | Full Booking</title>
+<meta name="description" content="Cucina autentica nel cuore di Nola">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root { 
+  --nero:     #0a0a0a;
+  --nero2:    #141414;
+  --nero3:    #1e1e1e;
+  --oro:      #c9a84c;
+  --oro2:     #e8c96b;
+  --crema:    #f0ead6;
+  --grigio:   #8a8a8a;
+  --bianco:   #ffffff;
+ }
+
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--nero);
+  color: var(--crema);
+  -webkit-font-smoothing: antialiased;
+}
+a { color: inherit; text-decoration: none; }
+img { display: block; }
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--nero2); }
+::-webkit-scrollbar-thumb { background: var(--oro); border-radius: 3px; }
+
+/* Topbar Full Booking */
+.fb-topbar {
+  background: var(--nero);
+  border-bottom: 1px solid rgba(201,168,76,0.2);
+  padding: 10px 32px;
+  display: flex; align-items: center; justify-content: space-between;
+  position: sticky; top: 0; z-index: 200;
+  backdrop-filter: blur(12px);
+}
+.fb-logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 18px; letter-spacing: 3px; font-weight: 700;
+  color: var(--bianco);
+}
+.fb-logo span { color: var(--oro); }
+.fb-topbar-cta {
+  font-size: 11px; color: var(--grigio);
+  letter-spacing: 1px; text-transform: uppercase;
+}
+
+/* Bottone oro */
+.btn-oro {
+  display: inline-block;
+  background: linear-gradient(135deg, var(--oro), var(--oro2));
+  color: var(--nero);
+  padding: 14px 36px;
+  font-size: 12px; font-weight: 700;
+  letter-spacing: 2px; text-transform: uppercase;
+  border: none; cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  transition: opacity .2s, transform .2s;
+}
+.btn-oro:hover { opacity: .88; transform: translateY(-1px); }
+
+/* Linea oro decorativa */
+.gold-line {
+  width: 48px; height: 2px;
+  background: linear-gradient(90deg, var(--oro), var(--oro2));
+  margin: 0 auto 20px;
+}
+.gold-line.left { margin: 0 0 20px; }
+
+
+/* NAVBAR */
+.navbar {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 300;
+  background: rgba(10,10,10,0.92);
+  border-bottom: 1px solid rgba(201,168,76,0.15);
+  padding: 0 40px;
+  display: flex; align-items: center; justify-content: space-between;
+  height: 68px;
+  backdrop-filter: blur(16px);
+  transition: background .3s;
+}
+.navbar-brand {
+  display: flex; align-items: center; gap: 14px;
+}
+.nav-logo { height: 40px; width: auto; max-width: 130px; object-fit: contain; }
+.navbar-nome {
+  font-family: 'Playfair Display', serif;
+  font-size: 17px; color: var(--crema); letter-spacing: .5px;
+}
+.navbar-links {
+  display: flex; align-items: center; gap: 32px;
+}
+.navbar-links a {
+  font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+  color: var(--grigio); transition: color .2s;
+}
+.navbar-links a:hover { color: var(--oro); }
+.navbar-prenota {
+  background: linear-gradient(135deg, var(--oro), var(--oro2));
+  color: var(--nero) !important;
+  padding: 10px 22px;
+  font-size: 11px !important; font-weight: 700 !important;
+  letter-spacing: 2px;
+}
+.navbar-prenota:hover { opacity: .88; }
+@media(max-width: 768px) {
+  .navbar { padding: 0 20px; }
+  .navbar-links { display: none; }
+}
+
+/* HERO */
+.hero {
+  height: 100vh; min-height: 600px;
+  position: relative; overflow: hidden;
+}
+.hero-img {
+  width: 100%; height: 100%; object-fit: cover;
+  transform: scale(1.04);
+  transition: transform 8s ease;
+}
+.hero:hover .hero-img { transform: scale(1); }
+.hero-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(10,10,10,0.3) 0%,
+    rgba(10,10,10,0.1) 40%,
+    rgba(10,10,10,0.85) 100%
+  );
+}
+.hero-content {
+  position: absolute; bottom: 80px; left: 0; right: 0;
+  padding: 0 60px;
+  max-width: 900px;
+}
+.hero-badge {
+  display: inline-block;
+  border: 1px solid var(--oro);
+  color: var(--oro);
+  font-size: 10px; letter-spacing: 3px; text-transform: uppercase;
+  padding: 6px 16px; margin-bottom: 20px;
+}
+.hero-titolo {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(36px, 6vw, 72px);
+  font-weight: 700; line-height: 1.1;
+  color: var(--bianco);
+  text-shadow: 0 2px 40px rgba(0,0,0,0.5);
+  margin-bottom: 16px;
+}
+.hero-tagline {
+  font-size: 15px; color: rgba(240,234,214,0.8);
+  line-height: 1.7; max-width: 540px; margin-bottom: 24px;
+  font-weight: 300;
+}
+.hero-meta {
+  display: flex; align-items: center; gap: 20px; flex-wrap: wrap;
+}
+.rating-pill {
+  display: flex; align-items: center; gap: 8px;
+  background: rgba(201,168,76,0.12);
+  border: 1px solid rgba(201,168,76,0.3);
+  padding: 8px 18px;
+}
+.star { font-size: 14px; }
+.star.full, .star.half { color: var(--oro); }
+.star.empty { color: rgba(201,168,76,0.25); }
+.rating-num { color: var(--oro); font-weight: 700; font-size: 15px; }
+.rating-cnt { color: rgba(240,234,214,0.6); font-size: 12px; }
+.hero-citta { color: rgba(240,234,214,0.75); font-size: 13px; letter-spacing: 1px; }
+@media(max-width: 768px) {
+  .hero-content { padding: 0 24px; bottom: 60px; }
+}
+
+/* SCROLL INDICATOR */
+.scroll-ind {
+  position: absolute; bottom: 28px; left: 50%;
+  transform: translateX(-50%);
+  display: flex; flex-direction: column; align-items: center; gap: 6px;
+  color: rgba(201,168,76,0.5); font-size: 10px; letter-spacing: 2px;
+  text-transform: uppercase;
+  animation: bounce 2s infinite;
+}
+.scroll-ind::after {
+  content: ''; width: 1px; height: 40px;
+  background: linear-gradient(to bottom, var(--oro), transparent);
+}
+@keyframes bounce {
+  0%,100% { opacity: .5; transform: translateX(-50%) translateY(0); }
+  50% { opacity: 1; transform: translateX(-50%) translateY(6px); }
+}
+
+/* BOTTONE PRENOTA FLOTTANTE */
+.btn-prenota-float {
+  position: fixed;
+  bottom: 36px; right: 36px;
+  z-index: 500;
+  width: 96px; height: 96px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--oro), var(--oro2));
+  color: var(--nero);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 4px;
+  font-family: 'Inter', sans-serif;
+  font-size: 11px; font-weight: 800;
+  letter-spacing: 2px; text-transform: uppercase;
+  text-decoration: none;
+  box-shadow: 0 8px 32px rgba(201,168,76,0.35), 0 2px 8px rgba(0,0,0,0.4);
+  transition: transform .25s, box-shadow .25s, opacity .25s;
+  opacity: 0;
+  transform: scale(0.7) translateY(20px);
+  pointer-events: none;
+}
+.btn-prenota-float.visible {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+  pointer-events: auto;
+}
+.btn-prenota-float:hover {
+  transform: scale(1.07) translateY(-3px);
+  box-shadow: 0 14px 40px rgba(201,168,76,0.5), 0 4px 12px rgba(0,0,0,0.4);
+}
+.btn-prenota-float .float-arrow {
+  font-size: 18px; line-height: 1;
+  transition: transform .2s;
+}
+.btn-prenota-float:hover .float-arrow {
+  transform: translateY(3px);
+}
+@media(max-width: 768px) {
+  .btn-prenota-float {
+    width: 80px; height: 80px;
+    bottom: 24px; right: 20px;
+    font-size: 10px;
+    opacity: 1; transform: scale(1) translateY(0);
+    pointer-events: auto;
+  }
+}
+
+/* SEZIONI */
+section { padding: 100px 60px; }
+@media(max-width: 768px) { section { padding: 60px 24px; } }
+
+.section-label {
+  font-size: 10px; letter-spacing: 4px; text-transform: uppercase;
+  color: var(--oro); margin-bottom: 14px;
+}
+.section-titolo {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(28px, 4vw, 42px); font-weight: 600;
+  color: var(--crema); line-height: 1.2; margin-bottom: 20px;
+}
+
+/* CHI SIAMO */
+.chi-siamo {
+  max-width: 1100px; margin: 0 auto;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
+}
+@media(max-width: 768px) { .chi-siamo { grid-template-columns: 1fr; gap: 40px; } }
+.chi-siamo-testo p {
+  font-size: 16px; line-height: 1.9; color: rgba(240,234,214,0.75);
+  font-weight: 300; margin-bottom: 16px;
+}
+.chi-siamo-foto {
+  position: relative; height: 480px;
+}
+.chi-siamo-foto img {
+  width: 100%; height: 100%; object-fit: cover;
+}
+.chi-siamo-foto::before {
+  content: '';
+  position: absolute; inset: -12px -12px 12px 12px;
+  border: 1px solid rgba(201,168,76,0.25);
+  z-index: -1;
+}
+
+/* GALLERY */
+.gallery-section { background: var(--nero2); }
+.gallery-grid {
+  max-width: 1200px; margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: 280px 280px;
+  gap: 4px;
+}
+.gallery-item { overflow: hidden; position: relative; }
+.gallery-item:first-child {
+  grid-column: span 2; grid-row: span 2;
+}
+.gallery-item img {
+  width: 100%; height: 100%; object-fit: cover;
+  transition: transform .6s ease;
+}
+.gallery-item:hover img { transform: scale(1.05); }
+@media(max-width: 768px) {
+  .gallery-grid { grid-template-columns: 1fr 1fr; grid-template-rows: auto; }
+  .gallery-item:first-child { grid-column: span 2; height: 220px; }
+  .gallery-item { height: 160px; }
+}
+
+/* INFO + ORARI */
+.info-section {
+  max-width: 1100px; margin: 0 auto;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 80px;
+}
+@media(max-width: 768px) { .info-section { grid-template-columns: 1fr; gap: 48px; } }
+.info-card {
+  border-top: 1px solid rgba(201,168,76,0.2);
+  padding-top: 32px;
+}
+.info-row {
+  display: flex; align-items: flex-start; gap: 16px;
+  margin-bottom: 20px; padding-bottom: 20px;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+.info-row:last-child { border-bottom: none; }
+.info-ico {
+  width: 36px; height: 36px; flex-shrink: 0;
+  background: rgba(201,168,76,0.1);
+  border: 1px solid rgba(201,168,76,0.2);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 15px;
+}
+.info-txt { font-size: 14px; color: rgba(240,234,214,0.75); line-height: 1.6; }
+.info-txt strong { color: var(--crema); font-size: 12px; letter-spacing: 1px; text-transform: uppercase; display: block; margin-bottom: 4px; }
+.orario-row {
+  display: flex; justify-content: space-between;
+  padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.05);
+  font-size: 13px;
+}
+.orario-giorno { color: var(--crema); }
+.orario-ore { color: var(--grigio); text-align: right; }
+.no-info { font-size: 13px; color: var(--grigio); font-style: italic; }
+
+/* CTA PRENOTA */
+.cta-section {
+  background: var(--nero2);
+  border-top: 1px solid rgba(201,168,76,0.15);
+  border-bottom: 1px solid rgba(201,168,76,0.15);
+  text-align: center;
+  padding: 120px 60px;
+}
+.cta-section .section-titolo { margin-bottom: 14px; }
+.cta-section p {
+  font-size: 15px; color: rgba(240,234,214,0.6);
+  max-width: 500px; margin: 0 auto 40px;
+  line-height: 1.7; font-weight: 300;
+}
+.cta-duo {
+  display: flex; align-items: center; justify-content: center;
+  gap: 20px; flex-wrap: wrap;
+}
+.btn-outline {
+  display: inline-block;
+  border: 1px solid var(--oro);
+  color: var(--oro);
+  padding: 14px 36px;
+  font-size: 12px; font-weight: 600;
+  letter-spacing: 2px; text-transform: uppercase;
+  transition: all .2s;
+}
+.btn-outline:hover { background: var(--oro); color: var(--nero); }
+
+/* FOOTER */
+footer {
+  background: var(--nero);
+  border-top: 1px solid rgba(201,168,76,0.1);
+  padding: 48px 60px 32px;
+  display: flex; justify-content: space-between; align-items: flex-end;
+  flex-wrap: wrap; gap: 24px;
+}
+.footer-brand {
+  font-family: 'Playfair Display', serif;
+  font-size: 20px; letter-spacing: 3px; color: var(--crema);
+}
+.footer-brand span { color: var(--oro); }
+.footer-copy {
+  font-size: 11px; color: rgba(138,138,138,0.5);
+  letter-spacing: 1px;
+}
+@media(max-width: 768px) {
+  footer { padding: 40px 24px 28px; flex-direction: column; align-items: flex-start; }
+}
+</style>
+</head>
+<body>
+
+<!-- BOTTONE PRENOTA FLOTTANTE -->
+<a href="pizzeria-tribunali-prenota.html" class="btn-prenota-float" id="floatBtn">
+  <span>PRENOTA</span>
+  <span class="float-arrow">↓</span>
+</a>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div class="navbar-brand">
+    
+    <span class="navbar-nome">Pizzeria Tribunali</span>
+  </div>
+  <div class="navbar-links">
+    <a href="#ristorante">Il Ristorante</a>
+    <a href="#galleria">Galleria</a>
+    <a href="#orari">Orari</a>
+    <a href="pizzeria-tribunali-prenota.html" class="navbar-prenota">Prenota</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <img class="hero-img" src="https://places.googleapis.com/v1/places/ChIJI5UPH86zOxMRcoYiuHp0NuQ/photos/Ab43m-uHK7opM8C9C30UX-QBT4hY8TsJb3nevKl_q2OHgskfUOEMgVVndXWrQkX9S1jmSyZR-6vypxjpsWUxFkyeVTgbK_0nrYzx3Tadqnoxv1TjRHcNLc9Ui7ywp0o--TmnJx7fn-BvoD5Ix-55OMzU2xqqlotxJjzxwHkfW1b-8FlSQavWrw6FdPC2mni5n2LSrH60Ll7Kn7sueZAP55R5jj2MPf5wQPxiWoatSPtatdfwEeDI-lAQJHNFc-H4qVhRTwOW2_gaCMjTBpWj1NP5cy3ZGAprVCN6NMfHfdCuT44K3xZE27vQfQwoHI_bOZuKMvi4kw0o6bWSMrrfRI-r-WHLWm4nk6_mMiemsl5HgO15XpIZQGkx_bH8d7GBVo0K1yqzxb66eNju1BW4GYd-rkt8O44ySqMnfFd_cfRHGnN7AdU/media?maxWidthPx=1200&key=AIzaSyC1pQxgyEA66BJ_F2ZLkHJvQeYDawXItEg" alt="Pizzeria Tribunali"
+       onerror="this.src='https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1600'">
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-badge">Full Booking · Nola</div>
+    <h1 class="hero-titolo">Pizzeria Tribunali</h1>
+    <p class="hero-tagline">Cucina autentica nel cuore di Nola</p>
+    <div class="hero-meta">
+      <div class="rating-pill">
+        <span class="star full">★</span><span class="star full">★</span><span class="star full">★</span><span class="star full">★</span><span class="star empty">☆</span>
+        <span class="rating-num">4.3</span>
+        <span class="rating-cnt">(113 recensioni)</span>
+      </div>
+      <span class="hero-citta">📍 Nola</span>
+    </div>
+  </div>
+  <div class="scroll-ind">Scopri</div>
+</section>
+
+<!-- CHI SIAMO -->
+<section id="ristorante">
+  <div class="chi-siamo">
+    <div class="chi-siamo-testo">
+      <div class="section-label">Il Ristorante</div>
+      <h2 class="section-titolo">Pizzeria Tribunali</h2>
+      <div class="gold-line left"></div>
+      <p>Cucina autentica nel cuore di Nola</p>
+      <p>Prenota il tuo tavolo online in pochi secondi — conferma immediata su WhatsApp, zero commissioni.</p>
+      <br>
+      <a href="pizzeria-tribunali-prenota.html" class="btn-oro">Prenota Ora</a>
+    </div>
+    <div class="chi-siamo-foto">
+      <img src="https://places.googleapis.com/v1/places/ChIJI5UPH86zOxMRcoYiuHp0NuQ/photos/Ab43m-sKkDiPGgDfr7jCWME0_2dvsywIzuxAhtpD_2tJswR9U0yi7UKDBgx8LzJ2N7OzeKVJesKD3UNKA4K4vXmQEA7qY50Z_Nv7aTJXXl_gn6FaR7Q8MqbMxjBxqMzIsY99e8RCgUB0gxYkeBrTOn77d_k0nNdqcnzfuMnhQqLi15e1X0oQllmMLvtWlovUtZtpyaZvv1x0oGhtdammuopsD1I54nRIIhK91YtVw6kVndI7B-PYp26btZk5jXIbZaPckA0XKYl3fGdVyeCkJa43v0SKKUDh3lVrWnZkP3MxicDP5jWd6yeFyV6vVwcQ6Lq1b_CkjT_gH26UcMweEAF_QIfRBRmO45whQDs3VIMmTWMU25vyn9nyymrAMPHyySA80kqyNpqT7b6TXVw_b4t1L8EAhKiM43aTXW2KPvT44GTtxQ/media?maxWidthPx=1200&key=AIzaSyC1pQxgyEA66BJ_F2ZLkHJvQeYDawXItEg" alt="Pizzeria Tribunali"
+           onerror="this.src='https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800'">
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section id="galleria" class="gallery-section">
+  <div style="max-width:1200px;margin:0 auto 40px">
+    <div class="section-label">Galleria</div>
+    <h2 class="section-titolo">Le nostre immagini</h2>
+    <div class="gold-line left"></div>
+  </div>
+  <div class="gallery-grid"><div class="gallery-item"><img src="https://places.googleapis.com/v1/places/ChIJI5UPH86zOxMRcoYiuHp0NuQ/photos/Ab43m-uHK7opM8C9C30UX-QBT4hY8TsJb3nevKl_q2OHgskfUOEMgVVndXWrQkX9S1jmSyZR-6vypxjpsWUxFkyeVTgbK_0nrYzx3Tadqnoxv1TjRHcNLc9Ui7ywp0o--TmnJx7fn-BvoD5Ix-55OMzU2xqqlotxJjzxwHkfW1b-8FlSQavWrw6FdPC2mni5n2LSrH60Ll7Kn7sueZAP55R5jj2MPf5wQPxiWoatSPtatdfwEeDI-lAQJHNFc-H4qVhRTwOW2_gaCMjTBpWj1NP5cy3ZGAprVCN6NMfHfdCuT44K3xZE27vQfQwoHI_bOZuKMvi4kw0o6bWSMrrfRI-r-WHLWm4nk6_mMiemsl5HgO15XpIZQGkx_bH8d7GBVo0K1yqzxb66eNju1BW4GYd-rkt8O44ySqMnfFd_cfRHGnN7AdU/media?maxWidthPx=1200&key=AIzaSyC1pQxgyEA66BJ_F2ZLkHJvQeYDawXItEg" alt="Pizzeria Tribunali" loading="lazy" onerror="this.parentElement.style.display:none"></div><div class="gallery-item"><img src="https://places.googleapis.com/v1/places/ChIJI5UPH86zOxMRcoYiuHp0NuQ/photos/Ab43m-sKkDiPGgDfr7jCWME0_2dvsywIzuxAhtpD_2tJswR9U0yi7UKDBgx8LzJ2N7OzeKVJesKD3UNKA4K4vXmQEA7qY50Z_Nv7aTJXXl_gn6FaR7Q8MqbMxjBxqMzIsY99e8RCgUB0gxYkeBrTOn77d_k0nNdqcnzfuMnhQqLi15e1X0oQllmMLvtWlovUtZtpyaZvv1x0oGhtdammuopsD1I54nRIIhK91YtVw6kVndI7B-PYp26btZk5jXIbZaPckA0XKYl3fGdVyeCkJa43v0SKKUDh3lVrWnZkP3MxicDP5jWd6yeFyV6vVwcQ6Lq1b_CkjT_gH26UcMweEAF_QIfRBRmO45whQDs3VIMmTWMU25vyn9nyymrAMPHyySA80kqyNpqT7b6TXVw_b4t1L8EAhKiM43aTXW2KPvT44GTtxQ/media?maxWidthPx=1200&key=AIzaSyC1pQxgyEA66BJ_F2ZLkHJvQeYDawXItEg" alt="Pizzeria Tribunali" loading="lazy" onerror="this.parentElement.style.display:none"></div><div class="gallery-item"><img src="https://places.googleapis.com/v1/places/ChIJI5UPH86zOxMRcoYiuHp0NuQ/photos/Ab43m-tgc4_GHHfdahTmsI0PG0nlAushfqVhF5S_weYmcw6qL1F3LC60bW1yQOeYYKhRQ3oGvTaApawPCNYcZsnBGevJ6_8NSo5-ng4F8OXtBQMT6dEiHf7owzO59ifyrMQVNYiH2Bj6ojyq5S3BnPftvDGZsjvL9wr5U3uw6e9jrhpe4qhHZjZL0KVMHkkHpARZTI1ifyYF-mZn9JCFFNRm84TLQnQw7wY0lYP0jOmm1qK8y_M-gqU-_ZsYA0P-dZTjRpTXoxxmOCEYKaDY7a_E6qweFkLuartJ6wntdBRGU8lvPZiHCjFSfyBg-dN5SqjbVkMfWXVnFFBdE7IF8gu1X5UiCQhtgP9LCfB5RSrTFP_Zu2JTAOyf3J-xLcbJE_TyDjd_NgKtvukYFlZya1aUJBod76DkmTOjAwX77SJQr5N1lz--jL6GlUNTMTlxFtTY/media?maxWidthPx=1200&key=AIzaSyC1pQxgyEA66BJ_F2ZLkHJvQeYDawXItEg" alt="Pizzeria Tribunali" loading="lazy" onerror="this.parentElement.style.display:none"></div><div class="gallery-item"><img src="https://places.googleapis.com/v1/places/ChIJI5UPH86zOxMRcoYiuHp0NuQ/photos/Ab43m-s_vaXZTeS5yHNAw208JfHCh4cCDcNBzZStn9c3caKHdxsnMc83S8vgLDgCGzM7UN0N7UyIy2mn1_yA9WKhNCkTvN7_RJllPSoZLp3jLdaz7iSZMO3lMp6SGHH-ZvhUQGDQKKfwS0xwbfciuDXaRkfCiViGto9DxFalpkQkpoY8l9Uwf-doVWFMDPui-SfXEzIgGopnmYV2uuAxD1LwDRFj-W_0wIcXzYfNsOjYmaMWLTjs98Le9IoyDEh3L6Gu3zea0IntUhtu0ymc1iuD3A9tDwS2CqKpN_I5E6HMprXF4NoCwWMRwLSyIu_8lPg7-cSRdrmcf9GNGUMnvMtmt5KgeF9GU7Iom07U1oNJhpDaIs8DeL0sAGQzQfXbRnwSM230wM-73vaevDsfN3NBK1N3Zs2HgTwNq0emKxjsVHwEMRM7/media?maxWidthPx=1200&key=AIzaSyC1pQxgyEA66BJ_F2ZLkHJvQeYDawXItEg" alt="Pizzeria Tribunali" loading="lazy" onerror="this.parentElement.style.display:none"></div><div class="gallery-item"><img src="https://places.googleapis.com/v1/places/ChIJI5UPH86zOxMRcoYiuHp0NuQ/photos/Ab43m-vJWQUJGxtuxXQMCJlEh8b04kNJmyx8_XI2AFq2-oDg5YcqUYNmn6LuNQu57ndMm_C0gQwFn9Zsvq9mfCXmB9-F1fozoprxWcqBlxJjMrZJ55EENM3243hoyc1RF6AY4lqJrIPpuO0Tl5TZAEzFpWrDlncJloJChb1A8c02OyUGswWzmQ_fWIHM3qhl6FrB2erxJAUglsOHuTs0Hul4lu4UXn-5USZiQ92p1luU_GHRhyMQobdeju6nqw2YA8dRd-y1XO-BbgN1tJqDhCLpx75IplqyJXeg_qT3pNfGyPClQXziQeCeciDxRd-_GxS5SQyDlqqRdFoOMUHEPqXYEvsOGIFHAopJiqdOiD8LtZ0G_0Agvi8RU9dPBL7DocjVna5CaCkf9IdqPEmkOs9_lNJJOyciPfGQCwlejZlSGSaW60YK/media?maxWidthPx=1200&key=AIzaSyC1pQxgyEA66BJ_F2ZLkHJvQeYDawXItEg" alt="Pizzeria Tribunali" loading="lazy" onerror="this.parentElement.style.display:none"></div></div>
+</section>
+
+<!-- ORARI E INFO -->
+<section id="orari">
+  <div class="info-section">
+    <div class="info-card">
+      <div class="section-label">Informazioni</div>
+      <h2 class="section-titolo" style="font-size:26px">Dove siamo</h2>
+      <div class="gold-line left"></div>
+      <div class="info-row">
+        <div class="info-ico">📍</div>
+        <div class="info-txt"><strong>Indirizzo</strong>Piazza Giordano Bruno, 25, 80035 Nola NA</div>
+      </div>
+      <div class="info-row"><div class="info-ico">📞</div><div class="info-txt"><strong>Telefono</strong>081 512 4103</div></div>
+      <div class="info-row">
+        <div class="info-ico">⭐</div>
+        <div class="info-txt"><strong>Valutazione Google</strong>4.3/5 su 113 recensioni</div>
+      </div>
+      
+    </div>
+    <div class="info-card">
+      <div class="section-label">Orari</div>
+      <h2 class="section-titolo" style="font-size:26px">Quando apriremo</h2>
+      <div class="gold-line left"></div>
+      <div class="orario-row"><span class="orario-giorno">Monday</span><span class="orario-ore">Closed</span></div><div class="orario-row"><span class="orario-giorno">Tuesday</span><span class="orario-ore">5:00 PM – 1:00 AM</span></div><div class="orario-row"><span class="orario-giorno">Wednesday</span><span class="orario-ore">5:00 PM – 1:00 AM</span></div><div class="orario-row"><span class="orario-giorno">Thursday</span><span class="orario-ore">5:00 PM – 1:00 AM</span></div><div class="orario-row"><span class="orario-giorno">Friday</span><span class="orario-ore">5:00 PM – 2:00 AM</span></div><div class="orario-row"><span class="orario-giorno">Saturday</span><span class="orario-ore">5:00 PM – 2:00 AM</span></div><div class="orario-row"><span class="orario-giorno">Sunday</span><span class="orario-ore">5:00 PM – 1:00 AM</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="section-label">Prenotazione Online</div>
+  <h2 class="section-titolo">Riserva il tuo tavolo</h2>
+  <div class="gold-line"></div>
+  <p>Prenota in 30 secondi. Conferma immediata su WhatsApp.<br>Zero commissioni — sempre gratuito per i clienti.</p>
+  <div class="cta-duo">
+    <a href="pizzeria-tribunali-prenota.html" class="btn-oro">📅 Prenota Ora</a>
+    <a href="tel:081 512 4103" class="btn-outline">📞 Chiama</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div>
+    <div class="footer-brand">FULL<span>BOOKING</span></div>
+    <div style="font-size:12px;color:var(--grigio);margin-top:6px;letter-spacing:1px">
+      Sistema di prenotazione online · Pizzeria Tribunali · Nola
+    </div>
+  </div>
+  <div class="footer-copy">
+    © 2025 fullbooking.cloud · Powered by GF Technological System
+  </div>
+</footer>
+
+<script>
+  // Bottone prenota flottante — appare dopo 80% dell'altezza hero
+  const floatBtn = document.getElementById('floatBtn');
+  const heroH = document.querySelector('.hero').offsetHeight;
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > heroH * 0.8) {
+      floatBtn.classList.add('visible');
+    } else {
+      floatBtn.classList.remove('visible');
+    }
+  }, { passive: true });
+</script>
+</body>
+</html>

@@ -60,6 +60,7 @@
         }
         .nav-tab:hover { color: var(--text); }
         .nav-tab.active { color: var(--accent2); border-bottom-color: var(--accent2); }
+        .nav-tab[onclick*="fullbooking"].active { color: #c9a84c !important; border-bottom-color: #c9a84c !important; }
 
         /* CONTAINER */
         .container { max-width: 1500px; margin: 0 auto; padding: 24px 32px; }
@@ -242,6 +243,7 @@
     <div class="nav-tab active" onclick="switchTab('dashboard')">📊 Dashboard</div>
     <div class="nav-tab" onclick="switchTab('leads')">👥 Lead</div>
     <div class="nav-tab" onclick="switchTab('campagne')">🚀 Campagne</div>
+    <div class="nav-tab" onclick="switchTab('fullbooking')" style="color:#c9a84c">🍽️ Full Booking</div>
 </div>
 
 <div class="container">
@@ -507,6 +509,101 @@
         </div>
     </div>
 
+    <!-- ═══════════════════════════════════════════════ -->
+    <!-- TAB FULL BOOKING                                -->
+    <!-- ═══════════════════════════════════════════════ -->
+    <div class="page" id="tab-fullbooking">
+
+        <!-- KPI Full Booking -->
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:24px">
+            <div class="kpi-card" style="border-color:rgba(201,168,76,0.3)">
+                <div class="kpi-icon" style="background:rgba(201,168,76,0.15);font-size:26px">🌐</div>
+                <div class="kpi-info">
+                    <div class="num" style="color:#c9a84c" id="fb-preview">—</div>
+                    <div class="label">Preview Generate</div>
+                    <div class="sub">Siti personalizzati online</div>
+                </div>
+            </div>
+            <div class="kpi-card" style="border-color:rgba(37,211,102,0.3)">
+                <div class="kpi-icon" style="background:rgba(37,211,102,0.15);font-size:26px">✅</div>
+                <div class="kpi-info">
+                    <div class="num" style="color:var(--green)" id="fb-inviati">—</div>
+                    <div class="label">WhatsApp Inviati</div>
+                    <div class="sub">Ristoranti contattati</div>
+                </div>
+            </div>
+            <div class="kpi-card" style="border-color:rgba(26,143,255,0.3)">
+                <div class="kpi-icon" style="background:rgba(26,143,255,0.15);font-size:26px">📤</div>
+                <div class="kpi-info">
+                    <div class="num" style="color:var(--accent)" id="fb-da-inviare">—</div>
+                    <div class="label">Da Inviare</div>
+                    <div class="sub">Con preview ma non contattati</div>
+                </div>
+            </div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px">
+
+            <!-- GENERA PREVIEW -->
+            <div class="chart-card" style="border-color:rgba(201,168,76,0.2)">
+                <h3 style="color:#c9a84c">⚙️ Step 1 — Genera Preview Ristoranti</h3>
+                <div style="margin-top:16px;display:flex;flex-direction:column;gap:12px">
+                    <div style="background:rgba(201,168,76,0.08);border:1px solid rgba(201,168,76,0.2);border-radius:8px;padding:14px;font-size:13px;color:var(--muted);line-height:1.6">
+                        Crea automaticamente il sito personalizzato per ogni ristorante con foto Google, rating e pagina di prenotazione. Poi fa il deploy su Netlify (fullbooking.cloud).
+                    </div>
+                    <div>
+                        <label style="font-size:12px;color:var(--muted)">Quanti ristoranti generare</label>
+                        <input type="number" id="fb-genera-limite" value="20" min="1" max="200"
+                            style="width:100%;background:var(--bg);border:1px solid var(--border);color:var(--text);padding:8px 12px;border-radius:8px;margin-top:4px;font-size:13px">
+                    </div>
+                    <button class="btn-action" style="background:linear-gradient(135deg,#c9a84c,#e8c96b);color:#0a0a0a;justify-content:center;padding:12px;font-weight:700" onclick="generaPreviewFB()">
+                        ⚙️ Genera Preview + Deploy Netlify
+                    </button>
+                    <div id="fb-genera-result" style="display:none;text-align:center;padding:12px;border-radius:8px;font-weight:700"></div>
+                    <div style="font-size:11px;color:var(--muted);text-align:center">
+                        Prende i ristoranti con più recensioni — operazione ~2 min per 20 ristoranti
+                    </div>
+                </div>
+            </div>
+
+            <!-- CAMPAGNA WHATSAPP FB -->
+            <div class="chart-card" style="border-color:rgba(37,211,102,0.2)">
+                <h3 style="color:#25d366">📱 Step 2 — Campagna WhatsApp Full Booking</h3>
+                <div style="margin-top:16px;display:flex;flex-direction:column;gap:12px">
+                    <div style="background:rgba(37,211,102,0.08);border:1px solid rgba(37,211,102,0.2);border-radius:8px;padding:14px;font-size:13px;color:var(--muted);line-height:1.6">
+                        Invia a ogni ristorante il link personalizzato al suo sito + pagina prenotazione. Solo ai ristoranti con preview generata e non ancora contattati.
+                    </div>
+                    <div>
+                        <label style="font-size:12px;color:var(--muted)">Quanti messaggi inviare</label>
+                        <input type="number" id="fb-wa-limite" value="50" min="1" max="100"
+                            style="width:100%;background:var(--bg);border:1px solid var(--border);color:var(--text);padding:8px 12px;border-radius:8px;margin-top:4px;font-size:13px">
+                    </div>
+                    <div style="background:rgba(255,145,0,0.08);border:1px solid rgba(255,145,0,0.2);border-radius:8px;padding:10px;font-size:12px;color:var(--muted)">
+                        ⚠️ Max 50/giorno consigliato per evitare ban WhatsApp. Pausa 3 sec tra messaggi.
+                    </div>
+                    <button class="btn-action" style="background:#25d366;color:white;justify-content:center;padding:12px;font-weight:700" onclick="campagnaFBWA()">
+                        📱 Avvia Campagna Full Booking
+                    </button>
+                    <div id="fb-wa-result" style="display:none;text-align:center;padding:12px;border-radius:8px;font-weight:700"></div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- LINK SITO -->
+        <div class="chart-card" style="margin-top:20px;border-color:rgba(201,168,76,0.2)">
+            <h3 style="color:#c9a84c">🌐 Sito Full Booking</h3>
+            <div style="display:flex;align-items:center;gap:16px;margin-top:12px;flex-wrap:wrap">
+                <div style="flex:1;font-size:13px;color:var(--muted)">Homepage pubblica con tutti i ristoranti attivi — la url che invii ai clienti.</div>
+                <a href="https://fullbooking.cloud" target="_blank"
+                   class="btn-action" style="background:rgba(201,168,76,0.15);border:1px solid rgba(201,168,76,0.3);color:#c9a84c;text-decoration:none">
+                    🌐 Apri fullbooking.cloud
+                </a>
+            </div>
+        </div>
+
+    </div>
+
 </div>
 
 <div class="toast" id="toast"></div>
@@ -537,8 +634,9 @@
         document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
         document.getElementById('tab-' + name).classList.add('active');
         document.querySelectorAll('.nav-tab').forEach((t, i) => {
-            if (['dashboard','leads','campagne'][i] === name) t.classList.add('active');
+            if (['dashboard','leads','campagne','fullbooking'][i] === name) t.classList.add('active');
         });
+        if (name === 'fullbooking') caricaStatsFB();
     }
 
     // ─── STATS ────────────────────────────────────────────────────────────────
@@ -890,12 +988,54 @@
 
     function esportaCSV() { window.open('/api/export-csv', '_blank'); }
 
+    // ─── FULL BOOKING ─────────────────────────────────────────────────────────
+    async function caricaStatsFB() {
+        try {
+            const res = await fetch('/api/fullbooking-stats');
+            const d = await res.json();
+            document.getElementById('fb-preview').textContent = d.preview;
+            document.getElementById('fb-inviati').textContent = d.inviati;
+            document.getElementById('fb-da-inviare').textContent = d.da_inviare;
+        } catch(e) {}
+    }
+
+    async function generaPreviewFB() {
+        const limite = parseInt(document.getElementById('fb-genera-limite').value);
+        const res_el = document.getElementById('fb-genera-result');
+        showToast('⚙️ Generazione preview avviata...', '#c9a84c');
+        res_el.style.display = 'none';
+        const res = await fetch('/api/genera-preview-fb', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({limite})});
+        const data = await res.json();
+        res_el.style.display = 'block';
+        res_el.style.background = 'rgba(201,168,76,0.1)';
+        res_el.style.color = '#c9a84c';
+        res_el.textContent = data.msg;
+        showToast('⚙️ ' + data.msg, '#c9a84c');
+        setTimeout(caricaStatsFB, 5000);
+    }
+
+    async function campagnaFBWA() {
+        const limite = parseInt(document.getElementById('fb-wa-limite').value);
+        const res_el = document.getElementById('fb-wa-result');
+        showToast('📱 Campagna Full Booking in corso...', '#25d366');
+        res_el.style.display = 'none';
+        const res = await fetch('/api/campagna-fullbooking-wa', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({limite})});
+        const data = await res.json();
+        res_el.style.display = 'block';
+        res_el.style.background = 'rgba(37,211,102,0.1)';
+        res_el.style.color = '#25d366';
+        res_el.textContent = `✅ WhatsApp Full Booking inviati: ${data.inviati}`;
+        showToast(`✅ Inviati ${data.inviati} messaggi Full Booking!`);
+        caricaStatsFB();
+    }
+
     // ─── INIT ─────────────────────────────────────────────────────────────────
     caricaStats();
     caricaCitta();
     caricaLeads();
     caricaAnalytics();
-    setInterval(() => { caricaStats(); caricaAnalytics(); }, 30000);
+    caricaStatsFB();
+    setInterval(() => { caricaStats(); caricaAnalytics(); caricaStatsFB(); }, 30000);
 </script>
 </body>
 </html>

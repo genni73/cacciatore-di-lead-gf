@@ -14,6 +14,7 @@ from enricher import arricchisci_tutti
 from outreach import invia_whatsapp_lead, invia_email_lead, campagna_whatsapp, campagna_email
 
 app = Flask(__name__)
+app.config['TEMPLATES_AUTO_RELOAD'] = True
 
 
 @app.route("/")
@@ -127,6 +128,49 @@ def api_campagna_wa():
     return jsonify({"inviati": inviati})
 
 
+@app.route("/api/campagna-fullbooking-wa", methods=["POST"])
+def api_campagna_fullbooking_wa():
+    data = request.get_json()
+    limite = data.get("limite", 50)
+    from outreach import campagna_fullbooking_wa
+    inviati = campagna_fullbooking_wa(limite=limite)
+    return jsonify({"inviati": inviati})
+
+
+@app.route("/api/fullbooking-stats")
+def api_fullbooking_stats():
+    conn = get_conn()
+    preview = conn.execute(
+        "SELECT COUNT(*) FROM leads WHERE note LIKE 'FB:preview:%'"
+    ).fetchone()[0]
+    inviati = conn.execute(
+        "SELECT COUNT(*) FROM leads WHERE stato='FB:inviato'"
+    ).fetchone()[0]
+    da_inviare = conn.execute(
+        "SELECT COUNT(*) FROM leads WHERE note LIKE 'FB:preview:%' AND telefono IS NOT NULL AND telefono != '' AND stato != 'FB:inviato'"
+    ).fetchone()[0]
+    conn.close()
+    return jsonify({"preview": preview, "inviati": inviati, "da_inviare": da_inviare})
+
+
+@app.route("/api/genera-preview-fb", methods=["POST"])
+def api_genera_preview_fb():
+    data = request.get_json()
+    limite = data.get("limite", 20)
+    def _genera():
+        from genera_preview_fullbooking import main as gen_main
+        gen_main(limite=limite)
+        import subprocess
+        subprocess.run(["netlify", "deploy", "--prod", "--dir=preview_fullbooking",
+                        "--auth=nfc_WeecQCAM5cvdchTbQp873cQF491q1ihA86bb",
+                        "--site=60c3c15b-400e-4d60-b39a-2a4416ceb70f",
+                        "--no-build"],
+                       capture_output=True, cwd=os.path.dirname(__file__))
+    t = threading.Thread(target=_genera, daemon=True)
+    t.start()
+    return jsonify({"ok": True, "msg": f"Generazione {limite} preview avviata in background"})
+
+
 @app.route("/api/campagna-email", methods=["POST"])
 def api_campagna_email():
     data = request.get_json()
@@ -230,5 +274,8 @@ def serve_preview_token(token):
 
 
 def avvia_dashboard(port=5000):
-    print(f"\n🌐 Dashboard aperta su: http://localhost:{port}")
-    app.run(host="0.0.0.0", port=port, debug=False)
+    print(f"\nDashboard aperta su: http://localhost:{port}")
+    app.run(host="0.0.0.0", port=port, debug=True, use_reloader=False)
+
+if __name__ == "__main__":
+    avvia_dashboard()

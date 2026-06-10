@@ -32,3 +32,6 @@ brochure.pdf
 # File temporanei Windows
 Thumbs.db
 desktop.ini
+
+# Local Netlify folder
+.netlify
