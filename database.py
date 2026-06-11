@@ -1,26 +1,51 @@
 # ============================================================
-#  GF LEAD HUNTER — Database SQLite
+#  GF LEAD HUNTER — Database (SQLite locale / PostgreSQL cloud)
 # ============================================================
 import os
 import sqlite3
 from datetime import datetime
 
-DB_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "leads.db")
+DATABASE_URL = os.environ.get("DATABASE_URL", "")
+if DATABASE_URL.startswith("postgres://"):
+    DATABASE_URL = DATABASE_URL.replace("postgres://", "postgresql://", 1)
+
+USE_PG = bool(DATABASE_URL)
+
+if USE_PG:
+    import psycopg2
+    import psycopg2.extras
+else:
+    DB_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "leads.db")
 
 
 def get_conn():
+    if USE_PG:
+        return psycopg2.connect(DATABASE_URL)
     conn = sqlite3.connect(DB_PATH)
     conn.row_factory = sqlite3.Row
     return conn
 
 
+def _exec(conn, sql, params=()):
+    if USE_PG:
+        sql = sql.replace("?", "%s")
+        cur = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+    else:
+        cur = conn.cursor()
+    cur.execute(sql, params)
+    return cur
+
+
 def init_db():
     conn = get_conn()
-    c = conn.cursor()
+    if USE_PG:
+        id_def = "id SERIAL PRIMARY KEY"
+    else:
+        id_def = "id INTEGER PRIMARY KEY AUTOINCREMENT"
 
-    c.execute("""
+    _exec(conn, f"""
         CREATE TABLE IF NOT EXISTS leads (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            {id_def},
             nome TEXT NOT NULL,
             categoria TEXT NOT NULL,
             citta TEXT,
@@ -38,9 +63,9 @@ def init_db():
         )
     """)
 
-    c.execute("""
+    _exec(conn, f"""
         CREATE TABLE IF NOT EXISTS messaggi (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            {id_def},
             lead_id INTEGER,
             tipo TEXT,
             contenuto TEXT,
@@ -50,9 +75,9 @@ def init_db():
         )
     """)
 
-    c.execute("""
+    _exec(conn, f"""
         CREATE TABLE IF NOT EXISTS sessioni_ricerca (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            {id_def},
             categoria TEXT,
             citta TEXT,
             lead_trovati INTEGER,
@@ -65,38 +90,50 @@ def init_db():
     print("✅ Database inizializzato correttamente")
 
 
-def salva_lead(lead: dict) -> int | None:
+def salva_lead(lead: dict):
     conn = get_conn()
-    c = conn.cursor()
     try:
-        c.execute("""
-            INSERT INTO leads (nome, categoria, citta, indirizzo, telefono, email,
-                               sito_web, rating, num_recensioni, google_place_id)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-        """, (
-            lead.get("nome"),
-            lead.get("categoria"),
-            lead.get("citta"),
-            lead.get("indirizzo"),
-            lead.get("telefono"),
-            lead.get("email"),
-            lead.get("sito_web"),
-            lead.get("rating"),
-            lead.get("num_recensioni"),
-            lead.get("place_id")
-        ))
-        conn.commit()
-        lead_id = c.lastrowid
-        return lead_id
-    except sqlite3.IntegrityError:
-        return None  # duplicato
+        if USE_PG:
+            cur = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+            cur.execute("""
+                INSERT INTO leads (nome, categoria, citta, indirizzo, telefono, email,
+                                   sito_web, rating, num_recensioni, google_place_id)
+                VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+                RETURNING id
+            """, (
+                lead.get("nome"), lead.get("categoria"), lead.get("citta"),
+                lead.get("indirizzo"), lead.get("telefono"), lead.get("email"),
+                lead.get("sito_web"), lead.get("rating"), lead.get("num_recensioni"),
+                lead.get("place_id")
+            ))
+            row = cur.fetchone()
+            conn.commit()
+            return row["id"] if row else None
+        else:
+            c = conn.cursor()
+            c.execute("""
+                INSERT INTO leads (nome, categoria, citta, indirizzo, telefono, email,
+                                   sito_web, rating, num_recensioni, google_place_id)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            """, (
+                lead.get("nome"), lead.get("categoria"), lead.get("citta"),
+                lead.get("indirizzo"), lead.get("telefono"), lead.get("email"),
+                lead.get("sito_web"), lead.get("rating"), lead.get("num_recensioni"),
+                lead.get("place_id")
+            ))
+            conn.commit()
+            return c.lastrowid
+    except Exception as e:
+        if "unique" in str(e).lower() or "duplicate" in str(e).lower():
+            return None
+        raise
     finally:
         conn.close()
 
 
 def aggiorna_email(lead_id: int, email: str):
     conn = get_conn()
-    conn.execute("UPDATE leads SET email=? WHERE id=?", (email, lead_id))
+    _exec(conn, "UPDATE leads SET email=? WHERE id=?", (email, lead_id))
     conn.commit()
     conn.close()
 
@@ -104,18 +141,18 @@ def aggiorna_email(lead_id: int, email: str):
 def aggiorna_stato(lead_id: int, stato: str, note: str = None):
     conn = get_conn()
     if note:
-        conn.execute("UPDATE leads SET stato=?, note=?, data_contatto=? WHERE id=?",
-                     (stato, note, datetime.now().isoformat(), lead_id))
+        _exec(conn, "UPDATE leads SET stato=?, note=?, data_contatto=? WHERE id=?",
+              (stato, note, datetime.now().isoformat(), lead_id))
     else:
-        conn.execute("UPDATE leads SET stato=?, data_contatto=? WHERE id=?",
-                     (stato, datetime.now().isoformat(), lead_id))
+        _exec(conn, "UPDATE leads SET stato=?, data_contatto=? WHERE id=?",
+              (stato, datetime.now().isoformat(), lead_id))
     conn.commit()
     conn.close()
 
 
 def salva_messaggio(lead_id: int, tipo: str, contenuto: str, esito: str = "inviato"):
     conn = get_conn()
-    conn.execute("""
+    _exec(conn, """
         INSERT INTO messaggi (lead_id, tipo, contenuto, esito)
         VALUES (?, ?, ?, ?)
     """, (lead_id, tipo, contenuto, esito))
@@ -141,33 +178,32 @@ def get_leads(stato=None, categoria=None, citta=None, con_telefono=False, con_em
     if con_email:
         query += " AND email IS NOT NULL AND email != ''"
     query += " ORDER BY data_creazione DESC"
-    leads = conn.execute(query, params).fetchall()
+    rows = _exec(conn, query, params).fetchall()
     conn.close()
-    return [dict(l) for l in leads]
+    return [dict(r) for r in rows]
 
 
 def get_stats():
     conn = get_conn()
     stats = {}
-    stats["totale"] = conn.execute("SELECT COUNT(*) FROM leads").fetchone()[0]
-    stats["nuovi"] = conn.execute("SELECT COUNT(*) FROM leads WHERE stato='nuovo'").fetchone()[0]
-    stats["contattati"] = conn.execute("SELECT COUNT(*) FROM leads WHERE stato='contattato'").fetchone()[0]
-    stats["interessati"] = conn.execute("SELECT COUNT(*) FROM leads WHERE stato='interessato'").fetchone()[0]
-    stats["clienti"] = conn.execute("SELECT COUNT(*) FROM leads WHERE stato='cliente'").fetchone()[0]
-    stats["con_telefono"] = conn.execute("SELECT COUNT(*) FROM leads WHERE telefono IS NOT NULL AND telefono != ''").fetchone()[0]
-    stats["con_email"] = conn.execute("SELECT COUNT(*) FROM leads WHERE email IS NOT NULL AND email != ''").fetchone()[0]
-    stats["messaggi_inviati"] = conn.execute("SELECT COUNT(*) FROM messaggi").fetchone()[0]
-    stats["per_categoria"] = [
-        {"categoria": r[0], "n": r[1]}
-        for r in conn.execute(
-            "SELECT categoria, COUNT(*) as n FROM leads GROUP BY categoria ORDER BY n DESC"
-        ).fetchall()
-    ]
-    stats["per_citta"] = [
-        {"citta": r[0], "n": r[1]}
-        for r in conn.execute(
-            "SELECT citta, COUNT(*) as n FROM leads GROUP BY citta ORDER BY n DESC LIMIT 10"
-        ).fetchall()
-    ]
+
+    def scalar(sql):
+        return _exec(conn, sql).fetchone()
+
+    stats["totale"] = list(scalar("SELECT COUNT(*) FROM leads").values())[0] if USE_PG else scalar("SELECT COUNT(*) FROM leads")[0]
+    stats["nuovi"] = list(scalar("SELECT COUNT(*) FROM leads WHERE stato='nuovo'").values())[0] if USE_PG else scalar("SELECT COUNT(*) FROM leads WHERE stato='nuovo'")[0]
+    stats["contattati"] = list(scalar("SELECT COUNT(*) FROM leads WHERE stato='contattato'").values())[0] if USE_PG else scalar("SELECT COUNT(*) FROM leads WHERE stato='contattato'")[0]
+    stats["interessati"] = list(scalar("SELECT COUNT(*) FROM leads WHERE stato='interessato'").values())[0] if USE_PG else scalar("SELECT COUNT(*) FROM leads WHERE stato='interessato'")[0]
+    stats["clienti"] = list(scalar("SELECT COUNT(*) FROM leads WHERE stato='cliente'").values())[0] if USE_PG else scalar("SELECT COUNT(*) FROM leads WHERE stato='cliente'")[0]
+    stats["con_telefono"] = list(scalar("SELECT COUNT(*) FROM leads WHERE telefono IS NOT NULL AND telefono != ''").values())[0] if USE_PG else scalar("SELECT COUNT(*) FROM leads WHERE telefono IS NOT NULL AND telefono != ''")[0]
+    stats["con_email"] = list(scalar("SELECT COUNT(*) FROM leads WHERE email IS NOT NULL AND email != ''").values())[0] if USE_PG else scalar("SELECT COUNT(*) FROM leads WHERE email IS NOT NULL AND email != ''")[0]
+    stats["messaggi_inviati"] = list(scalar("SELECT COUNT(*) FROM messaggi").values())[0] if USE_PG else scalar("SELECT COUNT(*) FROM messaggi")[0]
+
+    rows = _exec(conn, "SELECT categoria, COUNT(*) as n FROM leads GROUP BY categoria ORDER BY n DESC").fetchall()
+    stats["per_categoria"] = [{"categoria": r["categoria"] if USE_PG else r[0], "n": r["n"] if USE_PG else r[1]} for r in rows]
+
+    rows = _exec(conn, "SELECT citta, COUNT(*) as n FROM leads GROUP BY citta ORDER BY n DESC LIMIT 10").fetchall()
+    stats["per_citta"] = [{"citta": r["citta"] if USE_PG else r[0], "n": r["n"] if USE_PG else r[1]} for r in rows]
+
     conn.close()
     return stats
