@@ -1,10 +1,11 @@
 # ============================================================
 #  GF LEAD HUNTER — Database SQLite
 # ============================================================
+import os
 import sqlite3
 from datetime import datetime
 
-DB_PATH = "leads.db"
+DB_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "leads.db")
 
 
 def get_conn():
