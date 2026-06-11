@@ -13,6 +13,7 @@ GMAIL_APP_PASSWORD = os.environ.get("GMAIL_APP_PASSWORD", "")
 NOME_AZIENDA = os.environ.get("NOME_AZIENDA", "GF Technological System")
 NOME_VENDITORE = os.environ.get("NOME_VENDITORE", "Gennaro Fusco")
 TELEFONO = os.environ.get("TELEFONO", "+39 388 884 2343")
+FULLBOOKING_BASE_URL = os.environ.get("FULLBOOKING_BASE_URL", "https://www.fullbooking.it")
 
 # Categorie lead
 CATEGORIE = {
