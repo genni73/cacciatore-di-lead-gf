@@ -8,12 +8,13 @@ import os
 import threading
 from flask import Flask, render_template, jsonify, request, Response, send_file, abort
 
-from database import get_leads, get_stats, aggiorna_stato, get_conn
+from database import get_leads, get_stats, aggiorna_stato, get_conn, init_db
 from scraper import scrape_categoria_citta, scrape_tutto
 from enricher import arricchisci_tutti
 from outreach import invia_whatsapp_lead, invia_email_lead, campagna_whatsapp, campagna_email
 
 app = Flask(__name__)
+init_db()
 app.config['TEMPLATES_AUTO_RELOAD'] = True
 
 
