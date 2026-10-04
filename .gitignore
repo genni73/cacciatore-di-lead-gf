@@ -2,8 +2,9 @@
 #  GF LEAD HUNTER — File da NON caricare su GitHub
 # ============================================================
 
-# Credenziali e API key — MAI su GitHub
-config.py
+# Credenziali e API key locali — MAI su GitHub (config.py legge da variabili d'ambiente)
+config_local.py
+config.cacciatore-originale.py
 
 # Database con dati personali dei ristoranti
 leads.db
