@@ -9,6 +9,12 @@ import webbrowser
 import threading
 import time
 
+try:
+    sys.stdout.reconfigure(encoding="utf-8")
+    sys.stderr.reconfigure(encoding="utf-8")
+except Exception:
+    pass
+
 from database import init_db, get_stats
 from config import GOOGLE_MAPS_API_KEY
 
